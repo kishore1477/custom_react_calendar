@@ -4,12 +4,13 @@ import React, { useContext,useState } from "react";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import Contex from "../contex/Contex";
+import Labels from "./Labels";
 export default function CalendarHeader() {
   const [token, setToken] = useState('')
   const { monthIndex, setMonthIndex } = useContext(Contex);
-  console.log("MOnth index inside the calendar header:", monthIndex)
-  console.log("MOnth index inside the calendar header: types is", typeof(monthIndex))
-  console.log("monthIndex",monthIndex)
+  // console.log("MOnth index inside the calendar header:", monthIndex)
+  // console.log("MOnth index inside the calendar header: types is", typeof(monthIndex))
+  // console.log("monthIndex",monthIndex)
   function handlePrevMonth() {
     setMonthIndex(monthIndex - 1);
   }
@@ -53,6 +54,8 @@ export default function CalendarHeader() {
         )}
       </h2>
       <span>
+
+        <Labels/>
         {/* {token ?<button className="mr-4 text-red-500 border px-8 p-2 rounded-full flex items-center shadow-md hover:shadow-2xl font-bold" onClick={handleLogout}>Logout</button>: <LoginSocialGoogle className="mr-12"
         client_id={"925534215061-lhqcqsnmr3semr04cf300ocvnu85fc1r.apps.googleusercontent.com"}
         scope="openid profile email"

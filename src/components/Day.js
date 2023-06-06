@@ -31,37 +31,44 @@ const events = [
     user:"Kishore Kumar",
     title:"Complete Calendar",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
-    assigned_date:"02-06-23"
+    assigned_date:"02-06-23",
+    location:'Lahore'
   },
   {
     user:"Kishore Kumar",
     title:"Complete Calendar",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
-    assigned_date:"26-06-23"
+    assigned_date:"26-06-23",
+    location:'Islamabad'
   },
   {
     user:"Kishore Kumar1",
     title:"Complete Calendar1",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
-    assigned_date:"06-06-23"
+    assigned_date:"06-06-23",
+    location:'Karachi'
   },
   {
     user:"Kishore Kumar2",
     title:"Complete Calendar2",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
-    assigned_date:"03-06-23"
+    assigned_date:"03-06-23",
+    location:'Hyderabad'
   },
   {
     user:"Kishore Kumar3",
     title:"Complete Calendar3",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
-    assigned_date:"04-06-23"
+    assigned_date:"04-06-23",
+    location:'Thar Coal'
   },
 ]
-
+localStorage.setItem('events',  JSON.stringify(events))
+const eventInLS = JSON.parse(localStorage.getItem('events'))
+// console.log("event in Local storage", eventInLS)
 const loggedUserEvents = []
 
-events.map((evt, i)=>{
+eventInLS.map((evt, i)=>{
   // console.log("Events.user is :", evt.user)
   if(evt.user === loggedUser){
     loggedUserEvents.push(evt)
@@ -97,6 +104,7 @@ events.map((evt, i)=>{
        
       >
         {dayEvents.map((evt, idx) => (
+          
           <div
             key={idx}
             onClick={() => setSelectedEvent(evt)}
@@ -109,9 +117,9 @@ events.map((evt, i)=>{
 if(event.assigned_date === days.format("DD-MM-YY")){
  return ( <p className=' '>{event.title}</p>)
 }
-         })}</>:<>{events.map((evt,i)=>{
+         })}</>:<>{eventInLS.map((evt,i)=>{
           if(evt.assigned_date === days.format("DD-MM-YY")){
-            return ( <p >{evt.user}</p>)
+            return ( <p onClick={() => setSelectedEvent(evt)}>{evt.user}</p>)
            }
          })}</>}
       </div>

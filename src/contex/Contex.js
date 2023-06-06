@@ -13,7 +13,8 @@ const Contex = createContext({
   savedEvents: [],
   selectedEvent: null,
   setSelectedEvent: () => {},
-   
+  labels: [],
+  updateLabel: () => {},
 
 })
 

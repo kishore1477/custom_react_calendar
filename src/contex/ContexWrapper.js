@@ -54,13 +54,22 @@ const [savedEvents, dispatchCalEvent] = useReducer(
   
   useEffect(() => {
     localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+    const events =  JSON.parse(localStorage.getItem('savedEvents'))
+    console.log("Events inside local in wrapper:", events)
   }, [savedEvents]);
 
 console.log("Count is in  :", count)
+function updateLabel(label) {
+  setLabels(
+    labels.map((lbl) => (lbl.label === label.label ? label : lbl))
+  );
+}
 return (
     <div>
    
-<Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents }}>
+<Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents , setLabels,
+        labels,
+        updateLabel,}}>
         {props.children}
        {/* <App/> */}
     </Contex.Provider>

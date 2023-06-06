@@ -25,8 +25,8 @@ export default function EventModal() {
   const [location, setLocation] = useState(
     selectedEvent ? selectedEvent.location : ""
   );
-  const [description, setDescription] = useState(
-    selectedEvent ? selectedEvent.description : ""
+  const [desc, setDescription] = useState(
+    selectedEvent ? selectedEvent.desc : ""
   );
   const [selectedLabel, setSelectedLabel] = useState(
     selectedEvent
@@ -38,7 +38,7 @@ export default function EventModal() {
     e.preventDefault();
     const calendarEvent = {
       title,
-      description,
+      desc,
       location,
       label: selectedLabel,
       day: daySelected.valueOf(),
@@ -104,20 +104,20 @@ export default function EventModal() {
             </span>
             <input
               type="text"
-              name="description"
+              name="desc"
               placeholder="Add a description"
-              value={description}
+              value={desc}
               required
               className="pt-3 border-0 text-gray-600 pb-2 border-b-2 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               onChange={(e) => setDescription(e.target.value)}
             />
             <div className="flex">
-           <span className="material-icons-outlined w-1/2 md:w-1/4">
+           <span className="material-icons-outlined">
 add_location
 </span>
 <input
               type="text"
-              name="description"
+              name="location"
               placeholder="Add a Location"
               value={location}
               required
@@ -126,8 +126,9 @@ add_location
             />
 </div>
             <div className="flex gap-x-2">
-              {labelsClasses.map((lblClass, i) => (
-                <span
+              {labelsClasses.map((lblClass, i) => {
+              // console.log("lbl Classes is:", lblClass)
+            return (    <span
                   key={i}
                   onClick={() => setSelectedLabel(lblClass)}
                   className={`bg-${lblClass}-500  w-6 h-6 rounded-full flex items-center justify-center cursor-pointer`}
@@ -138,7 +139,7 @@ add_location
                     </span>
                   )}
                 </span>
-              ))}
+              )})}
             </div>
           </div>
         </div>
