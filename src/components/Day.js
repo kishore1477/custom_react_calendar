@@ -10,12 +10,12 @@ const Day = (props) => {
     useEffect(() => {
 // console.log("Filtered events is :", filteredEvents)
 // console.log(" savedEvents events is :", savedEvents)
-      const events = savedEvents.filter(
+      const events = filteredEvents.filter(
         (evt) =>
           dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY")
       );
       setDayEvents(events);
-    }, [savedEvents, days]);
+    }, [filteredEvents, days]);
 
 const getCurrentDayClass = ()=>{
   return days.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
@@ -78,8 +78,8 @@ eventInLS.map((evt, i)=>{
 // console.log("Logged user events is :", loggedUserEvents)
 
   return (
-    <div className='border border-gray-200 flex flex-col '>
-      <div className='h-32 flex flex-col  items-center'  onClick={() => {
+    <div className='border border-gray-300 flex flex-col '>
+      <div className='h-24 md:h-32 flex flex-col  items-center'  onClick={() => {
            setDaySelected(days);
           setShowEventModal(true);
         }}>
@@ -103,16 +103,16 @@ eventInLS.map((evt, i)=>{
         className="flex-1 "
        
       >
-        {dayEvents.map((evt, idx) => (
+        {dayEvents.map((evt, idx) => {
           
-          <div
+       return (   <div
             key={idx}
             onClick={() => setSelectedEvent(evt)}
-            className={`bg-${evt.label}-200 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
+            className={`bg-${evt.label && evt.label}-200 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
           >
             {evt.title}
-          </div>
-        ))}
+          </div>)
+})}
          {!loggedAdmin? <>{loggedUser && loggedUserEvents.map((event,i)=>{
 if(event.assigned_date === days.format("DD-MM-YY")){
  return ( <p className=' '>{event.title}</p>)

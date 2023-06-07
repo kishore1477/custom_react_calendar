@@ -3,6 +3,7 @@ import Day from './Day'
 import Contex from '../contex/Contex';
 import { getMonth } from '../main';
 import EventModal from './EventModal';
+import Labels from './Labels';
  
  const Month = () => {
   const [currenMonth, setCurrentMonth] = useState(getMonth());
@@ -14,7 +15,12 @@ import EventModal from './EventModal';
   console.log("monthis",currenMonth)
   
    return (
-    <>
+    <div className='flex'>
+    
+    <aside className="border p-5 w-1/4">
+    <Labels/>
+    </aside>
+    <div className='w-full h-full'>
    {showEventModal &&  <EventModal/>}
      <div  className="  mx-auto my-auto  grid grid-cols-7 grid-rows-5">
       {
@@ -34,7 +40,8 @@ import EventModal from './EventModal';
         ))
       }
      </div>
-     </>
+     </div>
+     </div>
 
    )
  }

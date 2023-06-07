@@ -39,13 +39,20 @@ const [savedEvents, dispatchCalEvent] = useReducer(
   );
 
   const filteredEvents = useMemo(() => {
-    return savedEvents.filter((evt) =>
-      labels
-        .filter((lbl) => lbl.checked)
-        .map((lbl) => lbl.label)
-        .includes(evt.label)
-    );
+    console.log("Labels is in filteredevents is ", labels)
+    return savedEvents.filter((evt) =>{
+     // Get the list of checked labels
+     const checkedLabels = labels.filter((lbl) => lbl.checked)
+console.log("CheckedLabels is :",checkedLabels)
+     // Get the list of labels in the checkedLabels array
+     const labelNames = checkedLabels.map((lbl) => lbl.label)
+     console.log("LabelNames is :", labelNames)
+ 
+     // Return true if the event's label is in the list of label names
+     return labelNames.includes(evt.label)
+  });
   }, [savedEvents, labels]);
+  console.log("filtered events inside contex wrapper is :", filteredEvents)
   useEffect(() => {
     if (!showEventModal) {
       setSelectedEvent(null);
@@ -55,11 +62,29 @@ const [savedEvents, dispatchCalEvent] = useReducer(
   useEffect(() => {
     localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
     const events =  JSON.parse(localStorage.getItem('savedEvents'))
-    console.log("Events inside local in wrapper:", events)
+    // console.log("Events inside local in wrapper:", events)
   }, [savedEvents]);
 
-console.log("Count is in  :", count)
+useEffect(() => {
+  setLabels((prevLabels) => {
+    return [...new Set(savedEvents.map((evt) => evt.label))].map(
+      (label) => {
+        const currentLabel = prevLabels.find(
+          (lbl) => lbl.label === label
+        );
+        console.log("currentLabel is:", currentLabel)
+        console.log("Previous labels is", prevLabels)
+        console.log("label is", label)
+        return {
+          label,
+          checked: currentLabel ? currentLabel.checked : true,
+        };
+      }
+    );
+  });
+}, [savedEvents]);
 function updateLabel(label) {
+  console.log("Label in updt:", label)
   setLabels(
     labels.map((lbl) => (lbl.label === label.label ? label : lbl))
   );

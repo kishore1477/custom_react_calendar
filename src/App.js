@@ -16,6 +16,7 @@ import {
 import ContexWrapper from './contex/ContexWrapper';
 import Login from './components/Login';
 import CalendarHeader from './components/CalendarHeader';
+import Labels from './components/Labels';
 function App() {
  
   const [show, setShow] = useState(false)
@@ -35,11 +36,12 @@ const handleCalendar =()=>{
       
 <Router>
   <Navbar/>
-  {/* { showEventModal && <EventModal/>} */}
+  
   <CalendarHeader/>
     <Routes>
-    {/* <Month month= {currenMonth} /> */}
+    
       <Route path="/" element={  <Month   />  }/>  
+      {/* <Route path="/" element={  <Labels/>}/>   */}
        <Route path="/login" element={  <Login  />}/>
      
 

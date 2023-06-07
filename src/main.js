@@ -9,6 +9,7 @@ export function getMonth(month = dayjs().month()) {
   
   let currentMonthCount = 0 - firstDayOfTheMonth;
   const daysMatrix = [];
+ 
 for (let i = 0; i < 6; i++) {
   const week = [];
   for (let j = 0; j < 7; j++) {
