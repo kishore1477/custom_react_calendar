@@ -30,6 +30,13 @@ export default function EventModal() {
     selectedEvent,
   } = useContext(Contex);
 
+  const [showTime, setShowTime] = useState(false)
+
+
+  const  handleAddTime = () =>{
+    setShowTime(!showTime)
+
+  }
   const [timeString, setTimeString] = useState('');
 
   // Use state to store the selected option
@@ -128,21 +135,22 @@ export default function EventModal() {
               <span className="material-icons-outlined text-gray-400 ">
                 schedule
               </span>
-              <p className="ml-2">{daySelected.format("dddd, MMMM DD")}</p>
-            </div>
-            <div className="text-sm">
+              <p className="ml-2 mr-10">{daySelected.format("dddd, MMMM DD")}</p>
+              <span className=" py-2 px-4 cursor-pointer bg-slate-200" onClick={handleAddTime}>Add time</span>
 
-              <label>From</label> <br />
-              {/* <TimePicker onChange={onChange} value={value} /> */}
-              <br />
-              <label>To</label> <br />
-              <TimePicker.RangePicker placeholder={["Start", "End"]} format="HH:mm" className="font-bold text-green-700" onOk={(time) => {
-                setTimeString(timeString);
-                console.log(time);
-                console.log(timeString);
-              }} />
-              {/* <TimePicker onChange={onChange}  timeFormat="HH:mm" value={value} /> */}
             </div>
+           {showTime?<div className="text-sm">
+
+              
+            
+            
+<TimePicker.RangePicker placeholder={["Start", "End"]} format="HH:mm" className="font-bold text-green-700" onOk={(time) => {
+  setTimeString(timeString);
+  console.log(time);
+  console.log(timeString);
+}} />
+
+</div>:<>All day</>} 
             <div className="flex">
               <span className="material-icons-outlined text-gray-400  flex justify-center items-center">
                 segment
