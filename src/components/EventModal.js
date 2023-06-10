@@ -33,7 +33,7 @@ export default function EventModal() {
   const [showTime, setShowTime] = useState(false)
 
 
-  const  handleAddTime = () =>{
+  const handleAddTime = () => {
     setShowTime(!showTime)
 
   }
@@ -56,6 +56,9 @@ export default function EventModal() {
   const [location, setLocation] = useState(
     selectedEvent ? selectedEvent.location : ""
   );
+  const [label, setLabel] = useState(
+    selectedEvent ? selectedEvent.label : ""
+  );
   const [desc, setDescription] = useState(
     selectedEvent ? selectedEvent.desc : ""
   );
@@ -71,7 +74,8 @@ export default function EventModal() {
       title,
       desc,
       location,
-      label: selectedLabel,
+      createdLabel:label,
+      label: selectedOption,
       day: daySelected.valueOf(),
       id: selectedEvent ? selectedEvent.id : Date.now(),
     };
@@ -136,21 +140,18 @@ export default function EventModal() {
                 schedule
               </span>
               <p className="ml-2 mr-10">{daySelected.format("dddd, MMMM DD")}</p>
-              <span className=" py-2 px-4 cursor-pointer bg-slate-200" onClick={handleAddTime}>Add time</span>
+
 
             </div>
-           {showTime?<div className="text-sm">
 
-              
-            
-            
-<TimePicker.RangePicker placeholder={["Start", "End"]} format="HH:mm" className="font-bold text-green-700" onOk={(time) => {
-  setTimeString(timeString);
-  console.log(time);
-  console.log(timeString);
-}} />
+            <TimePicker.RangePicker placeholder={["Start", "End"]} format="HH:mm" className="font-bold text-green-700" onOk={(time) => {
+              setTimeString(timeString);
+              console.log(time);
+              console.log(timeString);
+            }} />
 
-</div>:<>All day</>} 
+
+
             <div className="flex">
               <span className="material-icons-outlined text-gray-400  flex justify-center items-center">
                 segment
@@ -183,12 +184,12 @@ export default function EventModal() {
               <div className="flex">
                 <div className=""><input
                   type="text"
-                  name="location"
+                  name="label"
                   placeholder="Create a label"
-                  value={location}
+                  value={label}
                   required
                   className=" border-0 text-gray-600 pb-2 w-1/2 md:w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                  onChange={(e) => setLocation(e.target.value)}
+                  onChange={(e) => setLabel(e.target.value)}
                 /></div>
                 <div className="ml-4">
                   <select onChange={handleChange}>

@@ -4,6 +4,7 @@ import Contex from '../contex/Contex';
 import { getMonth } from '../main';
 import EventModal from './EventModal';
 import Labels from './Labels';
+import CalendarHeader from './CalendarHeader';
  
  const Month = () => {
   const [currenMonth, setCurrentMonth] = useState(getMonth());
@@ -15,6 +16,9 @@ import Labels from './Labels';
   console.log("monthis",currenMonth)
   
    return (
+
+    <>
+      <CalendarHeader/>
     <div className='flex'>
     
     <aside className="border p-5 w-1/4">
@@ -42,7 +46,7 @@ import Labels from './Labels';
      </div>
      </div>
      </div>
-
+     </>
    )
  }
  

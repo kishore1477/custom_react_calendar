@@ -31,6 +31,7 @@ const [count, setCount] = useState(10)
 const [daySelected, setDaySelected] = useState(dayjs());
 const [selectedEvent, setSelectedEvent] = useState(null)
 const [labels, setLabels] = useState([]);
+const [selectedUserEvent, setSelectedUserEvent] = useState(null)
 
 const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
@@ -67,17 +68,25 @@ console.log("CheckedLabels is :",checkedLabels)
 
 useEffect(() => {
   setLabels((prevLabels) => {
-    return [...new Set(savedEvents.map((evt) => evt.label))].map(
+    const  x =  [...new Set(savedEvents.map((evt) => evt.label))]
+    console.log("x is:", x)
+    return x.map(
       (label) => {
         const currentLabel = prevLabels.find(
           (lbl) => lbl.label === label
         );
-        console.log("currentLabel is:", currentLabel)
-        console.log("Previous labels is", prevLabels)
-        console.log("label is", label)
+        const  createdlabel =[]
+        savedEvents && savedEvents.map((evt,i) =>{
+if(evt.label === label){
+  console.log("evt is :", evt)
+  createdlabel.push(evt.createdLabel)
+}
+        } )
+        // console.log("Created label is :", createdlabel)
         return {
           label,
           checked: currentLabel ? currentLabel.checked : true,
+          Createdlabel: createdlabel,
         };
       }
     );
@@ -85,16 +94,23 @@ useEffect(() => {
 }, [savedEvents]);
 function updateLabel(label) {
   console.log("Label in updt:", label)
+  console.log("Labels is in upd:", labels)
   setLabels(
-    labels.map((lbl) => (lbl.label === label.label ? label : lbl))
-  );
+    labels.map((lbl,i) => {
+      console.log("Labelk inside map is :", lbl)
+  return  (
+
+      lbl.label === label.label ? label : lbl
+  )
+}
+  ))
 }
 return (
     <div>
    
 <Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents , setLabels,
         labels,
-        updateLabel,}}>
+        updateLabel,setSelectedUserEvent, selectedUserEvent}}>
         {props.children}
        {/* <App/> */}
     </Contex.Provider>

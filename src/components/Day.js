@@ -1,7 +1,25 @@
 import React , {useContext, useState,useEffect} from 'react'
 import dayjs from 'dayjs'
 import Contex from '../contex/Contex'
+import moment from 'moment';
+import 'dayjs/locale/en'; // Import the desired locale
 const Day = (props) => {
+  // console.log(moment.now());
+     // Set the locale globally for Day.js
+     dayjs.locale('en');
+
+     // Generate an array of dates for a long event spanning 7 days
+     const startDate = dayjs('2023-06-10');
+     const endDate = startDate.add(6, 'day');
+     const dates = [];
+     let currentDate = startDate;
+     while (currentDate.isBefore(endDate) || currentDate.isSame(endDate)) {
+       dates.push(currentDate);
+       currentDate = currentDate.add(1, 'day');
+     }
+
+
+
   const contex = useContext(Contex)
   const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents} = contex
   const [dayEvents, setDayEvents] = useState([]);
@@ -29,10 +47,12 @@ const loggedAdmin = "admin"
 const events = [
   {
     user:"Kishore Kumar",
-    title:"Complete Calendar",
+    title:"Complete Calendarbbtrhtr",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
     assigned_date:"02-06-23",
-    location:'Lahore'
+    location:'Lahore',
+    start:"06-17-23",
+    end:"06-29-23",
   },
   {
     user:"Kishore Kumar",
@@ -65,7 +85,7 @@ const events = [
 ]
 localStorage.setItem('events',  JSON.stringify(events))
 const eventInLS = JSON.parse(localStorage.getItem('events'))
-// console.log("event in Local storage", eventInLS)
+console.log("event in Local storage", eventInLS)
 const loggedUserEvents = []
 
 eventInLS.map((evt, i)=>{
@@ -103,6 +123,47 @@ eventInLS.map((evt, i)=>{
         className="flex-1 "
        
       >
+       {/* <div>
+     
+        <ul>
+          {dates.map((date) => (
+            <li key={date.format('YYYY-MM-DD')}>
+              {date.format('dddd, MMMM D, YYYY')}
+            </li>
+          ))}
+        </ul>
+      </div> */}
+      {eventInLS.map((evt,i)=>{
+        
+        console.log("Evt start is :", evt.start)
+      const start = evt.start && dayjs(evt.start).format('DD')
+      const fullStart = evt.start && dayjs(evt.start).format('DD-MM-YY')
+      console.log("Fullstart is :", fullStart)
+      // const sstart =  start.format('DD')
+      const end =evt.end && dayjs(evt.end).format('DD')
+      const fullend =evt.end && dayjs(evt.end).format('DD-MM-YY')
+      console.log("fullend is :", fullend)
+      console.log("(end-start) is:", (end-start))
+      console.log("days.format", days.format("DD-MM-YY"))
+      if((end-start) >1){
+
+        for (let i = start; i <end; i++) {
+           if(fullStart ===  days.format("DD-MM-YY")){
+            
+           }else if(fullend === days.format("DD-MM-YY")){
+
+           }
+          
+        }
+       
+
+        
+      }
+      console.log("Start date is the: ", start)
+      // console.log("Sstart date is the: ", sstart)
+      console.log("End date is the: ", end)
+    
+      })}
         {dayEvents.map((evt, idx) => {
           
        return (   <div
