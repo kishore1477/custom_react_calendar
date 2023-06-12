@@ -5,8 +5,8 @@ import Contex from '../contex/Contex'
 const SideBar = () => {
   const  {savedEvent, setSelectedUserEvent, selectedUserEvent} =   useContext(Contex)
   const eventInLS = JSON.parse(localStorage.getItem('events'))
-  const handleClick =(evt)=>{
-    setSelectedUserEvent(evt)
+const handleClick =(evt)=>{
+    setSelectedUserEvent((prevevt) => [{...prevevt}, evt])
   }
   return (
     <div>

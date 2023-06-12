@@ -19,7 +19,7 @@ const ShowMultipleCalendar = () => {
     <div className='flex'>
 <div className='w-1/2'>Admin Calendar</div>
 
-           {/* <div  className="w-1/2 m-4     grid grid-cols-7 grid-rows-5">
+           <div  className="w-1/2 m-4     grid grid-cols-7 grid-rows-5">
       {
        currenMonth && currenMonth.map((week,weekId)=>(
           // console.log("row id is :", weekId)
@@ -36,8 +36,8 @@ const ShowMultipleCalendar = () => {
           ))
         ))
       }
-     </div> */}
-     <MyCalendar/>
+     </div>
+     {/* <MyCalendar/> */}
     </div>
   )
 }

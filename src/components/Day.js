@@ -2,23 +2,36 @@ import React , {useContext, useState,useEffect} from 'react'
 import dayjs from 'dayjs'
 import Contex from '../contex/Contex'
 import moment from 'moment';
-import 'dayjs/locale/en'; // Import the desired locale
+
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+// import advancedFormat from 'dayjs/plugin/advancedFormat';
+// 
+// Import the plugin
+// dayjs.extend(advancedFormat);
+// Import the plugin
+dayjs.extend(isSameOrBefore);
+// import 'dayjs/locale/en'; // Import the desired locale
 const Day = (props) => {
-  // console.log(moment.now());
-     // Set the locale globally for Day.js
-     dayjs.locale('en');
+  dayjs().format()
+//   const   renderLongEvent = (date, eventName) =>{
+//     return (
+//       <div className="long-event">
+//         <span className="long-event-date">{date.format('MMM D, YYYY')}</span>
+//         <span className="long-event-name">{eventName}</span>
+//       </div>
+//     );
+//   }
+//   const startDate = dayjs('2023-06-15');
+//   const endDate = dayjs('2023-06-30');
+//   const eventName = 'Long Event';
 
-     // Generate an array of dates for a long event spanning 7 days
-     const startDate = dayjs('2023-06-10');
-     const endDate = startDate.add(6, 'day');
-     const dates = [];
-     let currentDate = startDate;
-     while (currentDate.isBefore(endDate) || currentDate.isSame(endDate)) {
-       dates.push(currentDate);
-       currentDate = currentDate.add(1, 'day');
-     }
-
-
+//   const calendar = [];
+//   let currentDate = startDate;
+//   while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, 'day')) {
+//     calendar.push(renderLongEvent(startDate, eventName));
+//     startDate.add(1, 'day');
+//   }
+// console.log("Calendar is:", calendar)
 
   const contex = useContext(Contex)
   const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents} = contex
@@ -119,46 +132,60 @@ eventInLS.map((evt, i)=>{
         </p>
         
       </header>
+
+      
       <div
         className="flex-1 "
        
       >
-       {/* <div>
-     
-        <ul>
-          {dates.map((date) => (
-            <li key={date.format('YYYY-MM-DD')}>
-              {date.format('dddd, MMMM D, YYYY')}
-            </li>
-          ))}
-        </ul>
-      </div> */}
+       
       {eventInLS.map((evt,i)=>{
         
         console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')
-      const fullStart = evt.start && dayjs(evt.start).format('DD-MM-YY')
+      const fullStart = evt.start && dayjs(evt.start)
       console.log("Fullstart is :", fullStart)
       // const sstart =  start.format('DD')
       const end =evt.end && dayjs(evt.end).format('DD')
-      const fullend =evt.end && dayjs(evt.end).format('DD-MM-YY')
+      const fullend =evt.end && dayjs(evt.end)
       console.log("fullend is :", fullend)
       console.log("(end-start) is:", (end-start))
       console.log("days.format", days.format("DD-MM-YY"))
-      if((end-start) >1){
+      let currentDate = fullStart;
+while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
+  currentDate = dayjs(currentDate).add(1, 'day');
 
-        for (let i = start; i <end; i++) {
-           if(fullStart ===  days.format("DD-MM-YY")){
+  console.log("Insie while")
+  // if(currentDate >= )
+  console.log("Current date iss :", currentDate)
+  console.log("Current date iss :", currentDate.format('D'))
+  // console.log("days date iss :", days)
+  console.log("days date iss :", days.format('D'))
+  if(days.format('DD-MM-YY') === currentDate.format('DD-MM-YY')){
+    return (
+    <div className='bg-yellow-400'>{evt.title}</div>
+  )
+  }
+  // if(days.format('D'))
+  
+  // return (
+  //   <div className='bg-yellow-400'>h</div>
+  // )
+}
+      // if((end-start) >1){
+
+      //   for (let i = start; i <end; i++) {
+      //      if(fullStart ===  days.format("DD-MM-YY")){
             
-           }else if(fullend === days.format("DD-MM-YY")){
+      //      }else if(fullend === days.format("DD-MM-YY")){
 
-           }
+      //      }
           
-        }
+      //   }
        
 
         
-      }
+      // }
       console.log("Start date is the: ", start)
       // console.log("Sstart date is the: ", sstart)
       console.log("End date is the: ", end)
