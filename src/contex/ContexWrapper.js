@@ -24,6 +24,21 @@ function initEvents() {
   const parsedEvents = storageEvents ? JSON.parse(storageEvents) : [];
   return parsedEvents;
 }
+const reducer =(state, {type, payload})=>{
+  switch (type) {
+    case "push":
+      console.log("State is :", state)
+      console.log("payload is:", payload)
+      console.log("type is:", type)
+      return [...state, payload];
+    
+    case "delete":
+      return state.filter((evt) => evt.id !== payload.id);
+    default:
+      throw new Error();
+  }
+
+}
  const  ContexWrapper = (props)=>{
      const [monthIndex, setMonthIndex] = useState(dayjs().month())
 const [showEventModal , setShowEventModal] = useState(false)
@@ -32,12 +47,13 @@ const [daySelected, setDaySelected] = useState(dayjs());
 const [selectedEvent, setSelectedEvent] = useState(null)
 const [labels, setLabels] = useState([]);
 const [selectedUserEvent, setSelectedUserEvent] = useState(null)
-
+ 
 const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
 [],
     initEvents
   );
+  const [selectedUserEventArray, dispatch] = useReducer(reducer, []);
 
   const filteredEvents = useMemo(() => {
     console.log("Labels is in filteredevents is ", labels)
@@ -105,12 +121,13 @@ function updateLabel(label) {
 }
   ))
 }
+console.log("selectedUserEventArray:", selectedUserEventArray)
 return (
     <div>
    
 <Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents , setLabels,
         labels,
-        updateLabel,setSelectedUserEvent, selectedUserEvent}}>
+        updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch }}>
         {props.children}
        {/* <App/> */}
     </Contex.Provider>

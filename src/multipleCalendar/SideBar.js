@@ -3,11 +3,11 @@ import { useContext } from 'react'
 import Contex from '../contex/Contex'
 
 const SideBar = () => {
-  const  {savedEvent, setSelectedUserEvent, selectedUserEvent} =   useContext(Contex)
+  const  {savedEvent, setSelectedUserEvent, selectedUserEvent,  dispatch} =   useContext(Contex)
   const eventInLS = JSON.parse(localStorage.getItem('events'))
 const handleClick =(evt)=>{
-    setSelectedUserEvent((prevevt) => [{...prevevt}, evt])
-  }
+  dispatch({ type: "push", payload: evt });
+}
   return (
     <div>
        <span className='font-bold flex justify-center items-center'> Users</span>

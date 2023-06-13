@@ -6,7 +6,7 @@ const Days = (props) => {
   const  {setShowEventModal, monthIndex,setDaySelected, selectedUserEvent ,savedEvents,setSelectedEvent,filteredEvents} = contex
   const [dayEvents, setDayEvents] = useState([]);
     const  { days, weekId, dayId} = props
- console.log("selectedUserEvent is :", selectedUserEvent)
+//  console.log("selectedUserEvent is :", selectedUserEvent)
     useEffect(() => {
 // console.log("Filtered events is :", filteredEvents)
 // console.log(" savedEvents events is :", savedEvents)

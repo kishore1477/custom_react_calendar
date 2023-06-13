@@ -163,14 +163,11 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
   console.log("days date iss :", days.format('D'))
   if(days.format('DD-MM-YY') === currentDate.format('DD-MM-YY')){
     return (
-    <div className='bg-yellow-400'>{evt.title}</div>
+    <div className='bg-gray-400  border-gray-50'>{evt.title}</div>
   )
   }
-  // if(days.format('D'))
-  
-  // return (
-  //   <div className='bg-yellow-400'>h</div>
-  // )
+  // currentDate = dayjs(currentDate).add(1, 'day');
+
 }
       // if((end-start) >1){
 

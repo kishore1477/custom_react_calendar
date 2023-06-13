@@ -10,7 +10,9 @@ const Contex = createContext({
   showEventModal: false,
   setShowEventModal: () => {},
   dispatchCalEvent: ({ type, payload }) => {},
+  dispatch: ({ type, payload }) => {},
   savedEvents: [],
+  selectedUserEventArray: [],
   selectedEvent: null,
   setSelectedEvent: () => {},
   selectedUserEvent: null,
@@ -18,6 +20,7 @@ const Contex = createContext({
   labels: [],
   setLabels: () => {},
   updateLabel: () => {},
+
 
 
 })
