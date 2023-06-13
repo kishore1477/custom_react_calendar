@@ -66,34 +66,39 @@ const events = [
     location:'Lahore',
     start:"06-17-23",
     end:"06-29-23",
+    color:"red",
   },
   {
     user:"Kishore Kumar",
     title:"Complete Calendar",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
     assigned_date:"26-06-23",
-    location:'Islamabad'
+    location:'Islamabad',
+    color:"blue",
   },
   {
     user:"Kishore Kumar1",
     title:"Complete Calendar1",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
     assigned_date:"06-06-23",
-    location:'Karachi'
+    location:'Karachi',
+    color:"green", 
   },
   {
     user:"Kishore Kumar2",
     title:"Complete Calendar2",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
     assigned_date:"03-06-23",
-    location:'Hyderabad'
+    location:'Hyderabad',
+    color:"indigo",
   },
   {
     user:"Kishore Kumar3",
     title:"Complete Calendar3",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
     assigned_date:"04-06-23",
-    location:'Thar Coal'
+    location:'Thar Coal',
+    color:"purple",
   },
 ]
 localStorage.setItem('events',  JSON.stringify(events))

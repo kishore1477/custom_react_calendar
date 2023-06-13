@@ -5,7 +5,9 @@ const Days = (props) => {
   const contex = useContext(Contex)
   const  {setShowEventModal, monthIndex,setDaySelected, selectedUserEvent ,savedEvents,setSelectedEvent,filteredEvents} = contex
   const [dayEvents, setDayEvents] = useState([]);
-    const  { days, weekId, dayId} = props
+    const  { days, weekId, dayId, item} = props
+
+    console.log("Item color i s:", item.color)
 //  console.log("selectedUserEvent is :", selectedUserEvent)
     useEffect(() => {
 // console.log("Filtered events is :", filteredEvents)
@@ -29,7 +31,7 @@ const getCurrentDayClass = ()=>{
 // console.log("Logged user events is :", loggedUserEvents)
 
   return (
-    <div className='border border-gray-300 flex flex-col '>
+    <div className={`border border-${item.color}-300 flex flex-col `}>
       <div className='h-24 md:h-32 flex flex-col  items-center'  onClick={() => {
            setDaySelected(days);
           setShowEventModal(true);
@@ -61,8 +63,8 @@ const getCurrentDayClass = ()=>{
             
             className={`p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
           >
-          {selectedUserEvent &&   selectedUserEvent.assigned_date === days.format("DD-MM-YY")?
-  <p className='bg-yellow-200  '>{selectedUserEvent.title}</p>:<></>
+          {item.assigned_date === days.format("DD-MM-YY")?
+  <p className='bg-yellow-200  '>{item.title}</p>:<></>
 }
             
           </div>

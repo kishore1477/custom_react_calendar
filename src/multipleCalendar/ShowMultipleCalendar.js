@@ -21,20 +21,22 @@ const ShowMultipleCalendar = () => {
 <div className=''>Admin Calendar</div>
 {selectedUserEventArray.map((item,i)=>{
 return  <div>
-  <div>
-  <button  onClick={() => {
+<span className='flex justify-center items-center' >{item.user}</span>
+  <div className='flex justify-end items-end'>
+  <button className='' onClick={() => {
                   dispatch({
                     type: "delete",
                     payload: item,
                   });
                   
                 }}>
-              <span className="material-icons-outlined text-gray-400">
+              <span className={`material-icons-outlined text-${item.color}-400`}>
                 close
               </span>
             </button>
   </div>
-   <div  className="w-1/2 m-4     grid grid-cols-7 grid-rows-5">
+
+   <div  className=" m-4  mt-0    grid grid-cols-7 grid-rows-5">
   {/* {item.title} */}
 {
  currenMonth && currenMonth.map((week,weekId)=>(
@@ -44,7 +46,7 @@ return  <div>
       // console.log("days :", days)
 
       
-        <Days days = {days} weekId ={weekId} dayId={dayId}/>
+        <Days days = {days} weekId ={weekId} item ={item} dayId={dayId}/>
 
      
 
