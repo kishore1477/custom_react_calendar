@@ -9,19 +9,32 @@ import ReactCalendar from './ReactCalendar';
 const ShowMultipleCalendar = () => {
   const [currenMonth, setCurrentMonth] = useState(getMonth());
   const contex = useContext(Contex)
-  const { showEventModal, monthIndex,state,selectedUserEvent, selectedUserEventArray}= contex 
+  const { showEventModal, monthIndex,state,selectedUserEvent, selectedUserEventArray, dispatch}= contex 
   useEffect(() => {
       setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
   console.log("monthis",currenMonth)
  
   // console.log("Selected events is :", selectedUserEvent)
-  console.log("selectedUserEventArray is :", selectedUserEventArray)
   return (
     <div className='flex'>
 <div className=''>Admin Calendar</div>
 {selectedUserEventArray.map((item,i)=>{
-return       <div  className="w-1/2 m-4     grid grid-cols-7 grid-rows-5">
+return  <div>
+  <div>
+  <button  onClick={() => {
+                  dispatch({
+                    type: "delete",
+                    payload: item,
+                  });
+                  
+                }}>
+              <span className="material-icons-outlined text-gray-400">
+                close
+              </span>
+            </button>
+  </div>
+   <div  className="w-1/2 m-4     grid grid-cols-7 grid-rows-5">
   {/* {item.title} */}
 {
  currenMonth && currenMonth.map((week,weekId)=>(
@@ -39,6 +52,7 @@ return       <div  className="w-1/2 m-4     grid grid-cols-7 grid-rows-5">
   ))
 }
 </div>
+</div>  
 })}
      
      {/* <MyCalendar/> */}

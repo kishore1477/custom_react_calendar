@@ -33,7 +33,7 @@ const reducer =(state, {type, payload})=>{
       return [...state, payload];
     
     case "delete":
-      return state.filter((evt) => evt.id !== payload.id);
+      return state.filter((evt) => evt.user !== payload.user);
     default:
       throw new Error();
   }
