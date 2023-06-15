@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Link } from 'react-router-dom'
+import Contex from '../contex/Contex'
 
 const Navbar = () => {
+  const contex = useContext(Contex)
+  const { showEventModal}= contex 
   return (
-    <div>
+    <div className={`${showEventModal && 'bg-red-100'}`}>
 
-<header className="text-gray-600 body-font  w-full mr-0">
-  <div className="container   flex flex-wrap shadow bg-white py-3 mr-0 flex-col md:flex-row items-center">
+<header className={`text-gray-600 body-font  w-full mr-0  border`}>
+  <div className="container   flex flex-wrap shadow py-3 mr-0 flex-col md:flex-row items-center">
   
     <nav className=" flex flex-wrap items-center text-base justify-center">
     

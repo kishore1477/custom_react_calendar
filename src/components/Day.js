@@ -3,41 +3,37 @@ import dayjs from 'dayjs'
 import Contex from '../contex/Contex'
 import moment from 'moment';
 
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-// import advancedFormat from 'dayjs/plugin/advancedFormat';
-// 
-// Import the plugin
-// dayjs.extend(advancedFormat);
-// Import the plugin
-dayjs.extend(isSameOrBefore);
+import { useNavigate } from "react-router-dom";
 // import 'dayjs/locale/en'; // Import the desired locale
 const Day = (props) => {
   dayjs().format()
-//   const   renderLongEvent = (date, eventName) =>{
-//     return (
-//       <div className="long-event">
-//         <span className="long-event-date">{date.format('MMM D, YYYY')}</span>
-//         <span className="long-event-name">{eventName}</span>
-//       </div>
-//     );
-//   }
-//   const startDate = dayjs('2023-06-15');
-//   const endDate = dayjs('2023-06-30');
-//   const eventName = 'Long Event';
-
-//   const calendar = [];
-//   let currentDate = startDate;
-//   while (currentDate.isBefore(endDate) || currentDate.isSame(endDate, 'day')) {
-//     calendar.push(renderLongEvent(startDate, eventName));
-//     startDate.add(1, 'day');
-//   }
-// console.log("Calendar is:", calendar)
+const navigate = useNavigate()
 
   const contex = useContext(Contex)
   const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents} = contex
   const [dayEvents, setDayEvents] = useState([]);
     const  { days, weekId, dayId} = props
- 
+
+
+  // jump to day view...
+const  handleClickOnDate =(e,date)=> {
+  e.preventDefault()
+  e.stopPropagation();
+    // let d = date
+    let d = date.format("MM-DD-YYYY") + '$day'
+     
+    const dat = {
+      view :'day',
+       da : date.format("MM-DD-YYYY")
+    }
+    navigate(`/day/${d}`)
+}
+// const withStopPropagation =(e, cb) =>{
+//   e.preventDefault()
+//   e.stopPropagation();
+//   return cb
+// }
+
     useEffect(() => {
 // console.log("Filtered events is :", filteredEvents)
 // console.log(" savedEvents events is :", savedEvents)
@@ -103,7 +99,7 @@ const events = [
 ]
 localStorage.setItem('events',  JSON.stringify(events))
 const eventInLS = JSON.parse(localStorage.getItem('events'))
-console.log("event in Local storage", eventInLS)
+// console.log("event in Local storage", eventInLS)
 const loggedUserEvents = []
 
 eventInLS.map((evt, i)=>{
@@ -128,7 +124,7 @@ eventInLS.map((evt, i)=>{
           </p>
         )}
        <p
-          className={`text-sm  cursor-pointer    text-center px-2  ${getCurrentDayClass()}`}
+          className={`text-sm  cursor-pointer    text-center px-2  ${getCurrentDayClass()}`} onClick={(e) =>  handleClickOnDate(e,days)}
        >
           {days.format("DD")}
           
@@ -146,51 +142,42 @@ eventInLS.map((evt, i)=>{
        
       {eventInLS.map((evt,i)=>{
         
-        console.log("Evt start is :", evt.start)
+        // console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')
       const fullStart = evt.start && dayjs(evt.start)
-      console.log("Fullstart is :", fullStart)
+      // console.log("Fullstart is :", fullStart)
       // const sstart =  start.format('DD')
       const end =evt.end && dayjs(evt.end).format('DD')
       const fullend =evt.end && dayjs(evt.end)
-      console.log("fullend is :", fullend)
-      console.log("(end-start) is:", (end-start))
-      console.log("days.format", days.format("DD-MM-YY"))
+      // console.log("fullend is :", fullend)
+      // console.log("(end-start) is:", (end-start))
+      // console.log("days.format", days.format("DD-MM-YY"))
       let currentDate = fullStart;
 while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
   currentDate = dayjs(currentDate).add(1, 'day');
 
-  console.log("Insie while")
+  // console.log("Insie while")
   // if(currentDate >= )
-  console.log("Current date iss :", currentDate)
-  console.log("Current date iss :", currentDate.format('D'))
+  // console.log("Current date iss :", currentDate)
+  // console.log("Current date iss :", currentDate.format('D'))
   // console.log("days date iss :", days)
-  console.log("days date iss :", days.format('D'))
+  // console.log("days date iss :", days.format('D'))
   if(days.format('DD-MM-YY') === currentDate.format('DD-MM-YY')){
     return (
-    <div className='bg-gray-400  border-gray-50'>{evt.title}</div>
+    <div className='bg-gray-400  border-gray-50'>y</div>
   )
   }
   // currentDate = dayjs(currentDate).add(1, 'day');
 
 }
-      // if((end-start) >1){
-
-      //   for (let i = start; i <end; i++) {
-      //      if(fullStart ===  days.format("DD-MM-YY")){
-            
-      //      }else if(fullend === days.format("DD-MM-YY")){
-
-      //      }
-          
-      //   }
+     
        
 
         
-      // }
-      console.log("Start date is the: ", start)
+     
+      // console.log("Start date is the: ", start)
       // console.log("Sstart date is the: ", sstart)
-      console.log("End date is the: ", end)
+      // console.log("End date is the: ", end)
     
       })}
         {dayEvents.map((evt, idx) => {

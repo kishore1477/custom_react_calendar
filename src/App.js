@@ -18,6 +18,7 @@ import Login from './components/Login';
 import CalendarHeader from './components/CalendarHeader';
 import Labels from './components/Labels';
 import Main from './multipleCalendar/Main';
+import DayView from './components/DayView/DayView';
 function App() {
  
   const [show, setShow] = useState(false)
@@ -37,7 +38,7 @@ const handleCalendar =()=>{
       
 <Router>
   <Navbar/>
-  
+  <CalendarHeader/>
 
     <Routes>
     
@@ -45,6 +46,7 @@ const handleCalendar =()=>{
       <Route path="/main" element={  <Main   />  }/>  
       {/* <Route path="/" element={  <Labels/>}/>   */}
        <Route path="/login" element={  <Login  />}/>
+       <Route path="/day/:date" element={  <DayView  />}/>
      
 
 

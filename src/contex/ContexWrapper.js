@@ -5,9 +5,9 @@ import dayjs from "dayjs";
 function savedEventsReducer(state, { type, payload }) {
   switch (type) {
     case "push":
-      console.log("State is :", state)
-      console.log("payload is:", payload)
-      console.log("type is:", type)
+      // console.log("State is :", state)
+      // console.log("payload is:", payload)
+      // console.log("type is:", type)
       return [...state, payload];
     case "update":
       return state.map((evt) =>
@@ -27,9 +27,9 @@ function initEvents() {
 const reducer =(state, {type, payload})=>{
   switch (type) {
     case "push":
-      console.log("State is :", state)
-      console.log("payload is:", payload)
-      console.log("type is:", type)
+      // console.log("State is :", state)
+      // console.log("payload is:", payload)
+      // console.log("type is:", type)
       return [...state, payload];
     
     case "delete":
@@ -47,7 +47,8 @@ const [daySelected, setDaySelected] = useState(dayjs());
 const [selectedEvent, setSelectedEvent] = useState(null)
 const [labels, setLabels] = useState([]);
 const [selectedUserEvent, setSelectedUserEvent] = useState(null)
- 
+const [selectedDate, setSelectedDate] = useState(dayjs())
+const [view, setView] = useState('month')
 const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
 [],
@@ -56,20 +57,20 @@ const [savedEvents, dispatchCalEvent] = useReducer(
   const [selectedUserEventArray, dispatch] = useReducer(reducer, []);
 
   const filteredEvents = useMemo(() => {
-    console.log("Labels is in filteredevents is ", labels)
+    // console.log("Labels is in filteredevents is ", labels)
     return savedEvents.filter((evt) =>{
      // Get the list of checked labels
      const checkedLabels = labels.filter((lbl) => lbl.checked)
-console.log("CheckedLabels is :",checkedLabels)
+// console.log("CheckedLabels is :",checkedLabels)
      // Get the list of labels in the checkedLabels array
      const labelNames = checkedLabels.map((lbl) => lbl.label)
-     console.log("LabelNames is :", labelNames)
+    //  console.log("LabelNames is :", labelNames)
  
      // Return true if the event's label is in the list of label names
      return labelNames.includes(evt.label)
   });
   }, [savedEvents, labels]);
-  console.log("filtered events inside contex wrapper is :", filteredEvents)
+  // console.log("filtered events inside contex wrapper is :", filteredEvents)
   useEffect(() => {
     if (!showEventModal) {
       setSelectedEvent(null);
@@ -121,13 +122,13 @@ function updateLabel(label) {
 }
   ))
 }
-console.log("selectedUserEventArray:", selectedUserEventArray)
+// console.log("selectedUserEventArray:", selectedUserEventArray)
 return (
     <div>
    
 <Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents , setLabels,
         labels,
-        updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch }}>
+        updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch , selectedDate, setSelectedDate, view, setView}}>
         {props.children}
        {/* <App/> */}
     </Contex.Provider>

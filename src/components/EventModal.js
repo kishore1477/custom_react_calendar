@@ -28,6 +28,7 @@ export default function EventModal() {
     daySelected,
     dispatchCalEvent,
     selectedEvent,
+    showEventModal,
   } = useContext(Contex);
 
   const [showTime, setShowTime] = useState(false)
@@ -38,7 +39,14 @@ export default function EventModal() {
 
   }
   const [timeString, setTimeString] = useState('');
+  console.log("time string is ",timeString);
 
+  const start = timeString && timeString[0]
+  const startTimeIS = dayjs(start).format('HH:mm')
+  console.log("Start time  is :", start)
+  console.log("startTimeIS time  is :", startTimeIS)
+  // const end = timeString && timeString[1].format('HH:mm')
+  // console.log("end time  is :", end)
   // Use state to store the selected option
   const [selectedOption, setSelectedOption] = useState("");
   // Handle the change event of the select tag
@@ -95,12 +103,13 @@ export default function EventModal() {
     setShowEventModal(false);
   }
   return (
-    <div className="h-screen w-full fixed left-0 top-10  flex justify-center items-center ">
-      <form className="bg-white rounded-lg shadow-2xl w-1/2 md:w-1/4">
+    <div className={`h-screen w-full fixed left-0 top-0  flex justify-center items-center `}>
+      <form className=" bg-white rounded-lg shadow-2xl mx-9 w-full md:w-96 ">
         <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
           <span className="material-icons-outlined text-gray-400 ">
             drag_handle
           </span>
+          <span>Add New Event</span>
           <div>
             {selectedEvent && (
               <span
@@ -145,9 +154,9 @@ export default function EventModal() {
             </div>
 
             <TimePicker.RangePicker placeholder={["Start", "End"]} format="HH:mm" className="font-bold text-green-700" onOk={(time) => {
-              setTimeString(timeString);
-              console.log(time);
-              console.log(timeString);
+              setTimeString(time);
+              console.log("time is ",time);
+            
             }} />
 
 

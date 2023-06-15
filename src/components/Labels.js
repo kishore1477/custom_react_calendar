@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import Contex from "../contex/Contex";
 
 export default function Labels() {
-  const { labels, updateLabel } = useContext(Contex);
+  const { labels, updateLabel, showEventModal } = useContext(Contex);
   console.log("Labels is:", labels)
   return (
     <React.Fragment>
-      
+      <div >
       <p className="text-gray-500 font-bold mt-10">Labels</p>
       {labels.map(({ label: lbl, checked, Createdlabel}, idx) => {
         console.log("LBL is", lbl)
@@ -25,7 +25,7 @@ export default function Labels() {
         )
         
 })}
-    
+    </div>
     </React.Fragment>
   );
 }

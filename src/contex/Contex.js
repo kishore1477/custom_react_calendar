@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { createContext } from 'react';
 
 const Contex = createContext({
@@ -20,6 +21,10 @@ const Contex = createContext({
   labels: [],
   setLabels: () => {},
   updateLabel: () => {},
+  selectedDate:dayjs(),
+  setSelectedDate:()=>{},
+  view:'month',
+  setView:()=>{}
 
 
 
