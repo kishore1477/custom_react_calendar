@@ -32,14 +32,15 @@ setView(view)
             // let currentDate = date || now.date()
             // setSelectedDate(dayjs(new Date(now.year(), monthIndex, currentDate)))
         }
-    }, [ date])
-const dd = dayjs().format("DD-MM-YYYY")
+    }, [dat])
+const dd = dayjs().format("MM-DD-YYYY")
 console.log("dd:", dd)
-console.log("date is:", date)
+// console.log("dat is : ", dat)
+console.log("selectedDate is:", selectedDate)
 // console.log("date formtt:", date.format("DD-MM-YY"))
 
     const getCurrentDayClass = ()=>{
-        return dat === dayjs().format("MM-DD-YYYY")
+        return  selectedDate === dayjs().format("MM-DD-YYYY")
         ? "bg-blue-600 text-white rounded-full w-10 h-10"
         : "";
       }

@@ -4,7 +4,7 @@ import Contex from '../contex/Contex'
 
 const Navbar = () => {
   const contex = useContext(Contex)
-  const { showEventModal}= contex 
+  const { showEventModal, setView}= contex 
   return (
     <div className={`${showEventModal && 'bg-red-100'}`}>
 
@@ -16,7 +16,7 @@ const Navbar = () => {
       
     </nav>
     {/* <span className="ml-3 text-xl">Tailblocks</span> */}
-    <Link to = "/" className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" >
+    <Link to = "/" className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" onClick={()=>setView('month')} >
     <img src="https://t4.ftcdn.net/jpg/03/20/76/73/360_F_320767314_SjgITibHaxadut6siUJyNaxzRWy8vzRE.jpg"className='w-20 h-10 ' alt="profile" width="500" height="600"/>
  
     </Link>

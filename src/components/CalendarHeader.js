@@ -37,7 +37,8 @@ export default function CalendarHeader() {
    if( view === 'day'){
     const sub = dayjs(selectedDate).subtract(1,'day')
     console.log("sub:", sub)
-   setSelectedDate(sub)
+    const subFormat = sub.format("MM-DD-YYYY")
+   setSelectedDate(subFormat)
 
    }else if( view === 'month'){
     setMonthIndex(monthIndex - 1);
@@ -48,7 +49,8 @@ export default function CalendarHeader() {
   function handleNextMonth() {
     if( view === 'day'){
       const add = dayjs(selectedDate).add(1,'day')
-      setSelectedDate(add)
+      const addFormat = add.format("MM-DD-YYYY")
+      setSelectedDate(addFormat)
       console.log("add is :", add)
      } else if ( view === 'month'){
 
@@ -62,7 +64,7 @@ export default function CalendarHeader() {
   }
   function handleReset() {
     if(view === 'day'){
-      setSelectedDate(dayjs())
+      setSelectedDate(dayjs().format("MM-DD-YYYY"))
     }else if(view === 'month'){
       setMonthIndex(
         monthIndex === dayjs().month()
@@ -101,9 +103,11 @@ export default function CalendarHeader() {
         </span>
       </button>
       <h2 className="ml-4 text-xl text-gray-500 font-bold">
-        {dayjs(new Date(dayjs().year(),monthIndex)).format(
+        {view === 'day'?dayjs(selectedDate).format(
+          "MMMM DD YYYY"
+        ):<>{view === 'month'?dayjs(new Date(dayjs().year(),monthIndex)).format(
           "MMMM YYYY"
-        )}
+        ):''}</>}
       </h2>
     
     
@@ -126,7 +130,7 @@ export default function CalendarHeader() {
                 <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-        Month
+      {view}
           {/* <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" /> */}
         </Menu.Button>
       </div>
