@@ -124,7 +124,7 @@ eventInLS.map((evt, i)=>{
           </p>
         )}
        <p
-          className={`text-sm  cursor-pointer    text-center px-2  ${getCurrentDayClass()}`} onClick={(e) =>  handleClickOnDate(e,days)}
+          className={`text-sm  cursor-pointer hover:rounded-full hover:bg-blue-300 hover:w-7 hover:h-7 flex justify-center items-center   text-center px-2  ${getCurrentDayClass()}`} onClick={(e) =>  handleClickOnDate(e,days)}
        >
           {days.format("DD")}
           

@@ -80,7 +80,7 @@ const [savedEvents, dispatchCalEvent] = useReducer(
   useEffect(() => {
     localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
     const events =  JSON.parse(localStorage.getItem('savedEvents'))
-    // console.log("Events inside local in wrapper:", events)
+    console.log("Events inside local in wrapper:", events)
   }, [savedEvents]);
 
 useEffect(() => {

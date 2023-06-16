@@ -110,11 +110,12 @@ export default function CalendarHeader() {
         ):''}</>}
       </h2>
     
-    
+  <div className="flex items-center justify-center md:absolute md:right-80 "> <Link to = '/overlay' > <button >
+      Overlay</button></Link></div>
 
 
 
-      <div className="flex items-center fixed right-0 mr-4 gap-x-2 md:gap-x-8 col-span-6">
+      <div className="flex items-end justify-end absolute right-0 mr-4 gap-x-2 md:gap-x-8 col-span-6">
                 <div className="flex items-center gap-x-2 md:gap-x-4   col-span-6">
                     <li className="list-none text-2xl">
                         <BiSearch className="text-gray-700"/>

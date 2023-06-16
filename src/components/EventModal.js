@@ -42,11 +42,13 @@ export default function EventModal() {
   console.log("time string is ",timeString);
 
   const start = timeString && timeString[0]
-  const startTimeIS = dayjs(start).format('HH:mm')
+  // const startTimeIS = dayjs(start).format('HH:mm')
+  const startTimeIS = dayjs(start).hour()
   console.log("Start time  is :", start)
-  console.log("startTimeIS time  is :", startTimeIS)
-  // const end = timeString && timeString[1].format('HH:mm')
-  // console.log("end time  is :", end)
+  console.log("startTimeIS time   in hour  is :", startTimeIS)
+  const end = timeString && timeString[1]
+  const endTimeIS = timeString && dayjs(end).format('HH:mm')
+  console.log("end time  is :", endTimeIS)
   // Use state to store the selected option
   const [selectedOption, setSelectedOption] = useState("");
   // Handle the change event of the select tag
@@ -79,6 +81,8 @@ export default function EventModal() {
   function handleSubmit(e) {
     e.preventDefault();
     const calendarEvent = {
+      start,
+      end,
       title,
       desc,
       location,
@@ -103,7 +107,7 @@ export default function EventModal() {
     setShowEventModal(false);
   }
   return (
-    <div className={`h-screen w-full fixed left-0 top-0  flex justify-center items-center `}>
+    <div className={`h-screen w-full fixed left-0 top-0  flex justify-center items-center z-10 `}>
       <form className=" bg-white rounded-lg shadow-2xl mx-9 w-full md:w-96 ">
         <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
           <span className="material-icons-outlined text-gray-400 ">

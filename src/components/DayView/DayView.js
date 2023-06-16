@@ -3,40 +3,74 @@ import "./DayView.scss"
 import dayjs from 'dayjs'
 import { useParams } from "react-router-dom";
 import Contex from '../../contex/Contex';
+import EventModal from '../EventModal';
 const DayView = () => {
    const contex =  useContext(Contex)
-   const {selectedDate, setSelectedDate, setView} = contex
-   
-    const d = new Date()
-
-    console.log("d:", d)
-    const [currentDayEvents, setCurrentDayEvents] = useState([])
-    console.log("Selected date is ", selectedDate)
-    const routeParams = useParams();
-    console.log("routeParams:", routeParams)
+   const {selectedDate, setSelectedDate, setView, savedEvents, setShowEventModal, showEventModal} = contex
+   const [currentDayEvents, setCurrentDayEvents] = useState([])
+   console.log("Current day events is :", currentDayEvents)
+   console.log("Selected date inside dayview is :", selectedDate)
+   const routeParams = useParams();
+   // console.log("routeParams:", routeParams)
 const {date} = routeParams
-console.log("date from useParamas:", date)
+// console.log("date from useParamas:", date)
 const category = date.split("$")
-console.log("catrgory :", category[0])
+// console.log("catrgory :", category[0])
 const dat =  category[0]
+// setSelectedDate(dat)
 const view = category[1]
 setView(view)
-    useEffect(() => {
-        let isValidDate = dayjs(dat).isValid()
-        console.log("isValidDate is :", isValidDate)
-        if(isValidDate && dat){
-            // let d = new Date(date)
-            setSelectedDate(dat)
-        } else {
-            // let now = dayjs()
-            // let currentDate = date || now.date()
-            // setSelectedDate(dayjs(new Date(now.year(), monthIndex, currentDate)))
-        }
-    }, [dat])
+   useEffect(() => {
+    let isValidDate = dayjs(dat).isValid()
+    console.log("isValidDate is :", isValidDate)
+    if(isValidDate && dat){
+        // let d = new Date(date)
+        setSelectedDate(dat)
+    } else {
+        // let now = dayjs()
+        // let currentDate = date || now.date()
+        // setSelectedDate(dayjs(new Date(now.year(), monthIndex, currentDate)))
+    }
+}, [dat])
+
+//    useEffect(() => {
+//     if (savedEvents) {
+//         console.log("Saved Events inside dayView is :", savedEvents)
+//         let currentEvts = savedEvents.filter(event => {
+              
+//                 let startDate = new Date(event.start)
+//                 // console.log(startDate.getDate(), selectedDate.date())
+//                 if (startDate.toDateString() === selectedDate.toDateString()) {
+//                     return event;
+//                 }
+             
+//         })
+//         setCurrentDayEvents(currentEvts)
+//     }
+
+// }, [savedEvents, selectedDate])
+useEffect(() => {
+    // console.log("Filtered events is :", filteredEvents)
+    // console.log(" savedEvents events is :", savedEvents)
+          const events = savedEvents.filter(
+            (evt) =>
+            // console.log( "evt.day format",dayjs(evt.day).format("MM-DD-YYYY"))
+              dayjs(evt.day).format("MM-DD-YYYY") === selectedDate
+          );
+          console.log("Events is :", events)
+          setCurrentDayEvents(events);
+        }, [savedEvents, selectedDate]);
+
+    const d = new Date()
+
+    // console.log("d:", d)
+    // console.log("Selected date is ", selectedDate)
+   
+
 const dd = dayjs().format("MM-DD-YYYY")
-console.log("dd:", dd)
+// console.log("dd:", dd)
 // console.log("dat is : ", dat)
-console.log("selectedDate is:", selectedDate)
+// console.log("selectedDate is:", selectedDate)
 // console.log("date formtt:", date.format("DD-MM-YY"))
 
     const getCurrentDayClass = ()=>{
@@ -62,29 +96,38 @@ console.log("selectedDate is:", selectedDate)
     }
 
    
-    // function renderEvent(hour) {
+    function renderEvent(hour) {
         
-    //     return currentDayEvents.map(event => {
-    //         const startDateTime = new Date(event.start)
-    //         return (
-    //             <div className={`day-events`}>
-    //                 {startDateTime.getHours() === hour && (
-    //                     <div className="px-2 day-event ">
-    //                         <div onClick={(e) => withStopPropagation(e, handleClickOnEventName(event, monthIndex))}
-    //                              className="ml-6 day-event-item " style={{background:  colors[event.eventColor]|| statusColors[event.status]}}>
-    //                             <h4>{event.title || "Untitled"}</h4>
-    //                         </div>
-    //                     </div>
-    //                 )}
-    //             </div>
-    //         )
-    //     })
-    // }
+        return currentDayEvents.map(event => {
+            // const startDateTime = new Date(event.startTimeIS)
+            const startDateTime = dayjs(event.start).hour()
 
+            console.log("StartDateTime is  :", startDateTime)
+            console.log("StartDateTime is type is  :", typeof(startDateTime))
+            console.log("hour is type is  :", typeof(hour))
+            console.log("hour is in render event  :", hour)
+
+            return (
+                <div className={`day-events`}>
+                    {startDateTime === hour && (
+                        <div className=" day-event ">
+                            <div 
+                                 className={` text-black day-event-item bg-${event.label}-500`}>
+                                <h4 className='text-black'>{event.title || "Untitled"}</h4>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )
+        })
+    }
+const handleEventClick = () =>{
+    setShowEventModal(true)
+}
 
   return (
-    <div className='mb-10'>
-
+    <div className={`${showEventModal && 'bg-red-100'} mb-10 z-0`}>
+ {showEventModal &&  <EventModal/>}
     <div className="col-span-10 flex items-center ml-10 gap-x-4 ">
 
         {/***** selected date *****/}
@@ -107,22 +150,22 @@ console.log("selectedDate is:", selectedDate)
             {Array.from({length: 24}).map((ele, index) => {
 
                 let hour = index
-
+console.log("hour is :", hour)
                 return (
-                    <div className="each-hour"
+                    <div className="each-hour w-full" onClick={handleEventClick}
                         >
 
                         {hour >= 0 && (
                             <>
-                                <h4 className="hour-label">{hour > 0
+                                <h4 className="hour-label border-r-2  border-slate-200 pr-2 ">{hour > 0
                                     ? renderHour(hour)
                                     : "12"
                                 }
                                     <span className="ml-1">{getStatus(hour)}</span>
                                 </h4>
-                                <div className="row ">
-                                    <div>
-                                    {/* {renderEvent(hour)} */}
+                                <div className="row">
+                                    <div className='border-t-2 w-full border-slate-200'>
+                                    {renderEvent(hour)}
                                     </div>
                                 </div>
                             </>
