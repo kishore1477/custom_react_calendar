@@ -50,9 +50,10 @@ const getCurrentDayClass = ()=>{
   : "";
 }
 // const loggedUser = localStorage.getItem('user')
-const loggedUser = ""
+const loggedUser = "Kishore Kumar"
 // const loggedAdmin = localStorage.getItem('admin')
-const loggedAdmin = "admin"
+// const loggedAdmin = "admin"
+const loggedAdmin = ""
 const events = [
   {
     user:"Kishore Kumar",
@@ -71,6 +72,8 @@ const events = [
     assigned_date:"26-06-23",
     location:'Islamabad',
     color:"blue",
+    start:"06-17-23",
+    end:"06-20-23",
   },
   {
     user:"Kishore Kumar1",
@@ -113,7 +116,7 @@ eventInLS.map((evt, i)=>{
 
   return (
     <div className='border border-gray-300 flex flex-col '>
-      <div className='h-24 md:h-32 flex flex-col  items-center'  onClick={() => {
+      <div className='h-24 w-full md:h-32 flex flex-col    items-center'  onClick={() => {
            setDaySelected(days);
           setShowEventModal(true);
         }}>
@@ -145,7 +148,7 @@ eventInLS.map((evt, i)=>{
         // console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')
       const fullStart = evt.start && dayjs(evt.start)
-      // console.log("Fullstart is :", fullStart)
+      console.log("Fullstart is :", fullStart)
       // const sstart =  start.format('DD')
       const end =evt.end && dayjs(evt.end).format('DD')
       const fullend =evt.end && dayjs(evt.end)
@@ -154,20 +157,30 @@ eventInLS.map((evt, i)=>{
       // console.log("days.format", days.format("DD-MM-YY"))
       let currentDate = fullStart;
 while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
-  currentDate = dayjs(currentDate).add(1, 'day');
+  // currentDate = dayjs(currentDate).add(1, 'day');
 
   // console.log("Insie while")
   // if(currentDate >= )
-  // console.log("Current date iss :", currentDate)
+  console.log("Current date iss :", currentDate)
   // console.log("Current date iss :", currentDate.format('D'))
   // console.log("days date iss :", days)
   // console.log("days date iss :", days.format('D'))
-  if(days.format('DD-MM-YY') === currentDate.format('DD-MM-YY')){
-    return (
-    <div className='bg-gray-400  border-gray-50'>y</div>
-  )
+  // currentDate ?<></>
+  if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
+    if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
+      return (
+        <div className='bg-gray-400   w-24 overflow-hidden border-gray-50'>{ evt.title}</div>
+      )
+    }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
+      return (
+        <div className='bg-gray-400 w-24 overflow-hidden border-gray-50 '><span className='invisible'>,</span></div>
+      )
+    }
+ 
   }
-  // currentDate = dayjs(currentDate).add(1, 'day');
+  
+  currentDate = dayjs(currentDate).add(1, 'day');
+
 
 }
      

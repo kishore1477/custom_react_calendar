@@ -25,9 +25,9 @@ import CalendarHeader from './CalendarHeader';
     <aside className={`border p-5 w-1/4 ${showEventModal && 'bg-red-100'}`}>
     <Labels/>
     </aside>
-    <div className='w-full h-full '>
+    <div className=' w-full h-screen'>
    {showEventModal &&  <EventModal/>}
-     <div  className={` mx-auto my-auto   grid grid-cols-7 grid-rows-5 ${showEventModal && 'bg-red-100'}`}>
+     <div  className={` mx-auto my-auto  grid grid-cols-7 grid-rows-5 ${showEventModal && 'bg-red-100'}`}>
       {
        currenMonth && currenMonth.map((week,weekId)=>(
           // console.log("row id is :", weekId)

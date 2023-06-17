@@ -2,6 +2,7 @@ import React, { useContext , useState, useEffect } from 'react'
 import Contex from '../contex/Contex'
 import { getMonth } from '../main';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 const Overlay = () => {
 //    const {selectedUserEventArray} =  useContext(Contex)
    const [currenMonth, setCurrentMonth] = useState(getMonth());
@@ -28,8 +29,10 @@ const Overlay = () => {
     ? "bg-blue-600 text-white rounded-full w-7 h-7"
     : "";
   }
+  console.log("selectedUserEventArray length :", selectedUserEventArray.length)
   return (
     <div>
+        {selectedUserEventArray.length ===  0  && <span className='flex items-center justify-center'>Please select users calendars from <Link  to = '/main' className='text-red-500 ml-2'>here</Link></span>}
         <div className='flex'>
       {selectedUserEventArray && selectedUserEventArray.map((evt,i)=>{
         return   <div  className={`bg-${evt.color}-500 mx-4 rounded px-2`}>

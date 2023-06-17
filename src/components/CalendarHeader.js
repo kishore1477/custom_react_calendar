@@ -121,12 +121,12 @@ export default function CalendarHeader() {
                         <BiSearch className="text-gray-700"/>
                     </li>
 
-                    <li className="list-none text-xl">
+                    {/* <li className="list-none text-xl">
                         <BiInfoCircle className="text-gray-700"/>
                     </li>
                     <li className="list-none text-xl">
                         <BsGear className="text-gray-700"/>
-                    </li>
+                    </li> */}
                 </div>
                 <Menu as="div" className="relative inline-block text-left">
       <div>
