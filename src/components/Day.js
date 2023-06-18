@@ -4,8 +4,17 @@ import Contex from '../contex/Contex'
 import moment from 'moment';
 
 import { useNavigate } from "react-router-dom";
+import { colorList } from './Colorpicker';
 // import 'dayjs/locale/en'; // Import the desired locale
 const Day = (props) => {
+//   const colorList = {
+//     indigo:'bg-indigo-200',
+//     gray:'bg-gray-200',
+//     green:'bg-green-200',
+//     blue:'bg-blue-200',
+//     red:'bg-red-200',
+//     purple:'bg-purple-200',
+// }
   dayjs().format()
 const navigate = useNavigate()
 
@@ -50,14 +59,15 @@ const getCurrentDayClass = ()=>{
   : "";
 }
 // const loggedUser = localStorage.getItem('user')
-const loggedUser = "Kishore Kumar"
+const loggedUser = ""
+// const loggedUser = "Kishore Kumar"
 // const loggedAdmin = localStorage.getItem('admin')
-// const loggedAdmin = "admin"
-const loggedAdmin = ""
+const loggedAdmin = "admin"
+// const loggedAdmin = ""
 const events = [
   {
     user:"Kishore Kumar",
-    title:"Complete Calendarbbtrhtr",
+    title:"Complete Calendar",
     desc:"This is important task please complete it before given deadline so that we can review your work.",
     assigned_date:"02-06-23",
     location:'Lahore',
@@ -115,8 +125,8 @@ eventInLS.map((evt, i)=>{
 // console.log("Logged user events is :", loggedUserEvents)
 
   return (
-    <div className='border border-gray-300 flex flex-col '>
-      <div className='h-24 w-full md:h-32 flex flex-col    items-center'  onClick={() => {
+    <div className='border  border-gray-100 flex flex-col '>
+      <div className='h-24 z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center'  onClick={() => {
            setDaySelected(days);
           setShowEventModal(true);
         }}>
@@ -127,7 +137,7 @@ eventInLS.map((evt, i)=>{
           </p>
         )}
        <p
-          className={`text-sm  cursor-pointer hover:rounded-full hover:bg-blue-300 hover:w-7 hover:h-7 flex justify-center items-center   text-center px-2  ${getCurrentDayClass()}`} onClick={(e) =>  handleClickOnDate(e,days)}
+          className={`text-sm  cursor-pointer hover:rounded-full hover:bg-blue-300 w-7 h-7  flex justify-center items-center   text-center px-2  ${getCurrentDayClass()}`} onClick={(e) =>  handleClickOnDate(e,days)}
        >
           {days.format("DD")}
           
@@ -169,11 +179,11 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
   if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
     if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
       return (
-        <div className='bg-gray-400   w-24 overflow-hidden border-gray-50'>{ evt.title}</div>
+        <div onClick={()=>{setShowEventModal(true)}} className={`bg-${evt.color}-400 cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50`}>{ evt.title}</div>
       )
     }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
       return (
-        <div className='bg-gray-400 w-24 overflow-hidden border-gray-50 '><span className='invisible'>,</span></div>
+        <div onClick={()=>{setShowEventModal(true)}}  className={`bg-${evt.color}-400 cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50 `}><span className='invisible'>,</span></div>
       )
     }
  
@@ -198,7 +208,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
        return (   <div
             key={idx}
             onClick={() => setSelectedEvent(evt)}
-            className={`bg-${evt.label && evt.label}-200 p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
+            className={` ${colorList[evt.label]} p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
           >
             {evt.title}
           </div>)
@@ -209,7 +219,7 @@ if(event.assigned_date === days.format("DD-MM-YY")){
 }
          })}</>:<>{eventInLS.map((evt,i)=>{
           if(evt.assigned_date === days.format("DD-MM-YY")){
-            return ( <p onClick={() => setSelectedEvent(evt)}>{evt.user}</p>)
+            return ( <p onClick={() => setSelectedEvent(evt)} className='flex items-center justify-center'>{evt.user}</p>)
            }
          })}</>}
       </div>

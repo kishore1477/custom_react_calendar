@@ -5,6 +5,7 @@ import { getMonth } from '../main';
 import Days from './Days';
 import MyCalendar from './MyCalendar';
 import ReactCalendar from './ReactCalendar';
+import { colorList, sideBarlabelColorList } from '../components/Colorpicker';
 
 const ShowMultipleCalendar = () => {
   const [currenMonth, setCurrentMonth] = useState(getMonth());
@@ -21,19 +22,19 @@ const ShowMultipleCalendar = () => {
 <div className=''>Admin Calendar</div>
 {selectedUserEventArray.map((item,i)=>{
 return  <div>
-<span className='flex justify-center items-center' >{item.user}</span>
   <div className='flex justify-end items-end'>
-  <button className='' onClick={() => {
+<span className={`mr-12 ${sideBarlabelColorList[item.color]}`} >{item.user}</span>
+
+              <span className={`material-icons-outlined cursor-pointer ${colorList[item.color]}`} onClick={() => {
                   dispatch({
                     type: "delete",
                     payload: item,
                   });
                   
                 }}>
-              <span className={`material-icons-outlined text-${item.color}-400`}>
                 close
               </span>
-            </button>
+             
   </div>
 
    <div  className=" m-4  mt-0    grid grid-cols-7 grid-rows-5">

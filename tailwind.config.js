@@ -8,5 +8,5 @@ module.exports = {
   //   //  "event":'#fee2e2'
   //   }
   // },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 }

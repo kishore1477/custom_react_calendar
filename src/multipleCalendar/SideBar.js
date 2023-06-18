@@ -3,10 +3,17 @@ import { useContext } from 'react'
 import Contex from '../contex/Contex'
 
 const SideBar = () => {
-  const  {savedEvent, setSelectedUserEvent, selectedUserEvent,  dispatch} =   useContext(Contex)
+  const  {savedEvent, setSelectedUserEvent, selectedUserEvent,  dispatch,selectedUserEventArray} =   useContext(Contex)
   const eventInLS = JSON.parse(localStorage.getItem('events'))
 const handleClick =(evt)=>{
+ const userList =  selectedUserEventArray.map((evet)=>evet.user)
+ const existingUser  = userList.includes(evt.user)
+ if(!existingUser){
   dispatch({ type: "push", payload: evt });
+ }
+ console.log("Existing USer is:", existingUser)
+ console.log("Userlist is :", userList)
+ 
 }
   return (
     <div>

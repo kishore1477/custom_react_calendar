@@ -3,6 +3,7 @@ import Contex from '../contex/Contex'
 import { getMonth } from '../main';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
+import { colorList } from '../components/Colorpicker';
 const Overlay = () => {
 //    const {selectedUserEventArray} =  useContext(Contex)
    const [currenMonth, setCurrentMonth] = useState(getMonth());
@@ -35,7 +36,7 @@ const Overlay = () => {
         {selectedUserEventArray.length ===  0  && <span className='flex items-center justify-center'>Please select users calendars from <Link  to = '/main' className='text-red-500 ml-2'>here</Link></span>}
         <div className='flex'>
       {selectedUserEventArray && selectedUserEventArray.map((evt,i)=>{
-        return   <div  className={`bg-${evt.color}-500 mx-4 rounded px-2`}>
+        return   <div  className={`${colorList[evt.color]} mx-4 rounded px-2`}>
         {/* <button className=''  */}
                         
                     {/* > */}
@@ -96,7 +97,7 @@ const Overlay = () => {
             >
                 {selectedUserEventArray && selectedUserEventArray.map((item,i)=>{
                   if(item.assigned_date === days.format("DD-MM-YY")){
-                    return ( <p className={`bg-${item.color}-500`}>{item.title}</p>)
+                    return ( <p className={`${colorList[item.color]}`}>{item.title}</p>)
                   }
                 })}
 

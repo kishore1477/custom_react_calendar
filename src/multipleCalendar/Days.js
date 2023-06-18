@@ -1,13 +1,14 @@
 import React , {useContext, useState,useEffect} from 'react'
 import dayjs from 'dayjs'
 import Contex from '../contex/Contex'
+import { multipleCalendarBorderList } from '../components/Colorpicker'
 const Days = (props) => {
   const contex = useContext(Contex)
   const  {setShowEventModal, monthIndex,setDaySelected, selectedUserEvent ,savedEvents,setSelectedEvent,filteredEvents} = contex
   const [dayEvents, setDayEvents] = useState([]);
     const  { days, weekId, dayId, item} = props
 
-    console.log("Item color i s:", item.color)
+    // console.log("Item color i s:", item.color)
 //  console.log("selectedUserEvent is :", selectedUserEvent)
     useEffect(() => {
 // console.log("Filtered events is :", filteredEvents)
@@ -31,7 +32,7 @@ const getCurrentDayClass = ()=>{
 // console.log("Logged user events is :", loggedUserEvents)
 
   return (
-    <div className={`border border-${item.color}-300 flex flex-col `}>
+    <div className={`border ${multipleCalendarBorderList[item.color]} flex flex-col `}>
       <div className='h-24 md:h-32 flex flex-col  items-center'  onClick={() => {
            setDaySelected(days);
           setShowEventModal(true);
