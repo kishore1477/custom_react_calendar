@@ -26,9 +26,12 @@ const Contex = createContext({
   view:'month',
   setView:()=>{},
   checked:true,
-  setChecked: ()=>{}
-
-
+  setChecked: ()=>{},
+  dispatchMultiCalEventModal: ({ type, payload }) => {},
+  multipleCalendarEventModalArray: [],
+  showMultiCalEventModal: false,
+  setShowMultiCalEventModal: () => {},
+ 
 
 })
 

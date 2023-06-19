@@ -1,6 +1,6 @@
 import App from "../App"
 import Contex from "./Contex"
-import { useState,useEffect,useReducer, useMemo } from "react"
+import { useState,useEffect,useReducer, useMemo,useRef } from "react"
 import dayjs from "dayjs";
 function savedEventsReducer(state, { type, payload }) {
   switch (type) {
@@ -39,9 +39,25 @@ const reducer =(state, {type, payload})=>{
   }
 
 }
+const reducerMCEM =(state, {type, payload})=>{
+  switch (type) {
+    case "push":
+      // console.log("State is :", state)
+      // console.log("payload is:", payload)
+      // console.log("type is:", type)
+      return [...state, payload];
+    
+    case "delete":
+      return state.filter((evt) => evt.user !== payload.user);
+    default:
+      throw new Error();
+  }
+
+}
  const  ContexWrapper = (props)=>{
      const [monthIndex, setMonthIndex] = useState(dayjs().month())
 const [showEventModal , setShowEventModal] = useState(false)
+const [showMultiCalEventModal , setShowMultiCalEventModal] = useState(false)
 const [count, setCount] = useState(10)
 const [daySelected, setDaySelected] = useState(dayjs());
 const [selectedEvent, setSelectedEvent] = useState(null)
@@ -50,6 +66,7 @@ const [selectedUserEvent, setSelectedUserEvent] = useState(null)
 const [selectedDate, setSelectedDate] = useState(dayjs())
 const [view, setView] = useState('month')
 const [checked, setChecked] = useState(true)
+ 
 
 const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
@@ -57,6 +74,7 @@ const [savedEvents, dispatchCalEvent] = useReducer(
     initEvents
   );
   const [selectedUserEventArray, dispatch] = useReducer(reducer, []);
+  const [multipleCalendarEventModalArray, dispatchMultiCalEventModal] = useReducer(reducerMCEM, []);
 
   const filteredEvents = useMemo(() => {
     // console.log("Labels is in filteredevents is ", labels)
@@ -129,7 +147,7 @@ return (
     <div>
    
 <Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents , setLabels,
-        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked}}>
+        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal}}>
         {props.children}
        {/* <App/> */}
     </Contex.Provider>

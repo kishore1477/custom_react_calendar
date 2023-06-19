@@ -1,10 +1,10 @@
 import React , {useContext, useState,useEffect} from 'react'
 import dayjs from 'dayjs'
 import Contex from '../contex/Contex'
-import { multipleCalendarBorderList } from '../components/Colorpicker'
+import { colorList, multipleCalendarBorderList } from '../components/Colorpicker'
 const Days = (props) => {
   const contex = useContext(Contex)
-  const  {setShowEventModal, monthIndex,setDaySelected, selectedUserEvent ,savedEvents,setSelectedEvent,filteredEvents} = contex
+  const  {setShowEventModal, monthIndex,setDaySelected, selectedUserEvent ,savedEvents,setSelectedEvent,filteredEvents,dispatchMultiCalEventModal, multipleCalendarEventModalArray,setShowMultiCalEventModal} = contex
   const [dayEvents, setDayEvents] = useState([]);
     const  { days, weekId, dayId, item} = props
 
@@ -26,25 +26,41 @@ const getCurrentDayClass = ()=>{
   : "";
 }
  
+const handleEventClick = (e, item) =>{
+  console.log("e.target is:" , e.target)
+  // console.log("modalRef.current is:" , modalRef.current)
+//   if (e.target === modalRef.current) {
+// alert("hi")
+//     dispatchMultiCalEventModal({ type: "push", payload: item });
+//     setShowMultiCalEventModal(true)
+//   }
+  dispatchMultiCalEventModal({ type: "push", payload: item });
+    setShowMultiCalEventModal(true)
+  
+  
+}
  
  
 
 // console.log("Logged user events is :", loggedUserEvents)
 
   return (
-    <div className={`border ${multipleCalendarBorderList[item.color]} flex flex-col `}>
+    <div>
+
+
+    <div className={` border ${multipleCalendarBorderList[item.color]} flex flex-col `}>
       <div className='h-24 md:h-32 flex flex-col  items-center'  onClick={() => {
            setDaySelected(days);
-          setShowEventModal(true);
+          
         }}>
        <header className="flex flex-col  items-center">
         { weekId === 0 &&  (
-          <p className="text-sm mt-1">
-            {days.format("ddd").toUpperCase()}
+          <p className="text-sm mx-2 mt-1">
+            {days.format("ddd")}
           </p>
         )}
        <p
-          className={`text-sm  cursor-pointer    text-center px-2  ${getCurrentDayClass()}`}
+          className={`text-sm    text-center px-2  ${getCurrentDayClass()}`}
        >
           {days.format("DD")}
           
@@ -62,10 +78,16 @@ const getCurrentDayClass = ()=>{
       <div
            
             
-            className={`p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
+            className={` text-gray-600 text-sm rounded truncate cursor-pointer`}
           >
           {item.assigned_date === days.format("DD-MM-YY")?
-  <p className='bg-yellow-200  '>{item.title}</p>:<></>
+  <p className={`${colorList[item.color]} text-sm `} onClick={(e)=>handleEventClick(e,item)}>{item.title.length > 3
+    ? `${item.title
+      .toLowerCase()
+      .substring(0, 3)
+    }..`
+    : item.title.charAt(0).toUpperCase() +
+    item.title.slice(1).toLowerCase()}{" "}</p>:<></>
 }
             
           </div>
@@ -73,6 +95,7 @@ const getCurrentDayClass = ()=>{
           
       </div>
       </div>
+    </div>
     </div>
   )
 }
