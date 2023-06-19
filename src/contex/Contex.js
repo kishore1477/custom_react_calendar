@@ -24,7 +24,9 @@ const Contex = createContext({
   selectedDate:dayjs(),
   setSelectedDate:()=>{},
   view:'month',
-  setView:()=>{}
+  setView:()=>{},
+  checked:true,
+  setChecked: ()=>{}
 
 
 

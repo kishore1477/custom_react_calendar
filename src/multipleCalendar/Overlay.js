@@ -4,11 +4,14 @@ import { getMonth } from '../main';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { colorList } from '../components/Colorpicker';
+import { useLocation } from 'react-router-dom'
 const Overlay = () => {
+  const location = useLocation();
+  console.log("path is :",location.pathname);
 //    const {selectedUserEventArray} =  useContext(Contex)
    const [currenMonth, setCurrentMonth] = useState(getMonth());
    const contex = useContext(Contex)
-   const { showEventModal, monthIndex,state,selectedUserEvent, selectedUserEventArray, dispatch}= contex 
+   const { showEventModal, monthIndex,state,selectedUserEvent, selectedUserEventArray, dispatch,setChecked}= contex 
    useEffect(() => {
        setCurrentMonth(getMonth(monthIndex));
    }, [monthIndex]);
@@ -31,9 +34,21 @@ const Overlay = () => {
     : "";
   }
   console.log("selectedUserEventArray length :", selectedUserEventArray.length)
+// if(selectedUserEventArray.length ===  0){
+//   setChecked(false)
+
+// }
+// const handleHere = () =>{
+//   setChecked((prev)=>{
+//     if(prev===false){
+//       true
+//     }
+//   })
+// }
+
   return (
     <div>
-        {selectedUserEventArray.length ===  0  && <span className='flex items-center justify-center'>Please select users calendars from <Link  to = '/main' className='text-red-500 ml-2'>here</Link></span>}
+        {selectedUserEventArray.length ===  0  &&  <span className='flex items-center justify-center'>Please select users calendars from <Link  to = '/main' className='text-red-500 ml-2' >here</Link></span>}
         <div className='flex'>
       {selectedUserEventArray && selectedUserEventArray.map((evt,i)=>{
         return   <div  className={`${colorList[evt.color]} mx-4 rounded px-2`}>

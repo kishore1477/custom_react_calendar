@@ -1,16 +1,22 @@
 import React, { useContext ,useState,useEffect} from 'react'
 import Contex from '../contex/Contex'
 import { getMonth } from '../main';
- 
+import { useLocation } from 'react-router-dom'
 import Days from './Days';
 import MyCalendar from './MyCalendar';
 import ReactCalendar from './ReactCalendar';
 import { colorList, sideBarlabelColorList } from '../components/Colorpicker';
 
 const ShowMultipleCalendar = () => {
+  const location = useLocation();
+  console.log("path is :",location.pathname);
+  const path = location.pathname
   const [currenMonth, setCurrentMonth] = useState(getMonth());
   const contex = useContext(Contex)
-  const { showEventModal, monthIndex,state,selectedUserEvent, selectedUserEventArray, dispatch}= contex 
+  const { showEventModal, monthIndex,state,selectedUserEvent, selectedUserEventArray, dispatch, setChecked}= contex 
+//   if(path === '/main' && selectedUserEventArray.length === 0){
+// setChecked(false)
+//   }
   useEffect(() => {
       setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);

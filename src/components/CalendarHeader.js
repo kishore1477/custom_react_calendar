@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import React, { useContext,useState } from "react";
+import { Switch ,FormControlLabel,FormGroup} from '@mui/material';
 // import logo from "../assets/logo.png";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { LoginSocialGoogle } from "reactjs-social-login";
@@ -9,34 +10,25 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 // import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Link, useParams } from "react-router-dom";
-// import {
-//   BiChevronLeft,
-//   BiChevronRight,
-//   BiInfoCircle,
-//   BiSearch,
-//   BsGear,
-//   FaSignInAlt,
-//   FaSignOutAlt, HiBars3,
-//   MdDashboard
-// } from "react-icons/all";
+import { useNavigate } from "react-router-dom";
+
 import {BiSearch, BiInfoCircle} from   "react-icons/bi";
 import {BsGear} from   "react-icons/bs";
 export default function CalendarHeader() {
+  const navigate  = useNavigate()
   const [token, setToken] = useState('')
-  const { monthIndex, setMonthIndex ,showEventModal, selectedDate,setSelectedDate, view,setView} = useContext(Contex);
-  console.log("Selected date is :", selectedDate)
-  // console.log("MOnth index inside the calendar header:", monthIndex)
-  // console.log("MOnth index inside the calendar header: types is", typeof(monthIndex))
-  // console.log("monthIndex",monthIndex)
+  const { monthIndex, setMonthIndex ,showEventModal, selectedDate,setSelectedDate, view,setView,selectedUserEventArray, checked,setChecked} = useContext(Contex);
+  
+   
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
   const {date} = useParams()
-  console.log("date inside calendar header :", date)
+  
   function handlePrevMonth() {
    if( view === 'day'){
     const sub = dayjs(selectedDate).subtract(1,'day')
-    console.log("sub:", sub)
+    
     const subFormat = sub.format("MM-DD-YYYY")
    setSelectedDate(subFormat)
 
@@ -79,6 +71,17 @@ export default function CalendarHeader() {
     setView('day')
     setSelectedDate(dayjs())
   }
+
+  const handleSwitch = (e) =>{
+    setChecked(!checked)
+    console.log("Checked value is:", checked)
+    checked?navigate('/overlay'):navigate('/main')
+   
+
+  }
+  // if(selectedUserEventArray.length === 0){
+  //   setChecked(false)
+  // }
   const d = dayjs().format("MM-DD-YYYY") + '$day'
   console.log("D inside header:", d)
   return (
@@ -109,7 +112,12 @@ export default function CalendarHeader() {
           "MMMM YYYY"
         ):''}</>}
       </h2>
-    
+
+      <FormGroup>
+  <FormControlLabel control={<Switch  value={checked} onChange={(e)=>handleSwitch(e)} />} label="Overlay" />
+ 
+</FormGroup>
+      {/* <Switch {...label} defaultChecked /> */}
   <div className="flex items-center justify-center md:absolute md:right-80 "> <Link to = '/overlay' > <button >
       Overlay</button></Link></div>
 
