@@ -31,6 +31,8 @@ const Contex = createContext({
   multipleCalendarEventModalArray: [],
   showMultiCalEventModal: false,
   setShowMultiCalEventModal: () => {},
+  showSmallCal:false,
+  setShowSmallCal:()=>{}
  
 
 })

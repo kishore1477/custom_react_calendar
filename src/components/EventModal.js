@@ -2,7 +2,11 @@ import React, { useContext, useState } from "react";
 import Contex from "../contex/Contex";
 // import TimePicker from 'react-time-picker';
 import { TimePicker } from 'antd';
+import { DatePicker } from 'antd';
+
 import dayjs from 'dayjs';
+import SmallCalendar from "./SmallCalendar";
+const { RangePicker } = DatePicker;
 // import 'react-time-picker/dist/TimePicker.css';
 // import 'react-clock/dist/Clock.css';
 const options = [
@@ -23,12 +27,39 @@ const labelsClasses = [
 ];
 
 export default function EventModal() {
+
+  //  date picker code
+  const [dates, setDates] = useState(null);
+  const [valued, setValued] = useState(null);
+  console.log("dates date is :", dates)
+  console.log("valued date is :", valued)
+  const disabledDate = (current) => {
+    console.log("current date is :", current)
+    
+    if (!dates) {
+      return false;
+    }
+    const tooLate = dates[0] && current.diff(dates[0], 'year') >= 1;
+    const tooEarly = dates[1] && dates[1].diff(current, 'year') >= 1;
+    return !!tooEarly || !!tooLate;
+  };
+  const onOpenChange = (open) => {
+    if (open) {
+      setDates([null, null]);
+    } else {
+      setDates(null);
+    }
+  };
+
+
   const {
     setShowEventModal,
     daySelected,
     dispatchCalEvent,
     selectedEvent,
     showEventModal,
+    showSmallCal,
+    setShowSmallCal,
   } = useContext(Contex);
 
   const [showTime, setShowTime] = useState(false)
@@ -106,8 +137,16 @@ export default function EventModal() {
 
     setShowEventModal(false);
   }
+
+  // const handleSmallCal = () =>{
+  //   setShowSmallCal(true)
+  // }
+
   return (
+
+    <div>  
     <div className={`h-screen w-full fixed left-0 top-0  flex justify-center items-center z-10 `}>
+     
       <form className=" bg-white rounded-lg shadow-2xl mx-9 w-full md:w-96 ">
         <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
           <span className="material-icons-outlined text-gray-400 ">
@@ -152,16 +191,39 @@ export default function EventModal() {
               <span className="material-icons-outlined text-gray-400 ">
                 schedule
               </span>
-              <p className="ml-2 mr-10">{daySelected.format("dddd, MMMM DD")}</p>
+              <p className="ml-2 mr-10" >{daySelected.format("dddd, MMMM DD")}</p>
 
 
             </div>
-
-            <TimePicker.RangePicker placeholder={["Start", "End"]} format="HH:mm" className="font-bold text-green-700" onOk={(time) => {
+            <RangePicker
+             suffixIcon
+            style={{
+              height: "auto",
+              width: "auto",
+              border: "none",
+              borderRadius: "0px",
+              cursor: "pointer",
+              fontSize: "17px",
+              margin: "0px",
+              padding: "0px"
+            }}
+      value={dates || valued}
+      disabledDate={disabledDate}
+      onCalendarChange={(val) => {
+        setDates(val);
+      }}
+      onChange={(val) => {
+        setValued(val);
+      }}
+      onOpenChange={onOpenChange}
+      changeOnBlur
+    />
+    {/* <DatePicker.RangePicker format="YYYY-MM-DD HH:mm"/> */}
+            {/* <TimePicker.RangePicker placeholder={["Start", "End"]} format="YYYY-MM-DD HH:mm" className="font-bold text-green-700" onOk={(time) => {
               setTimeString(time);
               console.log("time is ",time);
             
-            }} />
+            }} /> */}
 
 
 
@@ -245,6 +307,7 @@ export default function EventModal() {
           </button>
         </footer>
       </form>
+    </div>
     </div>
   );
 }

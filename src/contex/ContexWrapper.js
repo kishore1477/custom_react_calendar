@@ -66,7 +66,7 @@ const [selectedUserEvent, setSelectedUserEvent] = useState(null)
 const [selectedDate, setSelectedDate] = useState(dayjs())
 const [view, setView] = useState('month')
 const [checked, setChecked] = useState(true)
- 
+const [showSmallCal, setShowSmallCal] = useState(false)
 
 const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
@@ -147,7 +147,7 @@ return (
     <div>
    
 <Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents , setLabels,
-        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal}}>
+        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal, setShowSmallCal, showSmallCal}}>
         {props.children}
        {/* <App/> */}
     </Contex.Provider>
