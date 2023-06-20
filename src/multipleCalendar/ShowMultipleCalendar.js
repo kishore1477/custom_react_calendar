@@ -38,42 +38,44 @@ return <div>
   return <p>{evtt.title}</p>
 })}</div> */}
   {showMultiCalEventModal &&   <MultipleCalendarEventModal  user = {item.user}/>}
-  <div className='z-0'>
+    <div className='z-0'>
 
-  <div className='flex justify-end items-end'>
+<div className='flex justify-end items-end'>
 <span className={`mr-12 ${sideBarlabelColorList[item.color]}`} >{item.user}</span>
 
-              <span className={`material-icons-outlined cursor-pointer ${colorList[item.color]}`} onClick={() => {
-                  dispatch({
-                    type: "delete",
-                    payload: item,
-                  });
-                  
-                }}>
-                close
-              </span>
-             
-  </div>
+            <span className={`material-icons-outlined cursor-pointer ${colorList[item.color]}`} onClick={() => {
+                dispatch({
+                  type: "delete",
+                  payload: item,
+                });
+                
+              }}>
+              close
+            </span>
+           
+</div>
 
-   <div  className=" m-4  mt-0    grid grid-cols-7 grid-rows-5">
-  {/* {item.title} */}
+ <div  className=" m-4  mt-0    grid grid-cols-7 grid-rows-5">
+{/* {item.title} */}
 {
- currenMonth && currenMonth.map((week,weekId)=>(
+currenMonth && currenMonth.map((week,weekId)=>(
+  
+  week.map((days, dayId)=>(
+    // console.log("dayId id is :", dayId)
+    // console.log("days :", days)
+
     
-    week.map((days, dayId)=>(
-      // console.log("dayId id is :", dayId)
-      // console.log("days :", days)
+      <Days days = {days} weekId ={weekId} item ={item} dayId={dayId} />
 
-      
-        <Days days = {days} weekId ={weekId} item ={item} dayId={dayId} />
+   
 
-     
-
-    ))
   ))
+))
 }
 </div>
-</div>  
+</div> 
+
+
 </div>
 })}
      
