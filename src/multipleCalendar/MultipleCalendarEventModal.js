@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import Contex from '../contex/Contex'
 import { useRef } from "react";
+import { colorList } from '../components/Colorpicker';
 // import styles from "./Modal.module.css";
 const MultipleCalendarEventModal = (props) => {
     const modalRef = useRef(null)
@@ -148,7 +149,7 @@ const MultipleCalendarEventModal = (props) => {
 
 
 
-<div className="pb-8 pt-4 px-2 w-60 h-80">
+<div className={`pb-8 pt-4 px-2 w-60 ${colorList[evt.color]} h-80`}>
   <div className='flex justify-end items-end'>
 <button onClick={()=>handleMultiEventClose(evt)} >
               <span className="material-icons-outlined text-gray-400">
