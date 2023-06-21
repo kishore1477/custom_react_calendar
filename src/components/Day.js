@@ -23,6 +23,7 @@ const navigate = useNavigate()
   const [dayEvents, setDayEvents] = useState([]);
     const  { days, weekId, dayId} = props
 
+console.log("Filtered Events is:", filteredEvents)
 
   // jump to day view...
 const  handleClickOnDate =(e,date)=> {
@@ -51,6 +52,8 @@ const  handleClickOnDate =(e,date)=> {
           dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY")
       );
       setDayEvents(events);
+      console.log("events is :", events)
+      console.log("dayEvents Events is:", dayEvents)
     }, [filteredEvents, days]);
 
 const getCurrentDayClass = ()=>{
@@ -158,7 +161,7 @@ eventInLS.map((evt, i)=>{
         // console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')
       const fullStart = evt.start && dayjs(evt.start)
-      console.log("Fullstart is :", fullStart)
+      // console.log("Fullstart is :", fullStart)
       // const sstart =  start.format('DD')
       const end =evt.end && dayjs(evt.end).format('DD')
       const fullend =evt.end && dayjs(evt.end)
@@ -171,7 +174,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
 
   // console.log("Insie while")
   // if(currentDate >= )
-  console.log("Current date iss :", currentDate)
+  // console.log("Current date iss :", currentDate)
   // console.log("Current date iss :", currentDate.format('D'))
   // console.log("days date iss :", days)
   // console.log("days date iss :", days.format('D'))
@@ -203,16 +206,67 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
       // console.log("End date is the: ", end)
     
       })}
-        {dayEvents.map((evt, idx) => {
+      {filteredEvents.map((evt,i)=>{
+        
+        // console.log("Evt start is :", evt.start)
+      const start = evt.start && dayjs(evt.start).format('DD')
+      const fullStart = evt.start && dayjs(evt.start)
+      // console.log("Fullstart is :", fullStart)
+      // const sstart =  start.format('DD')
+      const end =evt.end && dayjs(evt.end).format('DD')
+      const fullend =evt.end && dayjs(evt.end)
+      // console.log("fullend is :", fullend)
+      // console.log("(end-start) is:", (end-start))
+      // console.log("days.format", days.format("DD-MM-YY"))
+      let currentDate = fullStart;
+while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
+  // currentDate = dayjs(currentDate).add(1, 'day');
+
+  // console.log("Insie while")
+  // if(currentDate >= )
+  // console.log("Current date iss :", currentDate)
+  // console.log("Current date iss :", currentDate.format('D'))
+  // console.log("days date iss :", days)
+  // console.log("days date iss :", days.format('D'))
+  // currentDate ?<></>
+  if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
+    if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
+      return (
+        <div onClick={()=>{setShowEventModal(true)}} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50`}>{ evt.title}</div>
+      )
+    }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
+      return (
+        <div onClick={()=>{setShowEventModal(true)}}  className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50 `}><span className='invisible'>,</span></div>
+      )
+    }
+ 
+  }
+  
+  currentDate = dayjs(currentDate).add(1, 'day');
+
+
+}
+     
+       
+
+        
+     
+      // console.log("Start date is the: ", start)
+      // console.log("Sstart date is the: ", sstart)
+      // console.log("End date is the: ", end)
+    
+      })}
+        {/* {dayEvents.map((evt, idx) => {
           
        return (   <div
             key={idx}
             onClick={() => setSelectedEvent(evt)}
             className={` ${colorList[evt.label]} p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
           >
-            {evt.title}
+
+            {dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY") ?evt.title:<></>}
           </div>)
-})}
+})} */}
          {!loggedAdmin? <>{loggedUser && loggedUserEvents.map((event,i)=>{
 if(event.assigned_date === days.format("DD-MM-YY")){
  return ( <p className=' '>{event.title}</p>)

@@ -31,16 +31,20 @@ export default function EventModal() {
   //  date picker code
   const [dates, setDates] = useState(null);
   const [valued, setValued] = useState(null);
+  console.log("Value 0 is:", valued &&  valued[0])
+  console.log("Value 1 is:", valued &&  valued[1])
   console.log("dates date is :", dates)
   console.log("valued date is :", valued)
   const disabledDate = (current) => {
-    console.log("current date is :", current)
+    // console.log("current date is :", current)
     
     if (!dates) {
       return false;
     }
     const tooLate = dates[0] && current.diff(dates[0], 'year') >= 1;
+    // console.log("tooLate is :", tooLate)
     const tooEarly = dates[1] && dates[1].diff(current, 'year') >= 1;
+    // console.log("tooEarly is :", tooEarly)
     return !!tooEarly || !!tooLate;
   };
   const onOpenChange = (open) => {
@@ -121,6 +125,8 @@ export default function EventModal() {
       label: selectedOption,
       day: daySelected.valueOf(),
       id: selectedEvent ? selectedEvent.id : Date.now(),
+      start:valued && valued[0],
+      end:valued && valued[1]
     };
     console.log("CalendarEvent is:", calendarEvent)
 
@@ -196,17 +202,17 @@ export default function EventModal() {
 
             </div>
             <RangePicker
-             suffixIcon
-            style={{
-              height: "auto",
-              width: "auto",
-              border: "none",
-              borderRadius: "0px",
-              cursor: "pointer",
-              fontSize: "17px",
-              margin: "0px",
-              padding: "0px"
-            }}
+            //  suffixIcon
+            // style={{
+            //   height: "auto",
+            //   width: "auto",
+            //   border: "none",
+            //   borderRadius: "0px",
+            //   cursor: "pointer",
+            //   fontSize: "17px",
+            //   margin: "0px",
+            //   padding: "0px"
+            // }}
       value={dates || valued}
       disabledDate={disabledDate}
       onCalendarChange={(val) => {

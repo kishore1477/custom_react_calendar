@@ -142,6 +142,7 @@ function updateLabel(label) {
 }
   ))
 }
+console.log("Saved events is :", savedEvents)
 // console.log("selectedUserEventArray:", selectedUserEventArray)
 return (
     <div>
