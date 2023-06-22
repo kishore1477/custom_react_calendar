@@ -49,7 +49,7 @@ const handleEventClick = (e, item) =>{
 
 
     <div className={` border ${multipleCalendarBorderList[item.color]} flex flex-col `}>
-      <div className='h-24 md:h-32 flex flex-col  items-center'  onClick={() => {
+      <div className='h-16 md:h-32 flex flex-col  items-center'  onClick={() => {
            setDaySelected(days);
           
         }}>

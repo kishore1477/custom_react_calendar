@@ -13,7 +13,7 @@ import CalendarHeader from './CalendarHeader';
   useEffect(() => {
       setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
-  // console.log("monthis",currenMonth)
+  console.log("monthis",currenMonth)
   
    return (
 
@@ -27,7 +27,7 @@ import CalendarHeader from './CalendarHeader';
     </aside>
     <div className=' w-full h-screen'>
    {showEventModal &&  <EventModal/>}
-     <div  className={` mx-auto my-auto  grid grid-cols-7 grid-rows-5 ${showEventModal && 'bg-red-100'}`}>
+     <div  className={` mx-auto my-auto z-0 grid grid-cols-7 grid-rows-5 ${showEventModal && 'bg-red-100'}`}>
       {
        currenMonth && currenMonth.map((week,weekId)=>(
           // console.log("row id is :", weekId)
@@ -37,7 +37,7 @@ import CalendarHeader from './CalendarHeader';
             // console.log("days :", days)
 
             
-              <Day days = {days} weekId ={weekId} dayId={dayId}/>
+              <Day week ={week} days = {days} weekId ={weekId} dayId={dayId}/>
 
            
 
