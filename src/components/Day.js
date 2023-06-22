@@ -7,23 +7,18 @@ import { useNavigate } from "react-router-dom";
 import { colorList } from './Colorpicker';
 // import 'dayjs/locale/en'; // Import the desired locale
 const Day = (props) => {
-//   const colorList = {
-//     indigo:'bg-indigo-200',
-//     gray:'bg-gray-200',
-//     green:'bg-green-200',
-//     blue:'bg-blue-200',
-//     red:'bg-red-200',
-//     purple:'bg-purple-200',
-// }
+
   dayjs().format()
 const navigate = useNavigate()
 
   const contex = useContext(Contex)
   const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents} = contex
   const [dayEvents, setDayEvents] = useState([]);
-    const  { days, weekId, dayId} = props
+    const  { days, weekId, dayId, week} = props
+    console.log("Week daya is :", week[0])
 
 console.log("Filtered Events is:", filteredEvents)
+console.log("filteredEvents.toReversed()Events is:", filteredEvents.toReversed())
 
   // jump to day view...
 const  handleClickOnDate =(e,date)=> {
@@ -156,7 +151,7 @@ eventInLS.map((evt, i)=>{
        
       >
        
-      {eventInLS.map((evt,i)=>{
+      {/* {eventInLS.map((evt,i)=>{
         
         // console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')
@@ -205,9 +200,9 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
       // console.log("Sstart date is the: ", sstart)
       // console.log("End date is the: ", end)
     
-      })}
-      {filteredEvents.map((evt,i)=>{
-        
+      })} */}
+      {filteredEvents.toReversed().map((evt,i)=>{
+        console.log("i:",i)
         // console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')
       const fullStart = evt.start && dayjs(evt.start)
@@ -232,11 +227,13 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
   if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
     if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
       return (
-        <div onClick={()=>{setShowEventModal(true)}} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50`}>{ evt.title}</div>
+        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{ evt.title}</div>
       )
     }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
       return (
-        <div onClick={()=>{setShowEventModal(true)}}  className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50 `}><span className='invisible'>,</span></div>
+       <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
+          {days.format('DD-MM-YY') === week[0].format('DD-MM-YY')? <span className=''>{evt.title}</span>: <span className='invisible'>,</span>}
+          <span className='invisible'>,</span></div>
       )
     }
  
