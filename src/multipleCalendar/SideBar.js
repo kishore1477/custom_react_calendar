@@ -15,9 +15,16 @@ const handleClick =(evt)=>{
  console.log("Userlist is :", userList)
  
 }
+
+const admin = localStorage.getItem('admin')
+const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
+const user = localStorage.getItem('loggedUser')
+const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
+const Userlist = JSON.parse(localStorage.getItem('userList'))
+console.log("userList is :", Userlist)
   return (
     <div>
-       <span className='font-bold flex justify-center items-center'> Users</span>
+       <span className='font-bold flex justify-center items-center'>Local Users</span>
         {eventInLS.map((evt,i)=>{
             return(
                 <div className='mx-4 flex flex-col space-y-4'> 
@@ -25,6 +32,14 @@ const handleClick =(evt)=>{
                 </div>
             )
         })}
+ <span className='font-bold flex justify-center items-center'>Special Users</span>
+      {loggedUser || loggedAdmin ? Userlist.map((user,i)=>{
+        return(
+          <div key={i} className='mx-4 flex flex-col space-y-4'> 
+          <div className=' py-4 cursor-pointer flex justify-center items-center' >{user.name}</div>
+          </div>
+      )
+      }):<></>}
     </div>
   )
 }

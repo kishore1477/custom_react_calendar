@@ -84,8 +84,13 @@ export default function CalendarHeader() {
   // }
   const d = dayjs().format("MM-DD-YYYY") + '$day'
   console.log("D inside header:", d)
+  const admin = localStorage.getItem('admin')
+  const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
+  const user = localStorage.getItem('loggedUser')
+  const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
   return (
-    <header className={`px-4 py-1 flex items-center ${showEventModal && 'bg-red-100'}`}>
+    <>
+    {loggedAdmin || loggedUser ?  <header className={`px-4 py-1 flex items-center ${showEventModal && 'bg-red-100'}`}>
       <h1 className="mr-10 text-xl text-gray-500 fond-bold">
         Calendar
       </h1>
@@ -113,10 +118,11 @@ export default function CalendarHeader() {
         ):''}</>}
       </h2>
 
-      <FormGroup>
+{ loggedUser.name ==='Arisha' || loggedAdmin ?<FormGroup>
   <FormControlLabel control={<Switch  value={checked} onChange={(e)=>handleSwitch(e)} />} label="Overlay" />
  
-</FormGroup>
+</FormGroup>:<></> }
+      
       {/* <Switch {...label} defaultChecked /> */}
   <div className="flex items-center justify-center md:absolute md:right-80 "> <Link to = '/overlay' > <button >
       Overlay</button></Link></div>
@@ -266,6 +272,8 @@ export default function CalendarHeader() {
                     )}
                 </li> */}
             </div>
-    </header>
+    </header>:<></>}
+  
+    </>
   );
 }

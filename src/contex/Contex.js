@@ -32,7 +32,11 @@ const Contex = createContext({
   showMultiCalEventModal: false,
   setShowMultiCalEventModal: () => {},
   showSmallCal:false,
-  setShowSmallCal:()=>{}
+  setShowSmallCal:()=>{},
+  loggedUser:'',
+  setLoggedUser: ()=>{},
+  loggedAdmin:"",
+  setLoggedAdmin:()=>{}
  
 
 })

@@ -20,6 +20,7 @@ import Labels from './components/Labels';
 import Main from './multipleCalendar/Main';
 import DayView from './components/DayView/DayView';
 import Overlay from './multipleCalendar/Overlay';
+import Home from './components/Home';
 function App() {
  
   const [show, setShow] = useState(false)
@@ -43,7 +44,8 @@ const handleCalendar =()=>{
 
     <Routes>
     
-      <Route path="/" element={  <Month   />  }/>  
+      <Route path="/" element={  <Home   />  }/>  
+      <Route path="/origin" element={  <Month   />  }/>  
       <Route path="/main" element={  <Main   />  }/>  
       {/* <Route path="/" element={  <Labels/>}/>   */}
        <Route path="/login" element={  <Login  />}/>

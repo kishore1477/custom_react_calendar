@@ -1,13 +1,20 @@
 import React, { useContext } from "react";
 import Contex from "../contex/Contex";
 import { focusRingColorList, sideBarlabelColorList } from "./Colorpicker";
+import { Link } from "react-router-dom";
 
 export default function Labels() {
   const { labels, updateLabel, showEventModal } = useContext(Contex);
   console.log("Labels is:", labels)
+  const admin = localStorage.getItem('admin')
+  const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
+  const user = localStorage.getItem('loggedUser')
+  const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
   return (
     <React.Fragment>
       <div >
+
+        {loggedUser.name === 'Arisha' && <button className="bg-indigo-200 px-3 py-1 rounded-sm"> <Link to = '/main'>  Show Team Member </Link> </button>}
       <p className="text-gray-500 font-bold mt-10">Labels</p>
       {labels.map(({ label: lbl, checked, Createdlabel}, idx) => {
         console.log("LBL is", lbl)

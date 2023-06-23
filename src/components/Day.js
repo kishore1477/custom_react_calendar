@@ -7,7 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { colorList } from './Colorpicker';
 // import 'dayjs/locale/en'; // Import the desired locale
 const Day = (props) => {
-
+  const admin = localStorage.getItem('admin')
+  const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
+  const user = localStorage.getItem('loggedUser')
+  const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
   dayjs().format()
 const navigate = useNavigate()
 
@@ -57,10 +60,10 @@ const getCurrentDayClass = ()=>{
   : "";
 }
 // const loggedUser = localStorage.getItem('user')
-const loggedUser = ""
+// const loggedUser = ""
 // const loggedUser = "Kishore Kumar"
 // const loggedAdmin = localStorage.getItem('admin')
-const loggedAdmin = "admin"
+// const loggedAdmin = "admin"
 // const loggedAdmin = ""
 const events = [
   {
@@ -108,26 +111,30 @@ const events = [
     color:"purple",
   },
 ]
+
+
 localStorage.setItem('events',  JSON.stringify(events))
 const eventInLS = JSON.parse(localStorage.getItem('events'))
 // console.log("event in Local storage", eventInLS)
-const loggedUserEvents = []
+// const loggedUserEvents = []
 
-eventInLS.map((evt, i)=>{
-  // console.log("Events.user is :", evt.user)
-  if(evt.user === loggedUser){
-    loggedUserEvents.push(evt)
-  }
-})
+// eventInLS.map((evt, i)=>{
+//   // console.log("Events.user is :", evt.user)
+//   if(evt.user === loggedUser){
+//     loggedUserEvents.push(evt)
+//   }
+// })
 
 // console.log("Logged user events is :", loggedUserEvents)
-
+const handleDivOnClick = () =>{
+  if( loggedUser.name === 'Arisha' || loggedAdmin){
+    setDaySelected(days)
+    setShowEventModal(true)
+  }
+}
   return (
     <div className='border  border-gray-100 flex flex-col '>
-      <div className='h-24 z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center'  onClick={() => {
-           setDaySelected(days);
-          setShowEventModal(true);
-        }}>
+      <div className='h-24 z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center'  onClick={handleDivOnClick}>
        <header className="flex flex-col  items-center">
         { weekId === 0 &&  (
           <p className="text-sm mt-1">
@@ -264,7 +271,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
             {dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY") ?evt.title:<></>}
           </div>)
 })} */}
-         {!loggedAdmin? <>{loggedUser && loggedUserEvents.map((event,i)=>{
+         {/* {!loggedAdmin? <>{loggedUser && loggedUserEvents.map((event,i)=>{
 if(event.assigned_date === days.format("DD-MM-YY")){
  return ( <p className=' '>{event.title}</p>)
 }
@@ -272,7 +279,7 @@ if(event.assigned_date === days.format("DD-MM-YY")){
           if(evt.assigned_date === days.format("DD-MM-YY")){
             return ( <p onClick={() => setSelectedEvent(evt)} className='flex items-center justify-center'>{evt.user}</p>)
            }
-         })}</>}
+         })}</>} */}
       </div>
       </div>
     </div>

@@ -67,6 +67,8 @@ const [selectedDate, setSelectedDate] = useState(dayjs())
 const [view, setView] = useState('month')
 const [checked, setChecked] = useState(true)
 const [showSmallCal, setShowSmallCal] = useState(false)
+const [loggedAdmin, setLoggedAdmin] = useState('')
+const [loggedUser, setLoggedUser] = useState('')
 
 const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
@@ -76,6 +78,21 @@ const [savedEvents, dispatchCalEvent] = useReducer(
   const [selectedUserEventArray, dispatch] = useReducer(reducer, []);
   const [multipleCalendarEventModalArray, dispatchMultiCalEventModal] = useReducer(reducerMCEM, []);
 
+  useEffect(() => {
+  
+  }, [localStorage.getItem('admin'), localStorage.getItem('loggedUser')]);
+  window.addEventListener("storage", () => {
+    // When local storage changes, dump the list to
+    // the console.
+   
+
+  const admin = localStorage.getItem('admin')
+  const LoggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
+  setLoggedAdmin(LoggedAdmin)
+  const user = localStorage.getItem('loggedUser')
+  const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
+  setLoggedUser(loggedUser)
+});
   const filteredEvents = useMemo(() => {
     // console.log("Labels is in filteredevents is ", labels)
     return savedEvents.filter((evt) =>{
@@ -148,7 +165,7 @@ return (
     <div>
    
 <Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents , setLabels,
-        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal, setShowSmallCal, showSmallCal}}>
+        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal, setShowSmallCal, showSmallCal, loggedAdmin, loggedUser, setLoggedAdmin, setLoggedUser}}>
         {props.children}
        {/* <App/> */}
     </Contex.Provider>
