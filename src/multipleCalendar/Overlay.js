@@ -55,7 +55,7 @@ const Overlay = () => {
         {/* <button className=''  */}
                         
                     {/* > */}
-                       <span className='mr-8 mb-8'> {evt.user}</span> 
+                       <span className='mr-8 mb-8'> {evt.name}</span> 
                     <span className={`material-icons-outlined  cursor-pointer`} onClick={() => {
                   dispatch({
                     type: "delete",

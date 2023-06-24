@@ -15,22 +15,26 @@ const userList  = [
   {
     name:"Arisha",
     email:"arisha@evolve.com",
-    pass:"arisha12"
+    pass:"arisha12",
+    color:'red'
   },
   {
     name:"Ansab",
     email:"ansab@evolve.com",
-    pass:"ansab12"
+    pass:"ansab12",
+    color:'green'
   },
   {
     name:"Ramsha",
     email:"ramsha@evolve.com",
-    pass:"ramsha12"
+    pass:"ramsha12",
+    color:'indigo'
   },
   {
     name:"Kishore",
     email:"kishore@evolve.com",
-    pass:"kishore12"
+    pass:"kishore12",
+    color:'purple'
   },
  
 ]

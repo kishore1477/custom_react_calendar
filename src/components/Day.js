@@ -127,19 +127,47 @@ const eventInLS = JSON.parse(localStorage.getItem('events'))
 
 // console.log("Logged user events is :", loggedUserEvents)
 const handleDivOnClick = () =>{
-  if( loggedUser.name === 'Arisha' || loggedAdmin){
+  if(  loggedUser.name === 'Arisha' || loggedAdmin){
     setDaySelected(days)
     setShowEventModal(true)
   }
 }
   return (
     <div className='border  border-gray-100 flex flex-col '>
+      {days.format("ddd") === 'Sun' || days.format("ddd") === 'Sat'? 
+      <div className='h-24 z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
+       <header className="flex flex-col  items-center">
+        { weekId === 0 &&  (
+        <>
+      
+         <p className="text-sm  text-red-400 mt-1">
+            {days.format("ddd").toUpperCase()}
+          </p> 
+         
+          </>
+        )}
+          <p
+          className={`text-sm   text-red-400  hover:rounded-full  w-7 h-7  flex justify-center items-center   text-center px-2  ${getCurrentDayClass()}`}
+       >
+          {days.format("DD")}
+        </p> 
+      
+        
+      </header>
+
+      
+      
+      </div>: 
       <div className='h-24 z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center'  onClick={handleDivOnClick}>
        <header className="flex flex-col  items-center">
         { weekId === 0 &&  (
-          <p className="text-sm mt-1">
+     
+      
+         <p className="text-sm mt-1">
             {days.format("ddd").toUpperCase()}
           </p>
+         
+         
         )}
        <p
           className={`text-sm  cursor-pointer hover:rounded-full hover:bg-blue-300 w-7 h-7  flex justify-center items-center   text-center px-2  ${getCurrentDayClass()}`} onClick={(e) =>  handleClickOnDate(e,days)}
@@ -149,6 +177,7 @@ const handleDivOnClick = () =>{
 
           
         </p>
+      
         
       </header>
 
@@ -239,7 +268,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
     }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
       return (
        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
-          {days.format('DD-MM-YY') === week[0].format('DD-MM-YY')? <span className=''>{evt.title}</span>: <span className='invisible'>,</span>}
+          {days.format("ddd") === 'Mon'? <span className=''>{evt.title}</span>: <span className='invisible'>,</span>}
           <span className='invisible'>,</span></div>
       )
     }
@@ -281,7 +310,8 @@ if(event.assigned_date === days.format("DD-MM-YY")){
            }
          })}</>} */}
       </div>
-      </div>
+      </div>}
+     
     </div>
   )
 }

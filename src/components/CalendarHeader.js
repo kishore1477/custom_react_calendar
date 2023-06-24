@@ -118,7 +118,7 @@ export default function CalendarHeader() {
         ):''}</>}
       </h2>
 
-{ loggedUser.name ==='Arisha' || loggedAdmin ?<FormGroup>
+{ (loggedUser && loggedUser.name ==='Arisha') || loggedAdmin ?<FormGroup>
   <FormControlLabel control={<Switch  value={checked} onChange={(e)=>handleSwitch(e)} />} label="Overlay" />
  
 </FormGroup>:<></> }

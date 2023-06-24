@@ -37,11 +37,11 @@ return <div>
 {/* <div className='z-10 '>{multipleCalendarEventModalArray.map((evtt,i)=>{
   return <p>{evtt.title}</p>
 })}</div> */}
-  {showMultiCalEventModal &&   <MultipleCalendarEventModal  user = {item.user}/>}
+  {showMultiCalEventModal &&   <MultipleCalendarEventModal  user = {item.name}/>}
     <div className='z-0'>
 
 <div className='flex justify-end items-end'>
-<span className={`mr-12 ${sideBarlabelColorList[item.color]}`} >{item.user}</span>
+<span className={`mr-12 ${sideBarlabelColorList[item.color]}`} >{item.name}</span>
 
             <span className={`material-icons-outlined cursor-pointer ${colorList[item.color]}`} onClick={() => {
                 dispatch({

@@ -9,7 +9,7 @@ const Main = () => {
         <div className='w-1/5 border-r-4px solid black h-96 bg-slate-100'>
             <SideBar/>
         </div>
-        <div className='w-full h-96'>
+        <div className=''>
             <ShowMultipleCalendar/>
             </div>
     </div>
