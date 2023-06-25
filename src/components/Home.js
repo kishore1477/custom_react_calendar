@@ -134,11 +134,11 @@ return (
         </a>
       </div>
     </div>
-  {loggedAdmin || loggedUser ?  <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-    <Link to ='/origin'>  View   </Link>
-    </button>:  <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-    <Link to ='/login'>  Login    </Link>
-    </button>}
+  {loggedAdmin || loggedUser ? <Link to ='/origin'>  <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+     View   
+    </button></Link>:  <Link to ='/login'> <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+     Login   
+    </button> </Link>}
   
 
   </div>

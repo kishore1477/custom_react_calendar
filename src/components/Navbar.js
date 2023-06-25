@@ -27,10 +27,14 @@ const Navbar = () => {
       
     </nav>
     {/* <span className="ml-3 text-xl">Tailblocks</span> */}
-    <Link to = "/" className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" onClick={()=>setView('month')} >
+    {loggedAdmin || loggedUser ?  <Link to = "/origin" className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" onClick={()=>setView('month')} >
     <img src="https://t4.ftcdn.net/jpg/03/20/76/73/360_F_320767314_SjgITibHaxadut6siUJyNaxzRWy8vzRE.jpg"className='w-20 h-10 ' alt="profile" width="500" height="600"/>
  
-    </Link>
+    </Link>:  <Link to = "/" className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0"  >
+    <img src="https://t4.ftcdn.net/jpg/03/20/76/73/360_F_320767314_SjgITibHaxadut6siUJyNaxzRWy8vzRE.jpg"className='w-20 h-10 ' alt="profile" width="500" height="600"/>
+ 
+    </Link>}
+  
     {loggedAdmin || loggedUser ? <a  onClick={handleLogout} className="ml-4 cursor-pointer hover:text-gray-900  bg-slate-200 rounded-sm text-black px-4">Logout </a>: <Link  to = '/login' className="ml-4 hover:text-gray-900  bg-slate-200 rounded-sm text-black px-4">Login </Link> }
    {loggedAdmin && <Link  to = '/main' className="ml-4 hover:text-gray-900 bg-slate-200 rounded-sm text-black px-4">Multiple Calendar </Link>}
     

@@ -28,7 +28,7 @@ const ShowMultipleCalendar = () => {
   // console.log("Selected events is :", selectedUserEvent)
   return (
     <div className='flex'>
-<div className=''>Admin Calendar</div>
+{/* <div className=''>Admin Calendar</div> */}
 {selectedUserEventArray.map((item,i)=>{
 
 
@@ -38,7 +38,7 @@ return <div>
   return <p>{evtt.title}</p>
 })}</div> */}
   {showMultiCalEventModal &&   <MultipleCalendarEventModal  user = {item.name}/>}
-    <div className='z-0'>
+    <div className=''>
 
 <div className='flex justify-end items-end'>
 <span className={`mr-12 ${sideBarlabelColorList[item.color]}`} >{item.name}</span>

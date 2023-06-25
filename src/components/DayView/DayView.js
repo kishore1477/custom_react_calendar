@@ -98,15 +98,17 @@ const dd = dayjs().format("MM-DD-YYYY")
    
     function renderEvent(hour) {
         
-        return currentDayEvents.map(event => {
+        return savedEvents.map(event => {
             // const startDateTime = new Date(event.startTimeIS)
             const startDateTime = dayjs(event.start).hour()
-
-            console.log("StartDateTime is  :", startDateTime)
-            console.log("StartDateTime is type is  :", typeof(startDateTime))
-            console.log("hour is type is  :", typeof(hour))
-            console.log("hour is in render event  :", hour)
-
+        
+              const fullStart = event.start && dayjs(event.start)
+              const fullend =event.end && dayjs(event.end)
+              let currentDate = fullStart;
+        while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
+         
+          if(selectedDate ===( currentDate && currentDate.format('MM-DD-YYYY'))){
+           if(selectedDate === fullStart.format('MM-DD-YYYY')){
             return (
                 <div className={`day-events`}>
                     {startDateTime === hour && (
@@ -119,6 +121,40 @@ const dd = dayjs().format("MM-DD-YYYY")
                     )}
                 </div>
             )
+    }else if (selectedDate !== fullStart.format('MM-DD-YYYY')){
+        return (
+            <div className={`day-events`}>
+                { hour === -1 && (
+                    <div className=" day-event ">
+                        <div 
+                             className={` text-black day-event-item bg-${event.label}-500`}>
+                            <h4 className='text-black'>{event.title || "Untitled"}</h4>
+                        </div>
+                    </div>
+                )}
+            </div>
+        )
+    }
+        
+         
+          }
+          
+          currentDate = dayjs(currentDate).add(1, 'day');
+        
+        
+        }
+             
+               
+        
+                
+             
+              
+              
+            console.log("StartDateTime is  :", startDateTime)
+            console.log("StartDateTime is type is  :", typeof(startDateTime))
+            console.log("hour is type is  :", typeof(hour))
+            console.log("hour is in render event  :", hour)
+
         })
     }
 const handleEventClick = () =>{

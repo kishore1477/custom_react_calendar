@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Contex from "../contex/Contex";
 // import TimePicker from 'react-time-picker';
 import { TimePicker } from 'antd';
-import { DatePicker } from 'antd';
+import { DatePicker,Space } from 'antd';
 
 import dayjs from 'dayjs';
 import SmallCalendar from "./SmallCalendar";
@@ -147,7 +147,13 @@ export default function EventModal() {
   // const handleSmallCal = () =>{
   //   setShowSmallCal(true)
   // }
+  const handleDefaultValue = () => {
+    // if (selectedDates) {
+    //   return [dayjs(defaultValue[0], DATE_FORMAT), dayjs(defaultValue[1], DATE_FORMAT)];
+    // }
 
+    return [dayjs(), dayjs()];
+  };
   return (
 
     <div>  
@@ -201,18 +207,18 @@ export default function EventModal() {
 
 
             </div>
-            <RangePicker
-            //  suffixIcon
-            // style={{
-            //   height: "auto",
-            //   width: "auto",
-            //   border: "none",
-            //   borderRadius: "0px",
-            //   cursor: "pointer",
-            //   fontSize: "17px",
-            //   margin: "0px",
-            //   padding: "0px"
-            // }}
+            {/* <RangePicker
+             suffixIcon
+            style={{
+              height: "auto",
+              width: "auto",
+              border: "none",
+              borderRadius: "0px",
+              cursor: "pointer",
+              fontSize: "17px",
+              margin: "0px",
+              padding: "0px"
+            }}
       value={dates || valued}
       disabledDate={disabledDate}
       onCalendarChange={(val) => {
@@ -221,9 +227,47 @@ export default function EventModal() {
       onChange={(val) => {
         setValued(val);
       }}
+      
       onOpenChange={onOpenChange}
       changeOnBlur
-    />
+    /> */}
+
+<Space direction="vertical" size={8}>
+  
+    <RangePicker 
+    //  defaultValue={handleDefaultValue}
+     defaultValue = {{
+      defaultValue:[dayjs(), dayjs()]}}
+         suffixIcon
+         style={{
+           height: "auto",
+           width: "auto",
+           border: "none",
+           borderRadius: "0px",
+           cursor: "pointer",
+           fontSize: "17px",
+           margin: "0px",
+           padding: "0px"
+         }}
+         value={dates || valued}
+         disabledDate={disabledDate}
+         onCalendarChange={(val) => {
+           setDates(val);
+         }}
+         onChange={(val) => {
+           setValued(val);
+         }}
+        
+         format="YYYY-MM-DD HH:mm"
+         placeholder={["Start", "End"]}
+        
+         showTime={{
+          hideDisabledOptions: true,
+          defaultValue: [dayjs('00:00', 'HH:mm'), dayjs('11:59', 'HH:mm')],
+        }}
+        />
+ 
+  </Space>
     {/* <DatePicker.RangePicker format="YYYY-MM-DD HH:mm"/> */}
             {/* <TimePicker.RangePicker placeholder={["Start", "End"]} format="YYYY-MM-DD HH:mm" className="font-bold text-green-700" onOk={(time) => {
               setTimeString(time);

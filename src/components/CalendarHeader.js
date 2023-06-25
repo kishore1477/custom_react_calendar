@@ -124,8 +124,8 @@ export default function CalendarHeader() {
 </FormGroup>:<></> }
       
       {/* <Switch {...label} defaultChecked /> */}
-  <div className="flex items-center justify-center md:absolute md:right-80 "> <Link to = '/overlay' > <button >
-      Overlay</button></Link></div>
+  {/* <div className="flex items-center justify-center md:absolute md:right-80 "> <Link to = '/overlay' > <button >
+      Overlay</button></Link></div> */}
 
 
 
@@ -164,7 +164,7 @@ export default function CalendarHeader() {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                 to = '/'
+                 to = '/origin'
                  onClick={()=>setView('month')}
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',

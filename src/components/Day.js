@@ -127,9 +127,15 @@ const eventInLS = JSON.parse(localStorage.getItem('events'))
 
 // console.log("Logged user events is :", loggedUserEvents)
 const handleDivOnClick = () =>{
-  if(  loggedUser.name === 'Arisha' || loggedAdmin){
+  if(loggedAdmin){
+    // if( || loggedAdmin){
+      setDaySelected(days)
+      setShowEventModal(true)
+    // }
+   
+  }else if(loggedUser.name === 'Arisha'){
     setDaySelected(days)
-    setShowEventModal(true)
+      setShowEventModal(true)
   }
 }
   return (
