@@ -95,8 +95,9 @@ export default function EventModal() {
 
   const [value, onChange] = useState('10:00');
   console.log("Time value is :", value)
-  const [modalData, setModalData] = useState({auditNo:'', location:'',customerName:"",standaradTyp:'', industCode:'', siteName:'',label:'' })
-  const [auditNo, setAuditNo] = useState('');
+  const [title, setTitle] = useState(
+    selectedEvent ? selectedEvent.title : ""
+  );
   const [location, setLocation] = useState(
     selectedEvent ? selectedEvent.location : ""
   );
@@ -114,14 +115,11 @@ export default function EventModal() {
 
   function handleSubmit(e) {
     e.preventDefault();
-const {auditNo,location, customerName, standaradTyp, industCode, siteName, label} = modalData
-    // auditNo:'', location:'',customerName:"",standaradTyp:'', industCode:'', siteName:'',label:'' 
     const calendarEvent = {
-      auditNo,
-      customerName,
-      standaradTyp,
-      industCode,
-      siteName,
+      start,
+      end,
+      title,
+      desc,
       location,
       createdLabel:label,
       label: selectedOption,
@@ -135,7 +133,7 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
     if (selectedEvent) {
       dispatchCalEvent({ type: "update", payload: calendarEvent });
     } else {
-      if (desc && location) {
+      if (title && desc && location) {
 
         dispatchCalEvent({ type: "push", payload: calendarEvent });
       } else {
@@ -156,11 +154,6 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
 
     return [dayjs(), dayjs()];
   };
-  const onchange = (e)=>{
-    const  {name, value} = e.target
-    setModalData({...modalData, [name]:value})
-    
-  }
   return (
 
     <div>  
@@ -198,13 +191,13 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
           <div className="grid grid-cols-1/5 items-end gap-y-7">
             <div></div>
             <input
-              type="number"
-              name="auditNo"
-              placeholder="Audit No"
-              value={modalData.auditNo}
+              type="text"
+              name="title"
+              placeholder="Add title"
+              value={title}
               required
               className="pt-3 border-0 text-gray-600 text-xl font-semibold pb-2  w-1/2 md:w-full  border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-              onChange={onchange}
+              onChange={(e) => setTitle(e.target.value)}
             />
             <div className="flex">
               <span className="material-icons-outlined text-gray-400 ">
@@ -214,7 +207,31 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
 
 
             </div>
-           
+            {/* <RangePicker
+             suffixIcon
+            style={{
+              height: "auto",
+              width: "auto",
+              border: "none",
+              borderRadius: "0px",
+              cursor: "pointer",
+              fontSize: "17px",
+              margin: "0px",
+              padding: "0px"
+            }}
+      value={dates || valued}
+      disabledDate={disabledDate}
+      onCalendarChange={(val) => {
+        setDates(val);
+      }}
+      onChange={(val) => {
+        setValued(val);
+      }}
+      
+      onOpenChange={onOpenChange}
+      changeOnBlur
+    /> */}
+
 <Space direction="vertical" size={8}>
   
     <RangePicker 
@@ -251,60 +268,27 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
         />
  
   </Space>
-  
+    {/* <DatePicker.RangePicker format="YYYY-MM-DD HH:mm"/> */}
+            {/* <TimePicker.RangePicker placeholder={["Start", "End"]} format="YYYY-MM-DD HH:mm" className="font-bold text-green-700" onOk={(time) => {
+              setTimeString(time);
+              console.log("time is ",time);
+            
+            }} /> */}
 
 
 
             <div className="flex">
-            <span className="material-icons-outlined">
-          person
-</span>
+              <span className="material-icons-outlined text-gray-400  flex justify-center items-center">
+                segment
+              </span>
               <input
                 type="text"
-                name="customerName"
-                placeholder="Customer Name"
-                value={modalData.customerName}
+                name="desc"
+                placeholder="Add a description"
+                value={desc}
                 required
                 className="ml-4 border-0 text-gray-600 pb-2 border-b-2 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                onChange={onchange}
-              />
-            </div>
-            <div className="flex">
-      
-              <input
-                type="text"
-                name="standaradTyp"
-                placeholder="Standarad (Audit type)"
-                value={modalData.standaradTyp}
-                required
-                className="ml-4 border-0 text-gray-600 pb-2 border-b-2 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                onChange={onchange}
-              />
-            </div>
-            <div className="flex">
-            <span className="material-icons-outlined">
-fiber_pin
-</span>
-              <input
-                type="number"
-                name="industCode"
-                placeholder="Industrial Code"
-                value={modalData.industCode}
-                required
-                className="ml-4 border-0 text-gray-600 pb-2 border-b-2 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                onChange={onchange}
-              />
-            </div>
-            <div className="flex">
-    
-              <input
-                type="text"
-                name="siteName"
-                placeholder="Site Name"
-                value={modalData.siteName}
-                required
-                className="ml-4 border-0 text-gray-600 pb-2 border-b-2 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                onChange={onchange}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div className="flex">
@@ -315,10 +299,10 @@ fiber_pin
                 type="text"
                 name="location"
                 placeholder="Add a Location"
-                value={modalData.location}
+                value={location}
                 required
                 className="ml-4 border-0 text-gray-600 pb-2 w-1/2 md:w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                onChange={onchange}
+                onChange={(e) => setLocation(e.target.value)}
               />
             </div>
             <div className="flex gap-x-2">
@@ -327,10 +311,10 @@ fiber_pin
                   type="text"
                   name="label"
                   placeholder="Create a label"
-                  value={modalData.label}
+                  value={label}
                   required
                   className=" border-0 text-gray-600 pb-2 w-1/2 md:w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-                  onChange={onchange}
+                  onChange={(e) => setLabel(e.target.value)}
                 /></div>
                 <div className="ml-4">
                   <select onChange={handleChange}>
@@ -343,7 +327,20 @@ fiber_pin
                 </div>
               </div>
 
-          
+              {/* {labelsClasses.map((lblClass, i) => {
+              // console.log("lbl Classes is:", lblClass)
+            return (    <span
+                  key={i}
+                  onClick={() => setSelectedLabel(lblClass)}
+                  className={`bg-${lblClass}-500  w-6 h-6 rounded-full flex items-center justify-center cursor-pointer`}
+                >
+                  {selectedLabel === lblClass && (
+                    <span className="material-icons-outlined  text-sm">
+                      check
+                    </span>
+                  )}
+                </span>
+              )})} */}
 
 
 

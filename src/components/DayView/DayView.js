@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { useParams } from "react-router-dom";
 import Contex from '../../contex/Contex';
 import EventModal from '../EventModal';
+import { colorList } from '../Colorpicker';
 const DayView = () => {
    const contex =  useContext(Contex)
    const {selectedDate, setSelectedDate, setView, savedEvents, setShowEventModal, showEventModal} = contex
@@ -80,7 +81,7 @@ const dd = dayjs().format("MM-DD-YYYY")
       }
     function getStatus(hour) {
         if (hour === 0) {
-            return "AM"
+            return "GMT"
         } else if (hour > 12) {
             return "PM"
         } else {
@@ -101,6 +102,7 @@ const dd = dayjs().format("MM-DD-YYYY")
         return savedEvents.map(event => {
             // const startDateTime = new Date(event.startTimeIS)
             const startDateTime = dayjs(event.start).hour()
+            const endDateTime = dayjs(event.end).hour()
         
               const fullStart = event.start && dayjs(event.start)
               const fullend =event.end && dayjs(event.end)
@@ -114,20 +116,33 @@ const dd = dayjs().format("MM-DD-YYYY")
                     {startDateTime === hour && (
                         <div className=" day-event ">
                             <div 
-                                 className={` text-black day-event-item bg-${event.label}-500`}>
+                                 className={` text-black day-event-item ${colorList[event.label]}`}>
                                 <h4 className='text-black'>{event.title || "Untitled"}</h4>
                             </div>
                         </div>
                     )}
                 </div>
             )
+    }else if (currentDate.format('MM-DD-YYYY') == fullend.format('MM-DD-YYYY')){
+        return (
+            <div className={`day-events`}>
+                { endDateTime === hour && (
+                    <div className=" day-event ">
+                        <div 
+                             className={` text-black day-event-item ${colorList[event.label]}`}>
+                            <h4 className='text-black'>{event.title || "Untitled"}</h4>
+                        </div>
+                    </div>
+                )}
+            </div>
+        )
     }else if (selectedDate !== fullStart.format('MM-DD-YYYY')){
         return (
             <div className={`day-events`}>
-                { hour === -1 && (
+                { hour === 0 && (
                     <div className=" day-event ">
                         <div 
-                             className={` text-black day-event-item bg-${event.label}-500`}>
+                             className={` text-black day-event-item ${colorList[event.label]}`}>
                             <h4 className='text-black'>{event.title || "Untitled"}</h4>
                         </div>
                     </div>
@@ -183,7 +198,7 @@ const handleEventClick = () =>{
 
     <div className="hour-list-wrapper">
         <div className="hour-list">
-            {Array.from({length: 24}).map((ele, index) => {
+            {Array.from({length: 25}).map((ele, index) => {
 
                 let hour = index
 console.log("hour is :", hour)
@@ -195,7 +210,7 @@ console.log("hour is :", hour)
                             <>
                                 <h4 className="hour-label border-r-2  border-slate-200 pr-2 ">{hour > 0
                                     ? renderHour(hour)
-                                    : "12"
+                                    : ""
                                 }
                                     <span className="ml-1">{getStatus(hour)}</span>
                                 </h4>

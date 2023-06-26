@@ -141,7 +141,7 @@ const handleDivOnClick = () =>{
   return (
     <div className='border  border-gray-100 flex flex-col '>
       {days.format("ddd") === 'Sun' || days.format("ddd") === 'Sat'? 
-      <div className='h-24 z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
+      <div className='h-24  z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
        <header className="flex flex-col  items-center">
         { weekId === 0 &&  (
         <>
@@ -269,12 +269,12 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
   if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
     if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
       return (
-        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{ evt.title}</div>
+        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{ evt.auditNo}</div>
       )
     }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
       return (
        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
-          {days.format("ddd") === 'Mon'? <span className=''>{evt.title}</span>: <span className='invisible'>,</span>}
+          {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo}</span>: <span className='invisible'>,</span>}
           <span className='invisible'>,</span></div>
       )
     }

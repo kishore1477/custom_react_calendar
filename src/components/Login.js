@@ -5,39 +5,73 @@ import { AiFillEyeInvisible,AiFillEye } from 'react-icons/ai';
 import { AiOutlineMail } from 'react-icons/ai';
 import { RiLockPasswordLine } from 'react-icons/ri';
 const Login = () => {
-    const [logindata, setLogindata] = useState({})
+  
     const [Error, setError] = useState("")
     const [loginData, setLoginData] = useState({logEmail:"",logPass:""});
 const [Success, setSuccess] = useState("");
 const [open, setOpen] = useState(false);
 const navigate = useNavigate();
-const userList  = [
-  {
-    name:"Arisha",
-    email:"arisha@evolve.com",
-    pass:"arisha12",
-    color:'red'
-  },
-  {
-    name:"Ansab",
-    email:"ansab@evolve.com",
-    pass:"ansab12",
-    color:'green'
-  },
-  {
-    name:"Ramsha",
-    email:"ramsha@evolve.com",
-    pass:"ramsha12",
-    color:'indigo'
-  },
-  {
-    name:"Kishore",
-    email:"kishore@evolve.com",
-    pass:"kishore12",
-    color:'purple'
-  },
+const  userList = {
+  user :[
+
+    {
+      name:"Arisha",
+      email:"arisha@evolve.com",
+      pass:"arisha12",
+      color:'red'
+    },
+    {
+      name:"Ansab",
+      email:"ansab@evolve.com",
+      pass:"ansab12",
+      color:'green'
+    },
+    {
+      name:"Ramsha",
+      email:"ramsha@evolve.com",
+      pass:"ramsha12",
+      color:'indigo'
+    },
+    {
+      name:"Kishore",
+      email:"kishore@evolve.com",
+      pass:"kishore12",
+      color:'purple'
+    },
+  ],
+  other:[
+
+     
+    {
+      name:"Sameer",
+      email:"sameer@evolve.com",
+      pass:"sameer12",
+      color:'blue',
+      profession:'Auditor'
+    },
+    {
+      name:"Huzaifa",
+      email:"huzaifa@evolve.com",
+      pass:"huzaifa12",
+      color:'gray',
+      profession:'Translator'
+    },
+    {
+      name:"Waleed",
+      email:"waleed@evolve.com",
+      pass:"waleed12",
+      color:'purple',
+      profession:'Expert'
+    },
+  ]
+}
+// const userList  = [
  
-]
+//   [
+   
+//   ],
+ 
+// ]
 const adminList  = [
   {
     name:"Noman",
@@ -51,11 +85,25 @@ localStorage.setItem("adminList", JSON.stringify(adminList))
       e.preventDefault()
       const {logEmail, logPass} = loginData
   
-  userList.map((user,i)=>{
-    if(user.email === logEmail && user.pass === logPass){
+  userList.user.map((user,i)=>{
+    if((user.email === logEmail) && (user.pass === logPass )){
       localStorage.setItem("loggedUser", JSON.stringify(user))
       navigate('/origin')
     }
+    // if((user.email === logEmail || user.other.email === logEmail) && (user.pass === logPass || user.other.pass === logPass)){
+    //   localStorage.setItem("loggedUser", JSON.stringify(user))
+    //   navigate('/origin')
+    // }
+  })
+  userList.other.map((user,i)=>{
+    if((user.email === logEmail) && (user.pass === logPass )){
+      localStorage.setItem("loggedUser", JSON.stringify(user))
+      navigate('/origin')
+    }
+    // if((user.email === logEmail || user.other.email === logEmail) && (user.pass === logPass || user.other.pass === logPass)){
+    //   localStorage.setItem("loggedUser", JSON.stringify(user))
+    //   navigate('/origin')
+    // }
   })
   adminList.map((admin,i)=>{
     if(admin.email === logEmail && admin.pass === logPass){

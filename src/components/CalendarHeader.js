@@ -89,8 +89,10 @@ export default function CalendarHeader() {
   const user = localStorage.getItem('loggedUser')
   const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
   return (
-    <>
-    {loggedAdmin || loggedUser ?  <header className={`px-4 py-1 flex items-center ${showEventModal && 'bg-red-100'}`}>
+    // className="sticky top-16"
+    <div>
+    {loggedAdmin || loggedUser ? 
+     <header className={`px-4 py-1 flex items-center ${showEventModal && 'bg-red-100'} `}>
       <h1 className="mr-10 text-xl text-gray-500 fond-bold">
         Calendar
       </h1>
@@ -274,6 +276,6 @@ export default function CalendarHeader() {
             </div>
     </header>:<></>}
   
-    </>
+    </div>
   );
 }

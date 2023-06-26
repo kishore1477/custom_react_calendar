@@ -23,7 +23,7 @@ const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
 const Userlist = JSON.parse(localStorage.getItem('userList'))
 console.log("userList is :", Userlist)
   return (
-    <div>
+    <div className='ml-5'>
        {/* <span className='font-bold flex justify-center items-center'>Local Users</span> */}
         {/* {eventInLS.map((evt,i)=>{
             return(
@@ -32,14 +32,21 @@ console.log("userList is :", Userlist)
                 </div>
             )
         })} */}
- <span className='font-bold flex justify-center items-center'>Special Users</span>
-      {loggedUser || loggedAdmin ? Userlist.map((user,i)=>{
+ <span className='font-bold flex justify-start items-start ml-10'> Users</span>
+      {loggedUser || loggedAdmin ? Userlist.user.map((user,i)=>{
         return(
           <div key={i} className='mx-4 flex flex-col space-y-4'> 
-          <div className=' py-4 cursor-pointer flex justify-center items-center' onClick={()=>handleClick(user) }>{user.name}</div>
+          <div className=' py-4 cursor-pointer flex justify-start items-start' onClick={()=>handleClick(user) }>{user.name}</div>
           </div>
       )
       }):<></>}
+      {loggedAdmin && Userlist.other.map((user,i)=>{
+        return(
+          <div key={i} className='mx-4 flex flex-col space-y-4'> 
+          <div className=' py-4 cursor-pointer flex justify-start items-start' onClick={()=>handleClick(user) }>{user.name} ({user.profession})</div>
+          </div>
+      )
+      })}
     </div>
   )
 }
