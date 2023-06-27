@@ -9,17 +9,20 @@ import { colorList } from './Colorpicker';
 const Day = (props) => {
   const admin = localStorage.getItem('admin')
   const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
+  const loggedAdminName = loggedAdmin && loggedAdmin.name
   const user = localStorage.getItem('loggedUser')
   const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
+  const loggedUserName = loggedUser && loggedUser.name
+  console.log("Logged username is :", loggedUserName)
   dayjs().format()
 const navigate = useNavigate()
 
   const contex = useContext(Contex)
-  const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents} = contex
+  const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents, selectedOffDay, setUserNameAddEvent, setAdminNameAddEvent} = contex
   const [dayEvents, setDayEvents] = useState([]);
     const  { days, weekId, dayId, week} = props
     console.log("Week daya is :", week[0])
-
+console.log("selectedOffDay is :", selectedOffDay)
 console.log("Filtered Events is:", filteredEvents)
 console.log("filteredEvents.toReversed()Events is:", filteredEvents.toReversed())
 
@@ -128,196 +131,195 @@ const eventInLS = JSON.parse(localStorage.getItem('events'))
 // console.log("Logged user events is :", loggedUserEvents)
 const handleDivOnClick = () =>{
   if(loggedAdmin){
-    // if( || loggedAdmin){
+  
       setDaySelected(days)
       setShowEventModal(true)
-    // }
+      setAdminNameAddEvent(loggedAdmin.name)
    
   }else if(loggedUser.name === 'Arisha'){
     setDaySelected(days)
       setShowEventModal(true)
+      setUserNameAddEvent(loggedUser.name)
   }
 }
   return (
     <div className='border  border-gray-100 flex flex-col '>
-      {days.format("ddd") === 'Sun' || days.format("ddd") === 'Sat'? 
+
+      {/* { selectedOffDay && selectedOffDay.map((offDay, i)=>{ */}
+      {selectedOffDay && (days.format("dddd") === selectedOffDay[0] || days.format("dddd") ===  selectedOffDay[1] ||  days.format("dddd") ===  selectedOffDay[2]) ?  
       <div className='h-24  z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
-       <header className="flex flex-col  items-center">
-        { weekId === 0 &&  (
-        <>
-      
-         <p className="text-sm  text-red-400 mt-1">
-            {days.format("ddd").toUpperCase()}
-          </p> 
-         
-          </>
-        )}
-          <p
-          className={`text-sm   text-red-400  hover:rounded-full  w-7 h-7  flex justify-center items-center   text-center px-2  ${getCurrentDayClass()}`}
-       >
-          {days.format("DD")}
-        </p> 
-      
-        
-      </header>
-
-      
-      
-      </div>: 
-      <div className='h-24 z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center'  onClick={handleDivOnClick}>
-       <header className="flex flex-col  items-center">
-        { weekId === 0 &&  (
-     
-      
-         <p className="text-sm mt-1">
-            {days.format("ddd").toUpperCase()}
-          </p>
-         
-         
-        )}
-       <p
-          className={`text-sm  cursor-pointer hover:rounded-full hover:bg-blue-300 w-7 h-7  flex justify-center items-center   text-center px-2  ${getCurrentDayClass()}`} onClick={(e) =>  handleClickOnDate(e,days)}
-       >
-          {days.format("DD")}
-          
-
-          
-        </p>
-      
-        
-      </header>
-
-      
-      <div
-        className="flex-1 "
-       
-      >
-       
-      {/* {eventInLS.map((evt,i)=>{
-        
-        // console.log("Evt start is :", evt.start)
-      const start = evt.start && dayjs(evt.start).format('DD')
-      const fullStart = evt.start && dayjs(evt.start)
-      // console.log("Fullstart is :", fullStart)
-      // const sstart =  start.format('DD')
-      const end =evt.end && dayjs(evt.end).format('DD')
-      const fullend =evt.end && dayjs(evt.end)
-      // console.log("fullend is :", fullend)
-      // console.log("(end-start) is:", (end-start))
-      // console.log("days.format", days.format("DD-MM-YY"))
-      let currentDate = fullStart;
-while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
-  // currentDate = dayjs(currentDate).add(1, 'day');
-
-  // console.log("Insie while")
-  // if(currentDate >= )
-  // console.log("Current date iss :", currentDate)
-  // console.log("Current date iss :", currentDate.format('D'))
-  // console.log("days date iss :", days)
-  // console.log("days date iss :", days.format('D'))
-  // currentDate ?<></>
-  if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
-    if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
-      return (
-        <div onClick={()=>{setShowEventModal(true)}} className={`bg-${evt.color}-400 cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50`}>{ evt.title}</div>
-      )
-    }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
-      return (
-        <div onClick={()=>{setShowEventModal(true)}}  className={`bg-${evt.color}-400 cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50 `}><span className='invisible'>,</span></div>
-      )
-    }
+  <header className="flex flex-col  items-center">
+   { weekId === 0 &&  (
+   <>
  
-  }
+    <p className="text-sm  text-red-400 mt-1">
+       {days.format("ddd").toUpperCase()}
+     </p> 
+    
+     </>
+   )}
+     <p
+     className={`text-sm   text-red-400  hover:rounded-full  w-7 h-7  flex justify-center items-center   text-center px-2  ${getCurrentDayClass()}`}
+  >
+     {days.format("DD")}
+   </p> 
+ 
+   
+ </header>
+
+ 
+ 
+ </div>:
+ <div className='h-24 z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center'  onClick={handleDivOnClick}>
+  <header className="flex flex-col  items-center">
+   { weekId === 0 &&  (
+
+ 
+    <p className="text-sm mt-1">
+       {days.format("ddd").toUpperCase()}
+     </p>
+    
+    
+   )}
+  <p
+     className={`text-sm  cursor-pointer hover:rounded-full hover:bg-blue-300 w-7 h-7  flex justify-center items-center   text-center px-2  ${getCurrentDayClass()}`} onClick={(e) =>  handleClickOnDate(e,days)}
+  >
+     {days.format("DD")}
+     
+
+     
+   </p>
+ 
+   
+ </header>
+
+ 
+ <div
+   className="flex-1 "
   
-  currentDate = dayjs(currentDate).add(1, 'day');
+ >
+  
+ {/* {eventInLS.map((evt,i)=>{
+   
+   // console.log("Evt start is :", evt.start)
+ const start = evt.start && dayjs(evt.start).format('DD')
+ const fullStart = evt.start && dayjs(evt.start)
+ // console.log("Fullstart is :", fullStart)
+ // const sstart =  start.format('DD')
+ const end =evt.end && dayjs(evt.end).format('DD')
+ const fullend =evt.end && dayjs(evt.end)
+ // console.log("fullend is :", fullend)
+ // console.log("(end-start) is:", (end-start))
+ // console.log("days.format", days.format("DD-MM-YY"))
+ let currentDate = fullStart;
+while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
+// currentDate = dayjs(currentDate).add(1, 'day');
+
+// console.log("Insie while")
+// if(currentDate >= )
+// console.log("Current date iss :", currentDate)
+// console.log("Current date iss :", currentDate.format('D'))
+// console.log("days date iss :", days)
+// console.log("days date iss :", days.format('D'))
+// currentDate ?<></>
+if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
+if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
+ return (
+   <div onClick={()=>{setShowEventModal(true)}} className={`bg-${evt.color}-400 cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50`}>{ evt.title}</div>
+ )
+}else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
+ return (
+   <div onClick={()=>{setShowEventModal(true)}}  className={`bg-${evt.color}-400 cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50 `}><span className='invisible'>,</span></div>
+ )
+}
+
+}
+
+currentDate = dayjs(currentDate).add(1, 'day');
 
 
 }
-     
-       
 
-        
-     
-      // console.log("Start date is the: ", start)
-      // console.log("Sstart date is the: ", sstart)
-      // console.log("End date is the: ", end)
-    
-      })} */}
-      {filteredEvents.toReversed().map((evt,i)=>{
-        console.log("i:",i)
-        // console.log("Evt start is :", evt.start)
-      const start = evt.start && dayjs(evt.start).format('DD')
-      const fullStart = evt.start && dayjs(evt.start)
-      // console.log("Fullstart is :", fullStart)
-      // const sstart =  start.format('DD')
-      const end =evt.end && dayjs(evt.end).format('DD')
-      const fullend =evt.end && dayjs(evt.end)
-      // console.log("fullend is :", fullend)
-      // console.log("(end-start) is:", (end-start))
-      // console.log("days.format", days.format("DD-MM-YY"))
-      let currentDate = fullStart;
-while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
-  // currentDate = dayjs(currentDate).add(1, 'day');
-
-  // console.log("Insie while")
-  // if(currentDate >= )
-  // console.log("Current date iss :", currentDate)
-  // console.log("Current date iss :", currentDate.format('D'))
-  // console.log("days date iss :", days)
-  // console.log("days date iss :", days.format('D'))
-  // currentDate ?<></>
-  if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
-    if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
-      return (
-        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{ evt.auditNo}</div>
-      )
-    }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
-      return (
-       <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
-          {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo}</span>: <span className='invisible'>,</span>}
-          <span className='invisible'>,</span></div>
-      )
-    }
- 
-  }
   
-  currentDate = dayjs(currentDate).add(1, 'day');
+
+   
+
+ // console.log("Start date is the: ", start)
+ // console.log("Sstart date is the: ", sstart)
+ // console.log("End date is the: ", end)
+
+ })} */}
+ {filteredEvents.toReversed().map((evt,i)=>{
+   console.log("i:",i)
+   // console.log("Evt start is :", evt.start)
+ const start = evt.start && dayjs(evt.start).format('DD')
+ const fullStart = evt.start && dayjs(evt.start)
+
+ const end =evt.end && dayjs(evt.end).format('DD')
+ const fullend =evt.end && dayjs(evt.end)
+
+ let currentDate = fullStart;
+while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
+
+if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
+if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
+if(evt.user === loggedUserName || (evt.admin && (evt.admin === loggedAdminName)) ){
+  return (
+    <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{ evt.admin?evt.admin:evt.user}</div>
+  )
+}
+
+}else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
+  if(evt.user === loggedUserName || (evt.admin && (evt.admin === loggedAdminName))){
+    return (
+      <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
+         {days.format("ddd") === 'Mon'? <span className=''>{evt.admin?evt.admin:evt.user}</span>: <span className='invisible'>,</span>}
+         <span className='invisible'>,</span></div>
+     )
+  }
+
+}
+
+}
+
+currentDate = dayjs(currentDate).add(1, 'day');
 
 
 }
-     
-       
 
-        
-     
-      // console.log("Start date is the: ", start)
-      // console.log("Sstart date is the: ", sstart)
-      // console.log("End date is the: ", end)
-    
-      })}
-        {/* {dayEvents.map((evt, idx) => {
-          
-       return (   <div
-            key={idx}
-            onClick={() => setSelectedEvent(evt)}
-            className={` ${colorList[evt.label]} p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
-          >
+  
 
-            {dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY") ?evt.title:<></>}
-          </div>)
+   
+
+ // console.log("Start date is the: ", start)
+ // console.log("Sstart date is the: ", sstart)
+ // console.log("End date is the: ", end)
+
+ })}
+   {/* {dayEvents.map((evt, idx) => {
+     
+  return (   <div
+       key={idx}
+       onClick={() => setSelectedEvent(evt)}
+       className={` ${colorList[evt.label]} p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
+     >
+
+       {dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY") ?evt.title:<></>}
+     </div>)
 })} */}
-         {/* {!loggedAdmin? <>{loggedUser && loggedUserEvents.map((event,i)=>{
+    {/* {!loggedAdmin? <>{loggedUser && loggedUserEvents.map((event,i)=>{
 if(event.assigned_date === days.format("DD-MM-YY")){
- return ( <p className=' '>{event.title}</p>)
+return ( <p className=' '>{event.title}</p>)
 }
-         })}</>:<>{eventInLS.map((evt,i)=>{
-          if(evt.assigned_date === days.format("DD-MM-YY")){
-            return ( <p onClick={() => setSelectedEvent(evt)} className='flex items-center justify-center'>{evt.user}</p>)
-           }
-         })}</>} */}
-      </div>
-      </div>}
-     
+    })}</>:<>{eventInLS.map((evt,i)=>{
+     if(evt.assigned_date === days.format("DD-MM-YY")){
+       return ( <p onClick={() => setSelectedEvent(evt)} className='flex items-center justify-center'>{evt.user}</p>)
+      }
+    })}</>} */}
+ </div>
+ </div>} 
+
+    
     </div>
   )
 }

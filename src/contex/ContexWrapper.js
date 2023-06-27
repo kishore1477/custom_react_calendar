@@ -70,6 +70,9 @@ const [checked, setChecked] = useState(true)
 const [showSmallCal, setShowSmallCal] = useState(false)
 const [loggedAdmin, setLoggedAdmin] = useState('')
 const [loggedUser, setLoggedUser] = useState('')
+const [userNameAddEvent, setUserNameAddEvent] = useState('')
+const [adminNameAddEvent, setAdminNameAddEvent] = useState('')
+const [selectedOffDay, setSelectedOffDay] = useState(["Saturday","Sunday"])
 
 const [savedEvents, dispatchCalEvent] = useReducer(
     savedEventsReducer,
@@ -166,7 +169,7 @@ return (
     <div>
    
 <Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents , setLabels,
-        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal, setShowSmallCal, showSmallCal, loggedAdmin, loggedUser, setLoggedAdmin, setLoggedUser}}>
+        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal, setShowSmallCal, showSmallCal, loggedAdmin, loggedUser, setLoggedAdmin, setLoggedUser, setSelectedOffDay, selectedOffDay, userNameAddEvent, setUserNameAddEvent, adminNameAddEvent, setAdminNameAddEvent}}>
         {props.children}
        {/* <App/> */}
     </Contex.Provider>

@@ -4,12 +4,14 @@ import { focusRingColorList, sideBarlabelColorList } from "./Colorpicker";
 import { Link } from "react-router-dom";
 
 export default function Labels() {
-  const { labels, updateLabel, showEventModal } = useContext(Contex);
+  const { labels, updateLabel, showEventModal, filteredEvents } = useContext(Contex);
   console.log("Labels is:", labels)
   const admin = localStorage.getItem('admin')
   const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
+  const loggedAdminName = loggedAdmin && loggedAdmin.name
   const user = localStorage.getItem('loggedUser')
   const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
+  const loggedUserName = loggedUser && loggedUser.name
   return (
     <React.Fragment>
       <div >
@@ -19,6 +21,7 @@ export default function Labels() {
       {labels.map(({ label: lbl, checked, Createdlabel}, idx) => {
         console.log("LBL is", lbl)
         console.log("Checked is ", checked)
+      
         return (
 <label key={idx} className="items-center mt-3 block">
           <input

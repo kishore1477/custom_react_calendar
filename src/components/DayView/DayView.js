@@ -108,48 +108,69 @@ const dd = dayjs().format("MM-DD-YYYY")
               const fullend =event.end && dayjs(event.end)
               let currentDate = fullStart;
         while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
-         
+         if(currentDate.format("ddd") === 'Sun' || currentDate.format("ddd") === 'Sat'){
+
+         }
           if(selectedDate ===( currentDate && currentDate.format('MM-DD-YYYY'))){
-           if(selectedDate === fullStart.format('MM-DD-YYYY')){
-            return (
-                <div className={`day-events`}>
-                    {startDateTime === hour && (
-                        <div className=" day-event ">
-                            <div 
-                                 className={` text-black day-event-item ${colorList[event.label]}`}>
-                                <h4 className='text-black'>{event.title || "Untitled"}</h4>
+
+            if(currentDate.format("ddd") === 'Sun' || currentDate.format("ddd") === 'Sat'){
+                return null
+                // return (
+                    // <div className={`day-events`}>
+                    //     {hour === 0 && (
+                    //         <div className=" day-event ">
+                    //             <div 
+                    //                  className={` text-black day-event-item`}>
+                    //                 <h4 className='text-black'>Off Days</h4>
+                    //             </div>
+                    //         </div>
+                    //   )} 
+                    // </div>
+                // )
+            }else {
+
+                if(selectedDate === fullStart.format('MM-DD-YYYY')){
+                    return (
+                        <div className={`day-events`}>
+                            {startDateTime === hour && (
+                                <div className=" day-event ">
+                                    <div 
+                                         className={` text-black day-event-item ${colorList[event.label]}`}>
+                                        <h4 className='text-black'>{event.auditNo || "Untitled"}</h4>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )
+            }else if (currentDate.format('MM-DD-YYYY') === fullend.format('MM-DD-YYYY')){
+                return (
+                    <div className={`day-events`}>
+                        { endDateTime === hour && (
+                            <div className=" day-event ">
+                                <div 
+                                     className={` text-black day-event-item ${colorList[event.label]}`}>
+                                    <h4 className='text-black'>{event.auditNo || "Untitled"}</h4>
+                                </div>
                             </div>
-                        </div>
-                    )}
-                </div>
-            )
-    }else if (currentDate.format('MM-DD-YYYY') == fullend.format('MM-DD-YYYY')){
-        return (
-            <div className={`day-events`}>
-                { endDateTime === hour && (
-                    <div className=" day-event ">
-                        <div 
-                             className={` text-black day-event-item ${colorList[event.label]}`}>
-                            <h4 className='text-black'>{event.title || "Untitled"}</h4>
-                        </div>
+                        )}
                     </div>
-                )}
-            </div>
-        )
-    }else if (selectedDate !== fullStart.format('MM-DD-YYYY')){
-        return (
-            <div className={`day-events`}>
-                { hour === 0 && (
-                    <div className=" day-event ">
-                        <div 
-                             className={` text-black day-event-item ${colorList[event.label]}`}>
-                            <h4 className='text-black'>{event.title || "Untitled"}</h4>
-                        </div>
+                )
+            }else if (selectedDate !== fullStart.format('MM-DD-YYYY')){
+                return (
+                    <div className={`day-events`}>
+                        { hour === 0 && (
+                            <div className=" day-event ">
+                                <div 
+                                     className={` text-black day-event-item ${colorList[event.label]}`}>
+                                    <h4 className='text-black'>{event.auditNo || "Untitled"}</h4>
+                                </div>
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
-        )
-    }
+                )
+            }
+            }
+          
         
          
           }
@@ -182,7 +203,18 @@ const handleEventClick = () =>{
     <div className="col-span-10 flex items-center ml-10 gap-x-4 ">
 
         {/***** selected date *****/}
-        <div className="ml-12 relative top-0 my-4 flex flex-col items-center ">
+        {dayjs(selectedDate).format("ddd") === 'Sun' || dayjs(selectedDate).format("ddd") === 'Sat'?     <div className="ml-12 relative top-0 my-4 flex flex-col items-center ">
+            <span className="font-normal text-red-500 text-sm text-primary">
+                {dayjs(selectedDate).format(
+                    "dddd"
+                )}
+            </span>
+            <h4 className={`font-medium text-xl text-red-500 p-2 flex justify-center items-center ${getCurrentDayClass()}  `}>
+                { dayjs(selectedDate).format(
+                    "DD"
+                )}
+            </h4>
+        </div>:    <div className="ml-12 relative top-0 my-4 flex flex-col items-center ">
             <span className="font-normal text-sm text-primary">
                 {dayjs(selectedDate).format(
                     "dddd"
@@ -193,7 +225,8 @@ const handleEventClick = () =>{
                     "DD"
                 )}
             </h4>
-        </div>
+        </div>}
+    
     </div>
 
     <div className="hour-list-wrapper">

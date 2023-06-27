@@ -158,8 +158,12 @@ const Navbar = () => {
   </div>
 </div>
     : <Link  to = '/login' className="ml-4 hover:text-gray-900  bg-slate-200 rounded-sm text-black px-4">Login </Link> }
-   {loggedAdmin && <Link  to = '/main' className="ml-4 hover:text-gray-900 bg-slate-200 rounded-sm text-black px-4">Multiple Calendar </Link>}
    </div>
+   {loggedAdmin && <div>
+    
+    <Link  to = '/main' className="ml-4 hover:text-gray-900 bg-slate-200 rounded-sm text-black px-4">Multiple Calendar </Link>
+    <Link  to = '/offDays' className="ml-4 hover:text-gray-900 bg-slate-200 rounded-sm text-black px-4">Calendar off days setup </Link>
+    </div>}
   </div>
 </header>
 

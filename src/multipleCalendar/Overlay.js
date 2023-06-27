@@ -14,7 +14,7 @@ const Overlay = () => {
 //    const {selectedUserEventArray} =  useContext(Contex)
    const [currenMonth, setCurrentMonth] = useState(getMonth());
    const contex = useContext(Contex)
-   const { showEventModal,setShowEventModal, setDaySelected ,savedEvents,setSelectedEvent, monthIndex,state,selectedUserEvent, selectedUserEventArray, dispatch,setChecked,filteredEvents}= contex 
+   const { showEventModal,setShowEventModal, setDaySelected ,savedEvents,setSelectedEvent, monthIndex,state,selectedUserEvent, selectedUserEventArray, dispatch,setChecked,filteredEvents, selectedOffDay}= contex 
    const admin = localStorage.getItem('admin')
    const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
    const user = localStorage.getItem('loggedUser')
@@ -117,8 +117,8 @@ const  handleClickOnDate =(e,date)=> {
         // DAy file
         
         <div className={`border  border-gray-300 flex flex-col `}>
-     {days.format("ddd") === 'Sun' || days.format("ddd") === 'Sat'? 
-      <div className='h-24 z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
+     {selectedOffDay && (days.format("dddd") === selectedOffDay[0] || days.format("dddd") ===  selectedOffDay[1] ||  days.format("dddd") ===  selectedOffDay[2])? 
+      <div className='h-24   w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
        <header className="flex flex-col  items-center">
         { weekId === 0 &&  (
         <>
@@ -141,7 +141,7 @@ const  handleClickOnDate =(e,date)=> {
       
       
       </div>: 
-      <div className='h-24 z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center'  onClick={()=>handleDivOnClick(days)}>
+      <div className='h-24   w-full md:h-32 flex flex-col  overflow-hidden  items-center'  onClick={()=>handleDivOnClick(days)}>
        <header className="flex flex-col  items-center">
         { weekId === 0 &&  (
      
@@ -220,7 +220,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
       // console.log("End date is the: ", end)
     
       })} */}
-      {filteredEvents.toReversed().map((evt,i)=>{
+      {filteredEvents.map((evt,i)=>{
         console.log("i:",i)
         // console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')
@@ -246,12 +246,12 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
   if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
     if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
       return (
-        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{ evt.title}</div>
+        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1   border-gray-50`}>{ evt.auditNo}</div>
       )
     }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
       return (
-       <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
-          {days.format("ddd") === 'Mon'? <span className=''>{evt.title}</span>: <span className='invisible'>,</span>}
+       <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1  border-gray-50 `}>
+          {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo}</span>: <span className='invisible'>,</span>}
           <span className='invisible'>,</span></div>
       )
     }

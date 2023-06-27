@@ -21,6 +21,7 @@ import Main from './multipleCalendar/Main';
 import DayView from './components/DayView/DayView';
 import Overlay from './multipleCalendar/Overlay';
 import Home from './components/Home';
+import OffDaysSetup from './components/OffDaysSetup';
 function App() {
  
   const [show, setShow] = useState(false)
@@ -45,6 +46,7 @@ const handleCalendar =()=>{
     <Routes>
     
       <Route path="/" element={  <Home   />  }/>  
+      <Route path="/offDays" element={  <OffDaysSetup   />  }/>  
       <Route path="/origin" element={  <Month   />  }/>  
       <Route path="/main" element={  <Main   />  }/>  
       {/* <Route path="/" element={  <Labels/>}/>   */}

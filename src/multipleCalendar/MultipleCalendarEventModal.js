@@ -17,7 +17,7 @@ const MultipleCalendarEventModal = (props) => {
   
    
     console.log(" selected user is :", user)
-     const {multipleCalendarEventModalArray,dispatchMultiCalEventModal,setShowMultiCalEventModal} = useContext(Contex)
+     const {multipleCalendarEventModalArray,dispatchMultiCalEventModal,setShowMultiCalEventModal, setShowEventModal,selectedEvent,dispatchCalEvent} = useContext(Contex)
      console.log("Multiple Calendar event array is :", multipleCalendarEventModalArray)
 
      const handleMultiEventClose = (evt) =>{
@@ -149,32 +149,59 @@ const MultipleCalendarEventModal = (props) => {
 
 
 
-<div className={`pb-8 pt-4 px-2 w-60 ${colorList[evt.color]} h-80`}>
+<div className={`pb-8 pt-4 px-2 w-60 ${colorList[evt.label]} h-80`}>
   <div className='flex justify-end items-end'>
+
+            
+            {/* <div> */}
+           
+            {selectedEvent && (
+              <span
+                onClick={() => {
+                  dispatchCalEvent({
+                    type: "delete",
+                    payload: evt,
+                  });
+                  dispatchMultiCalEventModal({
+                    type: "delete",
+                    payload: evt,
+                  })
+                  setShowEventModal(false);
+                }}
+                className="material-icons-outlined text-black cursor-pointer"
+              >
+                delete
+              </span>
+            )}
+
 <button onClick={()=>handleMultiEventClose(evt)} >
-              <span className="material-icons-outlined text-gray-400">
+              <span className="material-icons-outlined text-black cursor-pointer">
                 close
               </span>
             </button>
+
+
+
+
             </div>
         <div className="h-full flex items-start">
-          {/* <div className="w-12 flex-shrink-0 flex flex-col text-center leading-none">
-            <span className="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200">
+          <div className="w-12 flex-shrink-0 flex flex-col text-center leading-none">
+            {/* <span className="text-gray-500 pb-2 mb-2 border-b-2 border-gray-200">
               Jul
             </span>
             <span className="font-medium text-lg text-gray-800 title-font leading-none">
               18
-            </span>
-          </div> */}
+            </span> */}
+          </div>
           <div className="flex-grow pl-6">
             <h2 className="tracking-widest text-xs title-font font-medium text-indigo-500 mb-1">
              {evt.user}
             </h2>
             <h1 className="title-font text-xl font-medium text-gray-900 mb-3">
-            {evt.title}
+            {evt.auditNo}
             </h1>
             <p className="leading-relaxed mb-5 flex text-justify">
-             {evt.desc}
+             {evt.customerName}
             </p>
             <a className="inline-flex items-center">
               <img
@@ -192,7 +219,7 @@ const MultipleCalendarEventModal = (props) => {
         </div>
       </div>
 
-
+{/* </div> */}
 
 
 

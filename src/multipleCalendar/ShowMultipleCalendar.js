@@ -7,6 +7,7 @@ import MyCalendar from './MyCalendar';
 import ReactCalendar from './ReactCalendar';
 import { colorList, sideBarlabelColorList } from '../components/Colorpicker';
 import MultipleCalendarEventModal from './MultipleCalendarEventModal';
+import EventModal from '../components/EventModal';
 
 const ShowMultipleCalendar = () => {
   const modalRef = useRef(null);
@@ -27,7 +28,8 @@ const ShowMultipleCalendar = () => {
  
   // console.log("Selected events is :", selectedUserEvent)
   return (
-    <div className='flex'>
+    <div className={` ${showEventModal && 'bg-red-100'} flex` }>
+        {showEventModal &&  <EventModal/>}
 {/* <div className=''>Admin Calendar</div> */}
 {selectedUserEventArray.map((item,i)=>{
 
@@ -65,7 +67,7 @@ currenMonth && currenMonth.map((week,weekId)=>(
     // console.log("days :", days)
 
     
-      <Days days = {days} weekId ={weekId} item ={item} dayId={dayId} />
+      <Days days = {days} weekId ={weekId} item ={item} dayId={dayId} userName = {item.name} />
 
    
 

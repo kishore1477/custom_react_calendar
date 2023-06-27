@@ -63,7 +63,7 @@ export default function EventModal() {
     selectedEvent,
     showEventModal,
     showSmallCal,
-    setShowSmallCal,
+    setShowSmallCal,userNameAddEvent,adminNameAddEvent
   } = useContext(Contex);
 
   const [showTime, setShowTime] = useState(false)
@@ -128,14 +128,17 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
       day: daySelected.valueOf(),
       id: selectedEvent ? selectedEvent.id : Date.now(),
       start:valued && valued[0],
-      end:valued && valued[1]
+      end:valued && valued[1],
+      user: userNameAddEvent && userNameAddEvent,
+      admin: adminNameAddEvent && adminNameAddEvent,
+
     };
     console.log("CalendarEvent is:", calendarEvent)
 
     if (selectedEvent) {
       dispatchCalEvent({ type: "update", payload: calendarEvent });
     } else {
-      if (desc && location) {
+      if (auditNo && customerName && standaradTyp && siteName && label) {
 
         dispatchCalEvent({ type: "push", payload: calendarEvent });
       } else {
@@ -164,10 +167,10 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
   return (
 
     <div>  
-    <div className={`h-screen w-full fixed left-0 top-0  flex justify-center items-center z-10 `}>
+    <div className={`h-screen w-full fixed left-0 top-0 flex justify-center items-center  z-10`}>
      
-      <form className=" bg-white rounded-lg shadow-2xl mx-9 w-full md:w-96 ">
-        <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
+      <form className=" bg-white rounded-lg shadow-2xl mx-9 px-4  w-full md:w-96 ">
+        <header className="bg-gray-100 px-4 xl:py-2 flex justify-between items-center">
           <span className="material-icons-outlined text-gray-400 ">
             drag_handle
           </span>
@@ -194,8 +197,8 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
             </button>
           </div>
         </header>
-        <div className="p-3">
-          <div className="grid grid-cols-1/5 items-end gap-y-7">
+        <div className="">
+          <div className="grid grid-cols-1/5 items-end gap-y-2  xl:gap-y-4">
             <div></div>
             <input
               type="number"
@@ -203,7 +206,7 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
               placeholder="Audit No"
               value={modalData.auditNo}
               required
-              className="pt-3 border-0 text-gray-600 text-xl font-semibold pb-2  w-1/2 md:w-full  border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className=" border-0 text-gray-600 font-semibold   w-1/2 md:w-full  border-b-2 text-sm p-1 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               onChange={onchange}
             />
             <div className="flex">
@@ -265,7 +268,7 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
                 placeholder="Customer Name"
                 value={modalData.customerName}
                 required
-                className="ml-4 border-0 text-gray-600 pb-2 border-b-2 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="border-0 text-gray-600  border-b-2 text-sm p-1 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                 onChange={onchange}
               />
             </div>
@@ -277,7 +280,7 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
                 placeholder="Standarad (Audit type)"
                 value={modalData.standaradTyp}
                 required
-                className="ml-4 border-0 text-gray-600 pb-2 border-b-2 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="border-0 text-gray-600  border-b-2 text-sm p-1 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                 onChange={onchange}
               />
             </div>
@@ -291,7 +294,7 @@ fiber_pin
                 placeholder="Industrial Code"
                 value={modalData.industCode}
                 required
-                className="ml-4 border-0 text-gray-600 pb-2 border-b-2 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="border-0 text-gray-600  border-b-2 text-sm p-1 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                 onChange={onchange}
               />
             </div>
@@ -303,7 +306,7 @@ fiber_pin
                 placeholder="Site Name"
                 value={modalData.siteName}
                 required
-                className="ml-4 border-0 text-gray-600 pb-2 border-b-2 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="border-0 text-gray-600  border-b-2 text-sm p-1 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                 onChange={onchange}
               />
             </div>
@@ -317,7 +320,7 @@ fiber_pin
                 placeholder="Add a Location"
                 value={modalData.location}
                 required
-                className="ml-4 border-0 text-gray-600 pb-2 w-1/2 md:w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                className="border-0 text-gray-600  w-1/2 md:w-full border-b-2 text-sm p-1 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                 onChange={onchange}
               />
             </div>
@@ -329,11 +332,11 @@ fiber_pin
                   placeholder="Create a label"
                   value={modalData.label}
                   required
-                  className=" border-0 text-gray-600 pb-2 w-1/2 md:w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+                  className=" border-0 text-gray-600  w-1/2 md:w-full border-b-2 text-sm p-1 border-gray-200 focus:outline-none focus:ring-0  focus:border-blue-500"
                   onChange={onchange}
                 /></div>
                 <div className="ml-4">
-                  <select onChange={handleChange}>
+                  <select onChange={handleChange} className="border-0 ">
                     {options.map((option, i) => (
                       <option key={i} value={option}>
                         {option}
@@ -350,13 +353,13 @@ fiber_pin
             </div>
           </div>
         </div>
-        <footer className="flex justify-end border-t p-3 ">
+        <footer className="flex justify-end border-t pb-2  ">
           <button
             type="submit"
             onClick={handleSubmit}
-            className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white"
+            className="bg-blue-500 hover:bg-blue-600 px-2 text-sm py-1 rounded text-white"
           >
-            Save
+           Schedule
           </button>
         </footer>
       </form>

@@ -36,7 +36,13 @@ const Contex = createContext({
   loggedUser:'',
   setLoggedUser: ()=>{},
   loggedAdmin:"",
-  setLoggedAdmin:()=>{}
+  setLoggedAdmin:()=>{}, 
+  selectedOffDay :["Saturday","Sunday"],
+  setSelectedOffDay:()=>{},
+  userNameAddEvent:'',
+  setUserNameAddEvent:()=>{},
+  adminNameAddEvent:'',
+  setAdminNameAddEvent:()=>{}
  
 
 })
