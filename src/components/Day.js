@@ -21,10 +21,10 @@ const navigate = useNavigate()
   const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents, selectedOffDay, setUserNameAddEvent, setAdminNameAddEvent} = contex
   const [dayEvents, setDayEvents] = useState([]);
     const  { days, weekId, dayId, week} = props
-    console.log("Week daya is :", week[0])
-console.log("selectedOffDay is :", selectedOffDay)
+//     console.log("Week daya is :", week[0])
+// console.log("selectedOffDay is :", selectedOffDay)
 console.log("Filtered Events is:", filteredEvents)
-console.log("filteredEvents.toReversed()Events is:", filteredEvents.toReversed())
+// console.log("filteredEvents.toReversed()Events is:", filteredEvents.toReversed())
 
   // jump to day view...
 const  handleClickOnDate =(e,date)=> {
@@ -53,8 +53,8 @@ const  handleClickOnDate =(e,date)=> {
           dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY")
       );
       setDayEvents(events);
-      console.log("events is :", events)
-      console.log("dayEvents Events is:", dayEvents)
+      // console.log("events is :", events)
+      // console.log("dayEvents Events is:", dayEvents)
     }, [filteredEvents, days]);
 
 const getCurrentDayClass = ()=>{
@@ -134,7 +134,7 @@ const handleDivOnClick = () =>{
   
       setDaySelected(days)
       setShowEventModal(true)
-      setAdminNameAddEvent(loggedAdmin.name)
+      setUserNameAddEvent(loggedAdmin.name)
    
   }else if(loggedUser.name === 'Arisha'){
     setDaySelected(days)
@@ -260,26 +260,31 @@ currentDate = dayjs(currentDate).add(1, 'day');
 
  let currentDate = fullStart;
 while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
-
+// console.log("currentDate is :", currentDate)
 if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
+  // console.log("currentDate inside if is :", currentDate)
+  if(evt.user === loggedUserName || evt.user === loggedAdminName ){
+    console.log("fullStart is inside :", fullStart)
+    console.log("fullStart.format('DD-MM-YY') is inside :", fullStart.format('DD-MM-YY'))
+    console.log("days.format('DD-MM-YY') is inside :",days.format('DD-MM-YY'))
 if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
-if(evt.user === loggedUserName || (evt.admin && (evt.admin === loggedAdminName)) ){
+
   return (
-    <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{ evt.admin?evt.admin:evt.user}</div>
+    <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{evt.user===loggedAdminName?loggedAdminName:evt.user}</div>
   )
-}
+// }
 
 }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
-  if(evt.user === loggedUserName || (evt.admin && (evt.admin === loggedAdminName))){
+  // if(evt.user === loggedUserName || (evt.admin && (evt.admin === loggedAdminName))){
     return (
       <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
-         {days.format("ddd") === 'Mon'? <span className=''>{evt.admin?evt.admin:evt.user}</span>: <span className='invisible'>,</span>}
+         {days.format("ddd") === 'Mon'? <span className=''>{evt.user===loggedAdminName?loggedAdminName:evt.user}</span>: <span className='invisible'>,</span>}
          <span className='invisible'>,</span></div>
      )
-  }
+  // }
 
 }
-
+}
 }
 
 currentDate = dayjs(currentDate).add(1, 'day');

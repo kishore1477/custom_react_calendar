@@ -17,8 +17,8 @@ const Days = (props) => {
 //  console.log("selectedUserEvent is :", selectedUserEvent)
     useEffect(() => {
 // console.log("Filtered events is :", filteredEvents)
-console.log(" savedEvents events inside days.js is :", savedEvents)
-console.log("userNameis :", userName)
+// console.log(" savedEvents events inside days.js is :", savedEvents)
+// console.log("userNameis :", userName)
       const events = filteredEvents.filter(
         (evt) =>
           dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY")
@@ -161,7 +161,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
           return (
             <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>
          
-              { evt.auditNo}</div>
+              { evt.user}</div>
           )
         }else{
           return (<div  className={` cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50 invisible`}>
@@ -177,7 +177,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
         if(evt.user === userName){
           return (
             <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
-               {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo}</span>: <span className='invisible'>,</span>}
+               {days.format("ddd") === 'Mon'? <span className=''>{evt.user}</span>: <span className='invisible'>,</span>}
               </div>
            )
         }else{

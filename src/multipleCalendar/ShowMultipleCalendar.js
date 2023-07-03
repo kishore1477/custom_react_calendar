@@ -17,8 +17,8 @@ const ShowMultipleCalendar = () => {
   const path = location.pathname
   const [currenMonth, setCurrentMonth] = useState(getMonth());
   const contex = useContext(Contex)
-  const { showEventModal, monthIndex,state,selectedUserEvent, selectedUserEventArray, dispatch, setChecked,multipleCalendarEventModalArray, showMultiCalEventModal}= contex 
-//   if(path === '/main' && selectedUserEventArray.length === 0){
+  const { showEventModal, monthIndex,state,selectedUserEvent, selectedUsers, dispatch, setChecked,multipleCalendarEventModalArray, showMultiCalEventModal}= contex 
+//   if(path === '/main' && selectedUsers.length === 0){
 // setChecked(false)
 //   }
   useEffect(() => {
@@ -31,7 +31,7 @@ const ShowMultipleCalendar = () => {
     <div className={` ${showEventModal && 'bg-red-100'} flex` }>
         {showEventModal &&  <EventModal/>}
 {/* <div className=''>Admin Calendar</div> */}
-{selectedUserEventArray.map((item,i)=>{
+{selectedUsers.map((item,i)=>{
 
 
 return <div>  

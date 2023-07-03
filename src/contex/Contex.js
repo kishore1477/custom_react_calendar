@@ -13,7 +13,7 @@ const Contex = createContext({
   dispatchCalEvent: ({ type, payload }) => {},
   dispatch: ({ type, payload }) => {},
   savedEvents: [],
-  selectedUserEventArray: [],
+  selectedUsers: [],
   selectedEvent: null,
   setSelectedEvent: () => {},
   selectedUserEvent: null,
@@ -42,7 +42,9 @@ const Contex = createContext({
   userNameAddEvent:'',
   setUserNameAddEvent:()=>{},
   adminNameAddEvent:'',
-  setAdminNameAddEvent:()=>{}
+  setAdminNameAddEvent:()=>{},
+  dispatchUsersEvent: ({ type, payload }) => {},
+  selectedUsersEventFromLs: [],
  
 
 })

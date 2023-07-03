@@ -17,7 +17,7 @@ import {BsGear} from   "react-icons/bs";
 export default function CalendarHeader() {
   const navigate  = useNavigate()
   const [token, setToken] = useState('')
-  const { monthIndex, setMonthIndex ,showEventModal, selectedDate,setSelectedDate, view,setView,selectedUserEventArray, checked,setChecked} = useContext(Contex);
+  const { monthIndex, setMonthIndex ,showEventModal, selectedDate,setSelectedDate, view,setView,selectedUsers, checked,setChecked} = useContext(Contex);
   
    
   function classNames(...classes) {
@@ -79,7 +79,7 @@ export default function CalendarHeader() {
    
 
   }
-  // if(selectedUserEventArray.length === 0){
+  // if(selectedUsers.length === 0){
   //   setChecked(false)
   // }
   const d = dayjs().format("MM-DD-YYYY") + '$day'

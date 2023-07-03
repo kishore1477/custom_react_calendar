@@ -11,10 +11,10 @@ const Overlay = () => {
   const navigate = useNavigate()
   const location = useLocation();
   console.log("path is :",location.pathname);
-//    const {selectedUserEventArray} =  useContext(Contex)
+//    const {selectedUsers} =  useContext(Contex)
    const [currenMonth, setCurrentMonth] = useState(getMonth());
    const contex = useContext(Contex)
-   const { showEventModal,setShowEventModal, setDaySelected ,savedEvents,setSelectedEvent, monthIndex,state,selectedUserEvent, selectedUserEventArray, dispatch,setChecked,filteredEvents, selectedOffDay}= contex 
+   const { showEventModal,setShowEventModal, setDaySelected ,savedEvents,setSelectedEvent, monthIndex,state,selectedUserEvent, selectedUsers, dispatch,setChecked,filteredEvents, selectedOffDay,selectedUsersEventFromLs,dispatchUsersEvent}= contex 
    const admin = localStorage.getItem('admin')
    const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
    const user = localStorage.getItem('loggedUser')
@@ -22,26 +22,19 @@ const Overlay = () => {
    useEffect(() => {
        setCurrentMonth(getMonth(monthIndex));
    }, [monthIndex]);
- 
-//    useEffect(() => {
-   
-        //   const events = filteredEvents.filter(
-//             (evt) =>
-//               dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY")
-//           );
-//           setDayEvents(events);
-//         }, [filteredEvents, days]);
+ console.log("selectedUsersEventFromLs in overlay is :", selectedUsersEventFromLs)
+
 
 
    console.log("monthis",currenMonth)
-   console.log("selectedUserEventArray inside overlay is:", selectedUserEventArray)
+   console.log("selectedUsers inside overlay is:", selectedUsers)
    const getCurrentDayClass = (days)=>{
     return days.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
     ? "bg-blue-600 text-white rounded-full w-7 h-7"
     : "";
   }
-  console.log("selectedUserEventArray length :", selectedUserEventArray.length)
-// if(selectedUserEventArray.length ===  0){
+  console.log("selectedUsers length :", selectedUsers.length)
+// if(selectedUsers.length ===  0){
 //   setChecked(false)
 
 // }
@@ -76,6 +69,21 @@ const  handleClickOnDate =(e,date)=> {
     }
     navigate(`/day/${d}`)
 }
+const handleRemoveEvents = (user) =>{
+  dispatch({
+    type: "delete",
+    payload: user,
+  });
+  selectedUsersEventFromLs.map((evt,i)=>{
+if(evt.user === user.name){
+  dispatchUsersEvent({
+    type: "delete",
+    payload:evt,
+  });
+}
+  })
+
+}
   return (
     <div className={`${showEventModal && 'bg-red-100'}`}>
       <div className='flex justify-center items-center'>
@@ -83,21 +91,15 @@ const  handleClickOnDate =(e,date)=> {
 
       </div>
       {showEventModal &&  <EventModal/>}
-        {selectedUserEventArray.length ===  0  &&  <span className='flex items-center justify-center'>Please select users calendars from <Link  to = '/main' className='text-red-500 ml-2' >here</Link></span>}
+        {selectedUsers.length ===  0  &&  <span className='flex items-center justify-center'>Please select users calendars from <Link  to = '/main' className='text-red-500 ml-2' >here</Link></span>}
         <div className='flex'>
-      {selectedUserEventArray && selectedUserEventArray.map((evt,i)=>{
+      {selectedUsers && selectedUsers.map((evt,i)=>{
         return   <div  className={`${colorList[evt.color]} mx-4 rounded px-2`}>
         {/* <button className=''  */}
                         
                     {/* > */}
                        <span className='mr-8 mb-8'> {evt.name}</span> 
-                    <span className={`material-icons-outlined  cursor-pointer`} onClick={() => {
-                  dispatch({
-                    type: "delete",
-                    payload: evt,
-                  });
-                  
-                }}>
+                    <span className={`material-icons-outlined  cursor-pointer`} onClick={()=>handleRemoveEvents(evt)}>
                       close
                     </span>
                    
@@ -220,7 +222,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
       // console.log("End date is the: ", end)
     
       })} */}
-      {filteredEvents.map((evt,i)=>{
+      {selectedUsersEventFromLs.map((evt,i)=>{
         console.log("i:",i)
         // console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')

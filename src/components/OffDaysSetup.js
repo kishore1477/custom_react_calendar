@@ -85,8 +85,11 @@ const OffDaysSetup = () => {
         navigate('/origin')
       }
   return (
-    <div className='flex justify-center items-center'>
+    <div>
+<h1 className='flex items-center justify-center ' >Please Select Off Days</h1>
+<hr className='border' />
 
+    <div className='flex justify-center items-center'>
 <div className="flex  flex-col ">
       {data.map((obj, index) => (
         // <li key={index}>
@@ -114,6 +117,7 @@ const OffDaysSetup = () => {
   <input type="submit" defaultValue="Submit" />
 </form> */}
 
+    </div>
     </div>
   )
 }

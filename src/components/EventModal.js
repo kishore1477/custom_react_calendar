@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Contex from "../contex/Contex";
 // import TimePicker from 'react-time-picker';
 import { TimePicker } from 'antd';
@@ -63,11 +63,17 @@ export default function EventModal() {
     selectedEvent,
     showEventModal,
     showSmallCal,
-    setShowSmallCal,userNameAddEvent,adminNameAddEvent
+    setShowSmallCal,userNameAddEvent,adminNameAddEvent,setAdminNameAddEvent
   } = useContext(Contex);
 
   const [showTime, setShowTime] = useState(false)
-
+  const [adminNameEvent, setAdminNameEvent] = useState("")
+console.log("adminNameAddEvent is:",adminNameAddEvent)
+console.log("userNameAddEvent is:",userNameAddEvent)
+// useEffect(() => {
+//   // setAdminNameEvent(adminNameAddEvent)
+//   setAdminNameAddEvent('')
+// }, [userNameAddEvent])
 
   const handleAddTime = () => {
     setShowTime(!showTime)
@@ -130,7 +136,7 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
       start:valued && valued[0],
       end:valued && valued[1],
       user: userNameAddEvent && userNameAddEvent,
-      admin: adminNameAddEvent && adminNameAddEvent,
+      // admin: adminNameAddEvent && adminNameAddEvent,
 
     };
     console.log("CalendarEvent is:", calendarEvent)

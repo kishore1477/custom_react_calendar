@@ -40,6 +40,22 @@ const reducer =(state, {type, payload})=>{
   }
 
 }
+const reducerUsersEvent =(state, {type, payload})=>{
+  switch (type) {
+    case "push":
+      // console.log("State is :", state)
+      // console.log("payload is:", payload)
+      // console.log("type is:", type)
+      return [...state, payload];
+    
+    case "delete":
+      return state.filter((evt) => evt.user !== payload.user);
+      // return state.filter((evt) => evt.user !== payload.user);
+    default:
+      throw new Error();
+  }
+
+}
 const reducerMCEM =(state, {type, payload})=>{
   switch (type) {
     case "push":
@@ -79,7 +95,8 @@ const [savedEvents, dispatchCalEvent] = useReducer(
 [],
     initEvents
   );
-  const [selectedUserEventArray, dispatch] = useReducer(reducer, []);
+  const [selectedUsers, dispatch] = useReducer(reducer, []);
+  const [selectedUsersEventFromLs, dispatchUsersEvent] = useReducer(reducerUsersEvent, []);
   const [multipleCalendarEventModalArray, dispatchMultiCalEventModal] = useReducer(reducerMCEM, []);
 
   useEffect(() => {
@@ -164,12 +181,12 @@ function updateLabel(label) {
   ))
 }
 console.log("Saved events is :", savedEvents)
-// console.log("selectedUserEventArray:", selectedUserEventArray)
+// console.log("selectedUsers:", selectedUsers)
 return (
     <div>
    
 <Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents , setLabels,
-        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUserEventArray, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal, setShowSmallCal, showSmallCal, loggedAdmin, loggedUser, setLoggedAdmin, setLoggedUser, setSelectedOffDay, selectedOffDay, userNameAddEvent, setUserNameAddEvent, adminNameAddEvent, setAdminNameAddEvent}}>
+        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUsers, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal, setShowSmallCal, showSmallCal, loggedAdmin, loggedUser, setLoggedAdmin, setLoggedUser, setSelectedOffDay, selectedOffDay, userNameAddEvent, setUserNameAddEvent, adminNameAddEvent, setAdminNameAddEvent, selectedUsersEventFromLs,dispatchUsersEvent}}>
         {props.children}
        {/* <App/> */}
     </Contex.Provider>
