@@ -13,7 +13,7 @@ const Day = (props) => {
   const user = localStorage.getItem('loggedUser')
   const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
   const loggedUserName = loggedUser && loggedUser.name
-  console.log("Logged username is :", loggedUserName)
+  // console.log("Logged username is :", loggedUserName)
   dayjs().format()
 const navigate = useNavigate()
 
@@ -23,7 +23,7 @@ const navigate = useNavigate()
     const  { days, weekId, dayId, week} = props
 //     console.log("Week daya is :", week[0])
 // console.log("selectedOffDay is :", selectedOffDay)
-console.log("Filtered Events is:", filteredEvents)
+// console.log("Filtered Events is:", filteredEvents)
 // console.log("filteredEvents.toReversed()Events is:", filteredEvents.toReversed())
 
   // jump to day view...
@@ -48,7 +48,7 @@ const  handleClickOnDate =(e,date)=> {
     useEffect(() => {
 // console.log("Filtered events is :", filteredEvents)
 // console.log(" savedEvents events is :", savedEvents)
-      const events = filteredEvents.filter(
+      const events =  filteredEvents && filteredEvents.filter(
         (evt) =>
           dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY")
       );
@@ -143,7 +143,7 @@ const handleDivOnClick = () =>{
   }
 }
   return (
-    <div className='border  border-gray-100 flex flex-col '>
+    <div className='border  border-gray-200 flex flex-col '>
 
       {/* { selectedOffDay && selectedOffDay.map((offDay, i)=>{ */}
       {selectedOffDay && (days.format("dddd") === selectedOffDay[0] || days.format("dddd") ===  selectedOffDay[1] ||  days.format("dddd") ===  selectedOffDay[2]) ?  
@@ -249,8 +249,8 @@ currentDate = dayjs(currentDate).add(1, 'day');
  // console.log("End date is the: ", end)
 
  })} */}
- {filteredEvents.toReversed().map((evt,i)=>{
-   console.log("i:",i)
+ {filteredEvents &&   filteredEvents.toReversed().map((evt,i)=>{
+  //  console.log("i:",i)
    // console.log("Evt start is :", evt.start)
  const start = evt.start && dayjs(evt.start).format('DD')
  const fullStart = evt.start && dayjs(evt.start)
@@ -264,9 +264,9 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
 if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
   // console.log("currentDate inside if is :", currentDate)
   if(evt.user === loggedUserName || evt.user === loggedAdminName ){
-    console.log("fullStart is inside :", fullStart)
-    console.log("fullStart.format('DD-MM-YY') is inside :", fullStart.format('DD-MM-YY'))
-    console.log("days.format('DD-MM-YY') is inside :",days.format('DD-MM-YY'))
+    // console.log("fullStart is inside :", fullStart)
+    // console.log("fullStart.format('DD-MM-YY') is inside :", fullStart.format('DD-MM-YY'))
+    // console.log("days.format('DD-MM-YY') is inside :",days.format('DD-MM-YY'))
 if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
 
   return (

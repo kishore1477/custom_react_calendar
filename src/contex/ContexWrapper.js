@@ -151,10 +151,13 @@ useEffect(() => {
           (lbl) => lbl.label === label
         );
         const  createdlabel =[]
+        const  users =[]
+
         savedEvents && savedEvents.map((evt,i) =>{
 if(evt.label === label){
   console.log("evt is :", evt)
   createdlabel.push(evt.createdLabel)
+  users.push(evt.user)
 }
         } )
         // console.log("Created label is :", createdlabel)
@@ -162,6 +165,7 @@ if(evt.label === label){
           label,
           checked: currentLabel ? currentLabel.checked : true,
           Createdlabel: createdlabel,
+          user:users
         };
       }
     );

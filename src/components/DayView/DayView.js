@@ -6,6 +6,13 @@ import Contex from '../../contex/Contex';
 import EventModal from '../EventModal';
 import { colorList } from '../Colorpicker';
 const DayView = () => {
+
+    const admin = localStorage.getItem('admin')
+    const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
+    const loggedAdminName = loggedAdmin && loggedAdmin.name
+    const user = localStorage.getItem('loggedUser')
+    const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
+    const loggedUserName = loggedUser && loggedUser.name
    const contex =  useContext(Contex)
    const {selectedDate, setSelectedDate, setView, savedEvents, setShowEventModal, showEventModal} = contex
    const [currentDayEvents, setCurrentDayEvents] = useState([])
@@ -103,7 +110,8 @@ const dd = dayjs().format("MM-DD-YYYY")
             // const startDateTime = new Date(event.startTimeIS)
             const startDateTime = dayjs(event.start).hour()
             const endDateTime = dayjs(event.end).hour()
-        
+        if(event.user === loggedAdminName || event.user === loggedUserName){
+     
               const fullStart = event.start && dayjs(event.start)
               const fullend =event.end && dayjs(event.end)
               let currentDate = fullStart;
@@ -135,7 +143,7 @@ const dd = dayjs().format("MM-DD-YYYY")
                             {startDateTime === hour && (
                                 <div className=" day-event ">
                                     <div 
-                                         className={` text-black day-event-item ${colorList[event.label]}`}>
+                                         className={` text-black day-event-item   ${colorList[event.label]}`}>
                                         <h4 className='text-black'>{event.auditNo || "Untitled"}</h4>
                                     </div>
                                 </div>
@@ -148,7 +156,7 @@ const dd = dayjs().format("MM-DD-YYYY")
                         { endDateTime === hour && (
                             <div className=" day-event ">
                                 <div 
-                                     className={` text-black day-event-item ${colorList[event.label]}`}>
+                                     className={` text-black day-event-item   ${colorList[event.label]}`}>
                                     <h4 className='text-black'>{event.auditNo || "Untitled"}</h4>
                                 </div>
                             </div>
@@ -181,7 +189,8 @@ const dd = dayjs().format("MM-DD-YYYY")
         }
              
                
-        
+               
+    }
                 
              
               

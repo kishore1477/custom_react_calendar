@@ -3,7 +3,8 @@ import Contex from "../contex/Contex";
 // import TimePicker from 'react-time-picker';
 import { TimePicker } from 'antd';
 import { DatePicker,Space } from 'antd';
-
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
 import dayjs from 'dayjs';
 import SmallCalendar from "./SmallCalendar";
 const { RangePicker } = DatePicker;
@@ -17,20 +18,36 @@ const options = [
   "red",
   "purple",
 ];
-const labelsClasses = [
-  "indigo",
-  "gray",
-  "green",
-  "blue",
-  "red",
-  "purple",
+// const colourOptions = [{
+ 
+//   "gray":"gray",
+//   "green":"green",
+//   "blue": "blue",
+//   "red":"red",
+//   "purple":"purple",
+// }];
+// const colourOptions = [
+ 
+//   "indigo",
+//   "gray",
+//   "green",
+//   "blue",
+//   "red",
+//   "purple",
+// ];
+const colourOptions = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
 ];
 
 export default function EventModal() {
-
+  const animatedComponents = makeAnimated();
   //  date picker code
   const [dates, setDates] = useState(null);
   const [valued, setValued] = useState(null);
+  const [selectedTeamMembers, setSelectedTeamMembers] = useState(null);
+  console.log("Selected team members is :", selectedTeamMembers)
   console.log("Value 0 is:", valued &&  valued[0])
   console.log("Value 1 is:", valued &&  valued[1])
   console.log("dates date is :", dates)
@@ -112,11 +129,11 @@ console.log("userNameAddEvent is:",userNameAddEvent)
   const [desc, setDescription] = useState(
     selectedEvent ? selectedEvent.desc : ""
   );
-  const [selectedLabel, setSelectedLabel] = useState(
-    selectedEvent
-      ? labelsClasses.find((lbl) => lbl === selectedEvent.label)
-      : labelsClasses[0]
-  );
+  // const [selectedLabel, setSelectedLabel] = useState(
+  //   selectedEvent
+  //     ? labelsClasses.find((lbl) => lbl === selectedEvent.label)
+  //     : labelsClasses[0]
+  // );
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -204,7 +221,7 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
           </div>
         </header>
         <div className="">
-          <div className="grid grid-cols-1/5 items-end gap-y-2  xl:gap-y-4">
+          <div className="grid grid-cols-1/5 items-end gap-y-2  md:gap-y-8">
             <div></div>
             <input
               type="number"
@@ -330,6 +347,16 @@ fiber_pin
                 onChange={onchange}
               />
             </div>
+            
+
+            <Select
+      closeMenuOnSelect={false}
+      components={animatedComponents}
+      defaultValue={[colourOptions[0], colourOptions[1]]}
+      isMulti
+      options={colourOptions}
+      onChange={setSelectedTeamMembers}
+    />
             <div className="flex gap-x-2">
               <div className="flex">
                 <div className=""><input

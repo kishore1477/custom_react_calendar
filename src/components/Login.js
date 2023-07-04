@@ -159,7 +159,7 @@ localStorage.setItem("adminList", JSON.stringify(adminList))
           />
           <div className = 'text-2xl absolute right-1 top-9 text-yellow-500 cursor-pointer'>
               {
-                open? <AiFillEye  onClick={toggle}/>: <AiFillEyeInvisible  onClick={toggle}/>
+                open? <AiFillEye color='indigo' onClick={toggle}/>: <AiFillEyeInvisible  color='indigo' onClick={toggle}/>
               }
             
             </div>

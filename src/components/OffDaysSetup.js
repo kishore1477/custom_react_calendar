@@ -36,9 +36,9 @@ const MyCheckBoxList = [
     // console.log("onChange is :", onChange)
    
     return (
-      <div className='flex'>
+      <div className='flex items-baseline'>
         <input
-        className='mr-4'
+        className='mr-4 mb-0 '
           type="checkbox"
           id={`custom-checkbox-${obj.index}`}
           name={obj.name}
@@ -85,11 +85,12 @@ const OffDaysSetup = () => {
         navigate('/origin')
       }
   return (
-    <div>
+    <div className='mt-10'>
+<hr className='border' />
 <h1 className='flex items-center justify-center ' >Please Select Off Days</h1>
 <hr className='border' />
 
-    <div className='flex justify-center items-center'>
+    <div className='flex justify-center items-center mt-10'>
 <div className="flex  flex-col ">
       {data.map((obj, index) => (
         // <li key={index}>

@@ -22,6 +22,7 @@ import DayView from './components/DayView/DayView';
 import Overlay from './multipleCalendar/Overlay';
 import Home from './components/Home';
 import OffDaysSetup from './components/OffDaysSetup';
+import OverlayDayView from './components/OverlayDayView';
 function App() {
  
   const [show, setShow] = useState(false)
@@ -53,6 +54,7 @@ const handleCalendar =()=>{
        <Route path="/login" element={  <Login  />}/>
        <Route path="/overlay" element={  <Overlay  />}/>
        <Route path="/day/:date" element={  <DayView  />}/>
+       <Route path="/overlayday/:overlaydate" element={  <OverlayDayView  />}/>
      
 
 

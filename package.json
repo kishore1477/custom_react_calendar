@@ -25,6 +25,7 @@
     "react-icons": "^4.9.0",
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
+    "react-select": "^5.7.3",
     "react-social-login-buttons": "^3.9.1",
     "react-time-picker": "^6.2.0",
     "reactjs-social-login": "^2.6.2",

@@ -49,7 +49,7 @@ const handleDivOnClick = (days) =>{
   if(loggedAdmin){
     // if( || loggedAdmin){
       setDaySelected(days)
-      setShowEventModal(true)
+      // setShowEventModal(true)
     // }
    
   }else if(loggedUser.name === 'Arisha'){
@@ -67,7 +67,7 @@ const  handleClickOnDate =(e,date)=> {
       view :'day',
        da : date.format("MM-DD-YYYY")
     }
-    navigate(`/day/${d}`)
+    navigate(`/overlayday/${d}`)
 }
 const handleRemoveEvents = (user) =>{
   dispatch({
@@ -248,12 +248,12 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
   if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
     if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
       return (
-        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1   border-gray-50`}>{ evt.auditNo}</div>
+        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1   border-gray-50`}>{ evt.auditNo}/{evt.user}</div>
       )
     }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
       return (
        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1  border-gray-50 `}>
-          {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo}</span>: <span className='invisible'>,</span>}
+          {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo}/{evt.user}</span>: <span className='invisible'>,</span>}
           <span className='invisible'>,</span></div>
       )
     }
