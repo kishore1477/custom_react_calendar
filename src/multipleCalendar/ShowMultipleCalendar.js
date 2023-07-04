@@ -39,7 +39,7 @@ return <div>
 {/* <div className='z-10 '>{multipleCalendarEventModalArray.map((evtt,i)=>{
   return <p>{evtt.title}</p>
 })}</div> */}
-  {showMultiCalEventModal &&   <MultipleCalendarEventModal  user = {item.name}/>}
+  {showMultiCalEventModal &&   <MultipleCalendarEventModal  user = {item.name} color = {item.color}/>}
     <div className=''>
 
 <div className='flex justify-end items-end'>

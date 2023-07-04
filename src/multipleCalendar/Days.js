@@ -140,7 +140,7 @@ const  handleClickOnDate =(e,date)=> {
        
       
       {filteredEvents.toReversed().map((evt,i)=>{
-        console.log("i:",i)
+        // console.log("i:",i)
         // console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')
       const fullStart = evt.start && dayjs(evt.start)
@@ -161,7 +161,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
           return (
             <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>
          
-              { evt.user}</div>
+         {evt.auditNo.substring(0, 3)}..</div>
           )
         }else{
           return (<div  className={` cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50 invisible`}>
@@ -177,7 +177,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
         if(evt.user === userName){
           return (
             <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
-               {days.format("ddd") === 'Mon'? <span className=''>{evt.user}</span>: <span className='invisible'>,</span>}
+               {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo.substring(0, 3)}..</span>: <span className='invisible'>,</span>}
               </div>
            )
         }else{

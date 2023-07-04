@@ -36,18 +36,29 @@ const options = [
 //   "purple",
 // ];
 const colourOptions = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
+  { value: 'Arisha', label: 'Arisha' },
+  { value: 'Ramsha', label: 'Ramsha' },
+  { value: 'Ansab', label: 'Ansab' },
+  { value: 'Kishore', label: 'Kishore' },
 ];
-
+// useEffect(() => {
+//   // Add a new event to all selected team members
+//   selectedTeamMembers.forEach((teamMember) => {
+//     teamMember.events.push({
+//       title: "New Event",
+//       start: new Date(),
+//       end: new Date(),
+//     });
+//   });
+// }, [selectedTeamMembers]);
 export default function EventModal() {
   const animatedComponents = makeAnimated();
   //  date picker code
   const [dates, setDates] = useState(null);
   const [valued, setValued] = useState(null);
-  const [selectedTeamMembers, setSelectedTeamMembers] = useState(null);
+  const [selectedTeamMembers, setSelectedTeamMembers] = useState([]);
   console.log("Selected team members is :", selectedTeamMembers)
+  console.log("Selected team members is :", selectedTeamMembers.length )
   console.log("Value 0 is:", valued &&  valued[0])
   console.log("Value 1 is:", valued &&  valued[1])
   console.log("dates date is :", dates)
@@ -80,7 +91,7 @@ export default function EventModal() {
     selectedEvent,
     showEventModal,
     showSmallCal,
-    setShowSmallCal,userNameAddEvent,adminNameAddEvent,setAdminNameAddEvent
+    setShowSmallCal,userNameAddEvent,adminNameAddEvent,setAdminNameAddEvent,setUserNameAddEvent
   } = useContext(Contex);
 
   const [showTime, setShowTime] = useState(false)
@@ -153,6 +164,7 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
       start:valued && valued[0],
       end:valued && valued[1],
       user: userNameAddEvent && userNameAddEvent,
+     
       // admin: adminNameAddEvent && adminNameAddEvent,
 
     };
@@ -162,14 +174,41 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
       dispatchCalEvent({ type: "update", payload: calendarEvent });
     } else {
       if (auditNo && customerName && standaradTyp && siteName && label) {
+if(selectedTeamMembers.length > 0){
+  // selectedTeamMembers.forE
+  selectedTeamMembers.forEach((item) => {
+    
+    dispatchCalEvent({ type: "push", payload: {
+      auditNo,
+      customerName,
+      standaradTyp,
+      industCode,
+      siteName,
+      location,
+      createdLabel:label,
+      label: selectedOption,
+      day: daySelected.valueOf(),
+      id: selectedEvent ? selectedEvent.id : Date.now(),
+      start:valued && valued[0],
+      end:valued && valued[1],
+      user: item.value
+     
+      // admin: adminNameAddEvent && adminNameAddEvent,
 
-        dispatchCalEvent({ type: "push", payload: calendarEvent });
+    } });
+  });
+}else{
+  dispatchCalEvent({ type: "push", payload: calendarEvent });
+}
+        
       } else {
         alert("All Fields are required.")
       }
     }
 
     setShowEventModal(false);
+    setSelectedTeamMembers([])
+    setUserNameAddEvent('')
   }
 
   // const handleSmallCal = () =>{
@@ -221,7 +260,7 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
           </div>
         </header>
         <div className="">
-          <div className="grid grid-cols-1/5 items-end gap-y-2  md:gap-y-8">
+          <div className="grid grid-cols-1/5 items-end gap-y-2  md:gap-y-4">
             <div></div>
             <input
               type="number"
@@ -352,10 +391,11 @@ fiber_pin
             <Select
       closeMenuOnSelect={false}
       components={animatedComponents}
-      defaultValue={[colourOptions[0], colourOptions[1]]}
+     placeholder ='Select team members (optional)'
       isMulti
       options={colourOptions}
       onChange={setSelectedTeamMembers}
+      className="p-0 m-0 border-none"
     />
             <div className="flex gap-x-2">
               <div className="flex">

@@ -99,21 +99,14 @@ const [savedEvents, dispatchCalEvent] = useReducer(
   const [selectedUsersEventFromLs, dispatchUsersEvent] = useReducer(reducerUsersEvent, []);
   const [multipleCalendarEventModalArray, dispatchMultiCalEventModal] = useReducer(reducerMCEM, []);
 
-  useEffect(() => {
-  
-  }, [localStorage.getItem('admin'), localStorage.getItem('loggedUser')]);
-  window.addEventListener("storage", () => {
-    // When local storage changes, dump the list to
-    // the console.
-   
-
+ 
   const admin = localStorage.getItem('admin')
-  const LoggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
-  setLoggedAdmin(LoggedAdmin)
+  const loggedAdmin1 = admin && JSON.parse(localStorage.getItem('admin'))
+  const loggedAdminName = loggedAdmin1 && loggedAdmin1.name
   const user = localStorage.getItem('loggedUser')
-  const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
-  setLoggedUser(loggedUser)
-});
+  const loggedUser1 = user && JSON.parse(localStorage.getItem('loggedUser'))
+  const loggedUserName = loggedUser1 && loggedUser1.name
+
   const filteredEvents = useMemo(() => {
     // console.log("Labels is in filteredevents is ", labels)
     return savedEvents.filter((evt) =>{
@@ -156,8 +149,11 @@ useEffect(() => {
         savedEvents && savedEvents.map((evt,i) =>{
 if(evt.label === label){
   console.log("evt is :", evt)
-  createdlabel.push(evt.createdLabel)
-  users.push(evt.user)
+  if(evt.user === loggedUserName || evt.user === loggedAdminName){
+    
+    users.push(evt.user)
+    createdlabel.push(evt.createdLabel)
+  }
 }
         } )
         // console.log("Created label is :", createdlabel)
