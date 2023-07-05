@@ -18,9 +18,9 @@ const MultipleCalendarEventModal = (props) => {
   
    
     console.log(" selected user is :", user)
-     const {multipleCalendarEventModalArray,dispatchMultiCalEventModal,setShowMultiCalEventModal, setShowEventModal,selectedEvent,dispatchCalEvent} = useContext(Contex)
+     const {multipleCalendarEventModalArray,dispatchMultiCalEventModal,setShowMultiCalEventModal, setShowEventModal,selectedEvent,dispatchCalEvent, selectedUsers} = useContext(Contex)
      console.log("Multiple Calendar event array is :", multipleCalendarEventModalArray)
-
+const selectedUsersLength = selectedUsers.length
      const handleMultiEventClose = (evt) =>{
       dispatchMultiCalEventModal({
         type: "delete",
@@ -30,34 +30,13 @@ const MultipleCalendarEventModal = (props) => {
 
      }
   return (
-    <>
-     {/* <button
-      
-        onClick={() => setIsOpen(true)}
-      >
-        Open Modal
-      </button>
-      {isOpen && (
-        <div
-          ref={modalRef}
-        
-          onMouseDown={handleClick}
-        >
-        
-          <button
-            
-            onClick={() => setIsOpen(false)}
-          >
-            Close
-          </button>
-        </div>
-      )} */}
+    <div>
      
 
    {multipleCalendarEventModalArray.map((evt,i)=>{
     if(evt.user === user){
-        return  <div   className={`absolute top-96  flex justify-center items-center z-10 `}>
-        <form className=" bg-white rounded-lg shadow-2xl mx-9  ">
+        return  <div   className={`absolute top-96  ${selectedUsersLength ===1 &&  'md:right-1/3'}  flex justify-center items-center z-10  rounded-full`}>
+        <form className=" bg-white rounded-full shadow-2xl mx-9  ">
           {/* <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
             <span className="material-icons-outlined text-gray-400 ">
               drag_handle
@@ -175,11 +154,11 @@ const MultipleCalendarEventModal = (props) => {
               </span>
             )}
 
-<button onClick={()=>handleMultiEventClose(evt)} >
-              <span className="material-icons-outlined text-black cursor-pointer">
+{/* <button > */}
+              <span className="material-icons-outlined text-black cursor-pointer"  onClick={()=>handleMultiEventClose(evt)}>
                 close
               </span>
-            </button>
+            {/* </button> */}
 
 
 
@@ -238,7 +217,7 @@ const MultipleCalendarEventModal = (props) => {
     }
   
    })} 
-  </>
+  </div>
   )
 }
 

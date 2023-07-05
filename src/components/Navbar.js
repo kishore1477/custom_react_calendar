@@ -4,7 +4,7 @@ import Contex from '../contex/Contex'
 import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const contex = useContext(Contex)
-  const { showEventModal, setView, }= contex 
+  const { showEventModal, setView,showEventDataModal, }= contex 
   const navigate = useNavigate();
   const [isOpen, setOpen] = useState(false);
 
@@ -22,7 +22,7 @@ const Navbar = () => {
   }
   return (
     // sticky top-0
-    <div className={`${showEventModal && 'bg-red-100'} `}>
+    <div className={`${(showEventModal || showEventDataModal)&& 'bg-red-100'} `}>
 
 <header className={`text-gray-600 body-font  w-full mr-0  border`}>
   <div className="container   flex flex-wrap shadow py-3 mr-0 flex-col md:flex-row items-center">

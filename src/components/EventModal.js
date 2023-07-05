@@ -18,39 +18,14 @@ const options = [
   "red",
   "purple",
 ];
-// const colourOptions = [{
- 
-//   "gray":"gray",
-//   "green":"green",
-//   "blue": "blue",
-//   "red":"red",
-//   "purple":"purple",
-// }];
-// const colourOptions = [
- 
-//   "indigo",
-//   "gray",
-//   "green",
-//   "blue",
-//   "red",
-//   "purple",
-// ];
+
 const colourOptions = [
   { value: 'Arisha', label: 'Arisha' },
   { value: 'Ramsha', label: 'Ramsha' },
   { value: 'Ansab', label: 'Ansab' },
   { value: 'Kishore', label: 'Kishore' },
 ];
-// useEffect(() => {
-//   // Add a new event to all selected team members
-//   selectedTeamMembers.forEach((teamMember) => {
-//     teamMember.events.push({
-//       title: "New Event",
-//       start: new Date(),
-//       end: new Date(),
-//     });
-//   });
-// }, [selectedTeamMembers]);
+
 export default function EventModal() {
   const animatedComponents = makeAnimated();
   //  date picker code
@@ -238,20 +213,9 @@ if(selectedTeamMembers.length > 0){
           </span>
           <span>Add New Event</span>
           <div>
-            {selectedEvent && (
-              <span
-                onClick={() => {
-                  dispatchCalEvent({
-                    type: "delete",
-                    payload: selectedEvent,
-                  });
-                  setShowEventModal(false);
-                }}
-                className="material-icons-outlined text-gray-400 cursor-pointer"
-              >
-                delete
-              </span>
-            )}
+            
+              
+        
             <button onClick={() => setShowEventModal(false)}>
               <span className="material-icons-outlined text-gray-400">
                 close
@@ -306,7 +270,7 @@ if(selectedTeamMembers.length > 0){
            setValued(val);
          }}
         
-         format="YYYY-MM-DD HH:mm"
+         format="YYYY-MM-DD HH:mm a"
          placeholder={["Start", "End"]}
         
          showTime={{
@@ -405,7 +369,7 @@ fiber_pin
                   placeholder="Create a label"
                   value={modalData.label}
                   required
-                  className=" border-0 text-gray-600  w-1/2 md:w-full border-b-2 text-sm p-1 border-gray-200 focus:outline-none focus:ring-0  focus:border-blue-500"
+                  className=" border-0 text-gray-600   w-1/2 md:w-full border-b-2 text-sm p-1 border-gray-200 focus:outline-none focus:ring-0  focus:border-blue-500"
                   onChange={onchange}
                 /></div>
                 <div className="ml-4">

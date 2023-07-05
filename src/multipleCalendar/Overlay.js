@@ -7,6 +7,7 @@ import { colorList } from '../components/Colorpicker';
 import { useLocation } from 'react-router-dom'
 import EventModal from '../components/EventModal';
 import { useNavigate } from "react-router-dom";
+import ShowEventM from '../components/ShowEventM';
 const Overlay = () => {
   const navigate = useNavigate()
   const location = useLocation();
@@ -14,7 +15,7 @@ const Overlay = () => {
 //    const {selectedUsers} =  useContext(Contex)
    const [currenMonth, setCurrentMonth] = useState(getMonth());
    const contex = useContext(Contex)
-   const { showEventModal,setShowEventModal, setDaySelected ,savedEvents,setSelectedEvent, monthIndex,state,selectedUserEvent, selectedUsers, dispatch,setChecked,filteredEvents, selectedOffDay,selectedUsersEventFromLs,dispatchUsersEvent}= contex 
+   const { showEventModal,setShowEventModal, setDaySelected ,savedEvents,setSelectedEvent, monthIndex,state,selectedUserEvent, selectedUsers, dispatch,setChecked,filteredEvents, selectedOffDay,selectedUsersEventFromLs,dispatchUsersEvent,setShowEventDataModal,showEventDataModal}= contex 
    const admin = localStorage.getItem('admin')
    const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
    const user = localStorage.getItem('loggedUser')
@@ -45,18 +46,18 @@ const Overlay = () => {
 //     }
 //   })
 // }
-const handleDivOnClick = (days) =>{
-  if(loggedAdmin){
-    // if( || loggedAdmin){
-      setDaySelected(days)
-      // setShowEventModal(true)
-    // }
+// const handleDivOnClick = (days) =>{
+//   if(loggedAdmin){
+//     // if( || loggedAdmin){
+//       setDaySelected(days)
+//       // setShowEventModal(true)
+//     // }
    
-  }else if(loggedUser.name === 'Arisha'){
-    setDaySelected(days)
-      setShowEventModal(true)
-  }
-}
+//   }else if(loggedUser.name === 'Arisha'){
+//     setDaySelected(days)
+//       setShowEventModal(true)
+//   }
+// }
 const  handleClickOnDate =(e,date)=> {
   e.preventDefault()
   e.stopPropagation();
@@ -84,13 +85,26 @@ if(evt.user === user.name){
   })
 
 }
+const handleEventClick = (e,evt)=>{
+  console.log("clicked")
+  e.stopPropagation();
+  if(loggedAdmin){
+    setShowEventDataModal(true)
+    setSelectedEvent(evt)
+   
+  }else if(loggedUser.name === 'Arisha'){
+    setShowEventDataModal(true)
+    setSelectedEvent(evt)
+  }
+
+}
   return (
-    <div className={`${showEventModal && 'bg-red-100'}`}>
+    <div className={`${(showEventModal || showEventDataModal) && 'bg-red-100'}`}>
       <div className='flex justify-center items-center'>
       <p className='text-purple-500 font-bold'>Welcome to the overlay view </p>
 
       </div>
-      {showEventModal &&  <EventModal/>}
+      {showEventDataModal &&  <ShowEventM/>}
         {selectedUsers.length ===  0  &&  <span className='flex items-center justify-center'>Please select users calendars from <Link  to = '/main' className='text-red-500 ml-2' >here</Link></span>}
         <div className='flex'>
       {selectedUsers && selectedUsers.map((evt,i)=>{
@@ -143,7 +157,7 @@ if(evt.user === user.name){
       
       
       </div>: 
-      <div className='h-24   w-full md:h-32 flex flex-col  overflow-hidden  items-center'  onClick={()=>handleDivOnClick(days)}>
+      <div className='h-24   w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
        <header className="flex flex-col  items-center">
         { weekId === 0 &&  (
      
@@ -172,58 +186,9 @@ if(evt.user === user.name){
        
       >
        
-      {/* {eventInLS.map((evt,i)=>{
-        
-        // console.log("Evt start is :", evt.start)
-      const start = evt.start && dayjs(evt.start).format('DD')
-      const fullStart = evt.start && dayjs(evt.start)
-      // console.log("Fullstart is :", fullStart)
-      // const sstart =  start.format('DD')
-      const end =evt.end && dayjs(evt.end).format('DD')
-      const fullend =evt.end && dayjs(evt.end)
-      // console.log("fullend is :", fullend)
-      // console.log("(end-start) is:", (end-start))
-      // console.log("days.format", days.format("DD-MM-YY"))
-      let currentDate = fullStart;
-while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
-  // currentDate = dayjs(currentDate).add(1, 'day');
-
-  // console.log("Insie while")
-  // if(currentDate >= )
-  // console.log("Current date iss :", currentDate)
-  // console.log("Current date iss :", currentDate.format('D'))
-  // console.log("days date iss :", days)
-  // console.log("days date iss :", days.format('D'))
-  // currentDate ?<></>
-  if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
-    if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
-      return (
-        <div onClick={()=>{setShowEventModal(true)}} className={`bg-${evt.color}-400 cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50`}>{ evt.title}</div>
-      )
-    }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
-      return (
-        <div onClick={()=>{setShowEventModal(true)}}  className={`bg-${evt.color}-400 cursor-pointer flex items-center justify-center border-none w-24 md:w-96  z-10 border-gray-50 `}><span className='invisible'>,</span></div>
-      )
-    }
- 
-  }
-  
-  currentDate = dayjs(currentDate).add(1, 'day');
-
-
-}
-     
-       
-
-        
-     
-      // console.log("Start date is the: ", start)
-      // console.log("Sstart date is the: ", sstart)
-      // console.log("End date is the: ", end)
-    
-      })} */}
+      
       {selectedUsersEventFromLs.map((evt,i)=>{
-        console.log("i:",i)
+        // console.log("i:",i)
         // console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')
       const fullStart = evt.start && dayjs(evt.start)
@@ -248,11 +213,11 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
   if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
     if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
       return (
-        <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1   border-gray-50`}>{ evt.auditNo}/{evt.user}</div>
+        <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1   border-gray-50`}>{ evt.auditNo}/{evt.user}</div>
       )
     }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
       return (
-       <div onClick={() => setSelectedEvent(evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1  border-gray-50 `}>
+       <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1  border-gray-50 `}>
           {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo}/{evt.user}</span>: <span className='invisible'>,</span>}
           <span className='invisible'>,</span></div>
       )
@@ -274,26 +239,7 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
       // console.log("End date is the: ", end)
     
       })}
-        {/* {dayEvents.map((evt, idx) => {
-          
-       return (   <div
-            key={idx}
-            onClick={() => setSelectedEvent(evt)}
-            className={` ${colorList[evt.label]} p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
-          >
-
-            {dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY") ?evt.title:<></>}
-          </div>)
-})} */}
-         {/* {!loggedAdmin? <>{loggedUser && loggedUserEvents.map((event,i)=>{
-if(event.assigned_date === days.format("DD-MM-YY")){
- return ( <p className=' '>{event.title}</p>)
-}
-         })}</>:<>{eventInLS.map((evt,i)=>{
-          if(evt.assigned_date === days.format("DD-MM-YY")){
-            return ( <p onClick={() => setSelectedEvent(evt)} className='flex items-center justify-center'>{evt.user}</p>)
-           }
-         })}</>} */}
+   
       </div>
       </div>}
       </div>

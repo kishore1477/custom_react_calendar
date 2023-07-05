@@ -45,7 +45,8 @@ const Contex = createContext({
   setAdminNameAddEvent:()=>{},
   dispatchUsersEvent: ({ type, payload }) => {},
   selectedUsersEventFromLs: [],
- 
+  showEventDataModal:false,
+  setShowEventDataModal:()=>{},
 
 })
 

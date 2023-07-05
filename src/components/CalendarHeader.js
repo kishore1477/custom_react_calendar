@@ -17,7 +17,7 @@ import {BsGear} from   "react-icons/bs";
 export default function CalendarHeader() {
   const navigate  = useNavigate()
   const [token, setToken] = useState('')
-  const { monthIndex, setMonthIndex ,showEventModal, selectedDate,setSelectedDate, view,setView,selectedUsers, checked,setChecked} = useContext(Contex);
+  const { monthIndex, setMonthIndex ,showEventModal, selectedDate,setSelectedDate, view,setView,selectedUsers, checked,setChecked,showEventDataModal} = useContext(Contex);
   
    
   function classNames(...classes) {
@@ -92,13 +92,13 @@ export default function CalendarHeader() {
     // className="sticky top-16"
     <div>
     {loggedAdmin || loggedUser ? 
-     <header className={`px-4  py-1 flex items-center ${showEventModal && 'bg-red-100'} `}>
+     <header className={`px-4  py-1 flex items-center ${(showEventModal || showEventDataModal) && 'bg-red-100'} `}>
       <h1 className="mr-10 text-xl text-gray-500 fond-bold">
         Calendar
       </h1>
       <button
         onClick={handleReset}
-        className="border rounded py-2 px-4 mr-5"
+        className="border rounded md:py-2 md:px-4 md:mr-5"
       >
         Today
       </button>
@@ -112,7 +112,7 @@ export default function CalendarHeader() {
           chevron_right
         </span>
       </button>
-      <h2 className="ml-4 text-xl text-gray-500 font-bold">
+      <h2 className="md:ml-4 md:text-xl text-gray-500 md:font-bold">
         {view === 'day'?dayjs(selectedDate).format(
           "MMMM DD YYYY"
         ):<>{view === 'month'?dayjs(new Date(dayjs().year(),monthIndex)).format(
@@ -131,7 +131,7 @@ export default function CalendarHeader() {
 
 
 
-      <div className="flex items-end justify-end absolute right-0 mr-4 gap-x-2 md:gap-x-8 col-span-6">
+      <div className="flex items-end justify-end absolute right-0 mr-4   md:gap-x-8 col-span-6">
                 <div className="flex items-center gap-x-2 md:gap-x-4   col-span-6">
                     <li className="list-none text-2xl">
                         <BiSearch className="text-gray-700"/>

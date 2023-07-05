@@ -1,17 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Contex from "../contex/Contex";
 import { focusRingColorList, sideBarlabelColorList } from "./Colorpicker";
 import { Link } from "react-router-dom";
 
 export default function Labels() {
-  const { labels, updateLabel, showEventModal, filteredEvents } = useContext(Contex);
+  const { labels, updateLabel, showEventModal, filteredEvents,loggedUserName } = useContext(Contex);
+// const [d, setd] = useState([])
+// useEffect(() => {
+//   setd(labels)
+// }, [loggedUserName,labels])
+
   console.log("Labels is:", labels)
   const admin = localStorage.getItem('admin')
   const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
   const loggedAdminName = loggedAdmin && loggedAdmin.name
   const user = localStorage.getItem('loggedUser')
   const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
-  const loggedUserName = loggedUser && loggedUser.name
+  // const loggedUserName = loggedUser && loggedUser.name
   return (
     <React.Fragment>
       <div >

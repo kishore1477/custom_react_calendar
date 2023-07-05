@@ -17,7 +17,7 @@ const ShowMultipleCalendar = () => {
   const path = location.pathname
   const [currenMonth, setCurrentMonth] = useState(getMonth());
   const contex = useContext(Contex)
-  const { showEventModal, monthIndex,state,selectedUserEvent, selectedUsers, dispatch, setChecked,multipleCalendarEventModalArray, showMultiCalEventModal}= contex 
+  const { showEventModal, monthIndex,state,selectedUserEvent, selectedUsers, dispatch, setChecked,multipleCalendarEventModalArray, showMultiCalEventModal,selectedUsersEventFromLs,dispatchUsersEvent}= contex 
 //   if(path === '/main' && selectedUsers.length === 0){
 // setChecked(false)
 //   }
@@ -27,6 +27,19 @@ const ShowMultipleCalendar = () => {
   console.log("monthis",currenMonth)
  
   // console.log("Selected events is :", selectedUserEvent)
+  const  RemoveSelectedUserAndEvent = (user) =>{
+
+    selectedUsersEventFromLs.map((evt,i)=>{
+      if(evt.user=== user.name){
+        dispatchUsersEvent({ type: "delete", payload:evt});
+      }
+    })
+   
+    dispatch({
+      type: "delete",
+      payload: user,
+    });
+  }
   return (
     <div className={` ${showEventModal && 'bg-red-100'} flex` }>
         {showEventModal &&  <EventModal/>}
@@ -45,13 +58,7 @@ return <div>
 <div className='flex justify-end items-end'>
 <span className={`mr-12 ${sideBarlabelColorList[item.color]}`} >{item.name}</span>
 
-            <span className={`material-icons-outlined cursor-pointer ${colorList[item.color]}`} onClick={() => {
-                dispatch({
-                  type: "delete",
-                  payload: item,
-                });
-                
-              }}>
+            <span className={`material-icons-outlined cursor-pointer ${colorList[item.color]}`} onClick={()=>RemoveSelectedUserAndEvent(item)}>
               close
             </span>
            
