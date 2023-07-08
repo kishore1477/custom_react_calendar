@@ -15,7 +15,7 @@ const Overlay = () => {
 //    const {selectedUsers} =  useContext(Contex)
    const [currenMonth, setCurrentMonth] = useState(getMonth());
    const contex = useContext(Contex)
-   const { showEventModal,setShowEventModal, setDaySelected ,savedEvents,setSelectedEvent, monthIndex,state,selectedUserEvent, selectedUsers, dispatch,setChecked,filteredEvents, selectedOffDay,selectedUsersEventFromLs,dispatchUsersEvent,setShowEventDataModal,showEventDataModal}= contex 
+   const { showEventModal,setShowEventModal, setDaySelected ,savedEvents,handleShowMoreOpen,setSelectedEvent, monthIndex,state,selectedUserEvent, selectedUsers, dispatch,setChecked,filteredEvents, selectedOffDay,selectedUsersEventFromLs,dispatchUsersEvent,setShowEventDataModal,showEventDataModal}= contex 
    const admin = localStorage.getItem('admin')
    const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
    const user = localStorage.getItem('loggedUser')
@@ -98,6 +98,21 @@ const handleEventClick = (e,evt)=>{
   }
 
 }
+const handleDivOnClick = () =>{
+  if(loggedAdmin){
+  
+      // setDaySelected(days)
+      setShowEventModal(true)
+      // setUserNameAddEvent(loggedAdmin.name)
+   
+  }else if(loggedUser.name === 'Arisha'){
+    // setDaySelected(days)
+      setShowEventModal(true)
+      // setUserNameAddEvent(loggedUser.name)
+  }
+}
+var count =0
+const totalShowMoreOption =[]
   return (
     <div className={`${(showEventModal || showEventDataModal) && 'bg-red-100'}`}>
       <div className='flex justify-center items-center'>
@@ -105,6 +120,7 @@ const handleEventClick = (e,evt)=>{
 
       </div>
       {showEventDataModal &&  <ShowEventM/>}
+      {showEventModal &&  <EventModal/>}
         {selectedUsers.length ===  0  &&  <span className='flex items-center justify-center'>Please select users calendars from <Link  to = '/main' className='text-red-500 ml-2' >here</Link></span>}
         <div className='flex'>
       {selectedUsers && selectedUsers.map((evt,i)=>{
@@ -157,7 +173,7 @@ const handleEventClick = (e,evt)=>{
       
       
       </div>: 
-      <div className='h-24   w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
+      <div className='h-24   w-full md:h-32 flex flex-col  overflow-hidden  items-center' onClick={handleDivOnClick} >
        <header className="flex flex-col  items-center">
         { weekId === 0 &&  (
      
@@ -187,7 +203,7 @@ const handleEventClick = (e,evt)=>{
       >
        
       
-      {selectedUsersEventFromLs.map((evt,i)=>{
+      {selectedUsersEventFromLs.toReversed().map((evt,i)=>{
         // console.log("i:",i)
         // console.log("Evt start is :", evt.start)
       const start = evt.start && dayjs(evt.start).format('DD')
@@ -212,15 +228,30 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
   // currentDate ?<></>
   if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
     if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
+      totalShowMoreOption.push(evt)
+      count++
+if(count >3){
+return <span className='text-blue-500 cursor-pointer text-xs flex items-center justify-center' onClick={(e)=>handleShowMoreOpen(e,days,totalShowMoreOption)} >{count===4 && 'show more'}</span>
+
+}
       return (
-        <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1   border-gray-50`}>{ evt.auditNo}/{evt.user}</div>
+        <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]}  text-xs h-4  cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1   border-gray-50`}>{ evt.auditNo}/{evt.user}</div>
       )
     }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
-      return (
-       <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1  border-gray-50 `}>
-          {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo}/{evt.user}</span>: <span className='invisible'>,</span>}
-          <span className='invisible'>,</span></div>
-      )
+
+      totalShowMoreOption.push(evt)
+      count++
+if(count >3){
+return <span className='text-blue-500 cursor-pointer text-xs flex items-center justify-center' onClick={(e)=>handleShowMoreOpen(e,days,totalShowMoreOption)} >{count===4 && 'show more'}</span>
+
+}else{
+  return (
+    <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]}  text-xs h-4 cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1  border-gray-50 `}>
+       {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo}/{evt.user}</span>: <span className='invisible'>,</span>}
+     </div>
+   )
+}
+      
     }
  
   }

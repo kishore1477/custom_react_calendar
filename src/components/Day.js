@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { useNavigate } from "react-router-dom";
 import { colorList } from './Colorpicker';
+import ShowMoreEventModals from './ShowMoreEventModals';
 // import 'dayjs/locale/en'; // Import the desired locale
 const Day = (props) => {
   const admin = localStorage.getItem('admin')
@@ -18,13 +19,12 @@ const Day = (props) => {
 const navigate = useNavigate()
 
   const contex = useContext(Contex)
-  const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents, selectedOffDay, setUserNameAddEvent, setAdminNameAddEvent,setShowEventDataModal} = contex
+  const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents, selectedOffDay, setUserNameAddEvent, setAdminNameAddEvent,setShowEventDataModal,handleShowMoreOpen,showMoreOpen} = contex
   const [dayEvents, setDayEvents] = useState([]);
+
+
     const  { days, weekId, dayId, week} = props
-//     console.log("Week daya is :", week[0])
-// console.log("selectedOffDay is :", selectedOffDay)
-// console.log("Filtered Events is:", filteredEvents)
-// console.log("filteredEvents.toReversed()Events is:", filteredEvents.toReversed())
+
 
   // jump to day view...
 const  handleClickOnDate =(e,date)=> {
@@ -122,12 +122,27 @@ const handleDivOnClick = () =>{
       setUserNameAddEvent(loggedUser.name)
   }
 }
+const handleEventClick = (e,evt)=>{
+  console.log("clicked")
+  e.stopPropagation();
+  if(loggedAdmin){
+    setShowEventDataModal(true)
+    setSelectedEvent(evt)
+   
+  }else if(loggedUser.name === 'Arisha'){
+    setShowEventDataModal(true)
+    setSelectedEvent(evt)
+  }
 
+}
+var count = 0
+const totalShowMoreOption = []
+// console.log("totalShowMoreOption is :", totalShowMoreOption)
 
 
   return (
     <div className='border  border-gray-200 flex flex-col '>
-
+{showMoreOpen && <ShowMoreEventModals/>}
       {/* { selectedOffDay && selectedOffDay.map((offDay, i)=>{ */}
       {selectedOffDay && (days.format("dddd") === selectedOffDay[0] || days.format("dddd") ===  selectedOffDay[1] ||  days.format("dddd") ===  selectedOffDay[2]) ?  
       <div className='h-24  z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
@@ -183,7 +198,7 @@ const handleDivOnClick = () =>{
  >
   
 
- {filteredEvents &&   filteredEvents.toReversed().map((evt,i)=>{
+ {filteredEvents &&  filteredEvents.toReversed().map((evt,i)=>{
   //  console.log("i:",i)
    // console.log("Evt start is :", evt.start)
 //  const start = evt.start && dayjs(evt.start).format('DD')
@@ -194,30 +209,72 @@ const handleDivOnClick = () =>{
 
  let currentDate = fullStart;
 while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
-// console.log("currentDate is :", currentDate)
+//  console.log("i is :", i)
 if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
-  // console.log("currentDate inside if is :", currentDate)
-  if(evt.user === loggedUserName || evt.user === loggedAdminName ){
-    // console.log("fullStart is inside :", fullStart)
-    // console.log("fullStart.format('DD-MM-YY') is inside :", fullStart.format('DD-MM-YY'))
-    // console.log("days.format('DD-MM-YY') is inside :",days.format('DD-MM-YY'))
+  
+  // user logim
+  if(evt.user === loggedUserName  ){
+    
 if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
 
   return (
-    <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{evt.user===loggedAdminName?evt.auditNo:evt.auditNo}</div>
+    <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{evt.auditNo}</div>
   )
 // }
 
 }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
+  
   // if(evt.user === loggedUserName || (evt.admin && (evt.admin === loggedAdminName))){
     return (
       <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
-         {days.format("ddd") === 'Mon'? <span className=''>{evt.user===loggedAdminName?evt.auditNo:evt.auditNo}</span>: <span className='invisible'>,</span>}
+         {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo}</span>: <span className='invisible'>,</span>}
          <span className='invisible'>,</span></div>
      )
   // }
 
 }
+}
+//  admin login  ❤
+else{
+  if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
+    totalShowMoreOption.push(evt)
+// count++ 
+// if(count >2){
+//   return <div>Show more</div>
+// }
+// totalShowMoreOption.push(evt)
+count++ 
+console.log("count inside !== is :", count)
+if(count >3){
+// return <span className='text-black cursor-pointer flex items-center justify-center'>{evt.auditNo.substring(0, 3)}../{evt.user}</span>
+return <span className='text-blue-500 cursor-pointer text-xs flex items-center justify-center' onClick={(e)=>handleShowMoreOpen(e,days,totalShowMoreOption)} >{count===4 && 'show more'}</span>
+}
+    return (
+      <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer h-4 flex text-xs items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>{evt.auditNo.substring(0, 3)}../{evt.user}</div>
+    )
+  // }
+  
+  }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
+    totalShowMoreOption.push(evt)
+    // console.log("totalShowMoreOption inside if is:", totalShowMoreOption)
+    // console.log("evt inside if is :", evt)
+      count++ 
+      // console.log("count inside !== is :", count)
+  if(count >3){
+    // return <div>Show more</div>
+return <span className='text-blue-500 cursor-pointer flex items-center text-xs justify-center' onClick={(e)=>handleShowMoreOpen(e,days,totalShowMoreOption)}>{count===4 && 'show more'}</span>
+
+  }else{
+    return (
+      <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} text-xs h-4 cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
+         {days.format("ddd") === 'Mon'? <span className=''> {evt.auditNo.substring(0, 3)}../{evt.user}</span>: <span className='invisible'>,</span>}
+         <span className='invisible'>,</span></div>
+     )
+  }
+      
+    // }
+  
+  }
 }
 }
 
@@ -227,36 +284,20 @@ currentDate = dayjs(currentDate).add(1, 'day');
 }
 
   
-
    
 
  // console.log("Start date is the: ", start)
  // console.log("Sstart date is the: ", sstart)
  // console.log("End date is the: ", end)
 
- })}
-   {/* {dayEvents.map((evt, idx) => {
-     
-  return (   <div
-       key={idx}
-       onClick={() => setSelectedEvent(evt)}
-       className={` ${colorList[evt.label]} p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate cursor-pointer`}
-     >
+ })
 
-       {dayjs(evt.day).format("DD-MM-YY") === days.format("DD-MM-YY") ?evt.title:<></>}
-     </div>)
-})} */}
-    {/* {!loggedAdmin? <>{loggedUser && loggedUserEvents.map((event,i)=>{
-if(event.assigned_date === days.format("DD-MM-YY")){
-return ( <p className=' '>{event.title}</p>)
 }
-    })}</>:<>{eventInLS.map((evt,i)=>{
-     if(evt.assigned_date === days.format("DD-MM-YY")){
-       return ( <p onClick={() => setSelectedEvent(evt)} className='flex items-center justify-center'>{evt.user}</p>)
-      }
-    })}</>} */}
+   
  </div>
- </div>} 
+ </div>
+//  {setAllEventOfday()}
+ } 
 
     
     </div>

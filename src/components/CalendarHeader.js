@@ -17,7 +17,7 @@ import {BsGear} from   "react-icons/bs";
 export default function CalendarHeader() {
   const navigate  = useNavigate()
   const [token, setToken] = useState('')
-  const { monthIndex, setMonthIndex ,showEventModal, selectedDate,setSelectedDate, view,setView,selectedUsers, checked,setChecked,showEventDataModal} = useContext(Contex);
+  const { monthIndex, setMonthIndex ,showEventModal, selectedDate,setSelectedDate, view,setView,selectedUsers,showMoreOpen, checked,setChecked,showEventDataModal} = useContext(Contex);
   
    
   function classNames(...classes) {
@@ -92,7 +92,7 @@ export default function CalendarHeader() {
     // className="sticky top-16"
     <div>
     {loggedAdmin || loggedUser ? 
-     <header className={`px-4  py-1 flex items-center ${(showEventModal || showEventDataModal) && 'bg-red-100'} `}>
+     <header className={`px-4  py-1 flex items-center ${(showEventModal || showMoreOpen || showEventDataModal) && 'bg-red-100'} `}>
       <h1 className="mr-10 text-xl text-gray-500 fond-bold">
         Calendar
       </h1>

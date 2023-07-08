@@ -135,7 +135,7 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
       createdLabel:label,
       label: selectedOption,
       day: daySelected.valueOf(),
-      id: selectedEvent ? selectedEvent.id : Date.now(),
+      id:  Date.now(),
       start:valued && valued[0],
       end:valued && valued[1],
       user: userNameAddEvent && userNameAddEvent,
@@ -145,9 +145,9 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
     };
     console.log("CalendarEvent is:", calendarEvent)
 
-    if (selectedEvent) {
-      dispatchCalEvent({ type: "update", payload: calendarEvent });
-    } else {
+    // if (selectedEvent) {
+      // dispatchCalEvent({ type: "update", payload: calendarEvent });
+    // } else {
       if (auditNo && customerName && standaradTyp && siteName && label) {
 if(selectedTeamMembers.length > 0){
   // selectedTeamMembers.forE
@@ -163,7 +163,7 @@ if(selectedTeamMembers.length > 0){
       createdLabel:label,
       label: selectedOption,
       day: daySelected.valueOf(),
-      id: selectedEvent ? selectedEvent.id : Date.now(),
+      id:  Date.now(),
       start:valued && valued[0],
       end:valued && valued[1],
       user: item.value
@@ -171,19 +171,23 @@ if(selectedTeamMembers.length > 0){
       // admin: adminNameAddEvent && adminNameAddEvent,
 
     } });
+    setUserNameAddEvent('')
+    setSelectedTeamMembers([])
   });
 }else{
   dispatchCalEvent({ type: "push", payload: calendarEvent });
+  setSelectedTeamMembers([])
+  setUserNameAddEvent('')
 }
         
       } else {
         alert("All Fields are required.")
       }
-    }
+    // }
 
     setShowEventModal(false);
-    setSelectedTeamMembers([])
-    setUserNameAddEvent('')
+    // setSelectedTeamMembers([])
+    // setUserNameAddEvent('')
   }
 
   // const handleSmallCal = () =>{

@@ -47,6 +47,12 @@ const Contex = createContext({
   selectedUsersEventFromLs: [],
   showEventDataModal:false,
   setShowEventDataModal:()=>{},
+  showMoreOpen:false,
+  setShowMoreOpen:()=>{},
+  handleShowMoreOpen:()=>{},
+  handleShowMoreClose:()=>{},
+
+
 
 })
 
