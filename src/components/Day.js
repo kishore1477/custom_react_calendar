@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useNavigate } from "react-router-dom";
 import { colorList } from './Colorpicker';
 import ShowMoreEventModals from './ShowMoreEventModals';
+import ShowMoreEventModal2 from './ShowMoreEventModal2';
 // import 'dayjs/locale/en'; // Import the desired locale
 const Day = (props) => {
   const admin = localStorage.getItem('admin')
@@ -19,7 +20,7 @@ const Day = (props) => {
 const navigate = useNavigate()
 
   const contex = useContext(Contex)
-  const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents, selectedOffDay, setUserNameAddEvent, setAdminNameAddEvent,setShowEventDataModal,handleShowMoreOpen,showMoreOpen} = contex
+  const  {setShowEventModal, monthIndex,setDaySelected ,savedEvents,setSelectedEvent,filteredEvents, selectedOffDay, setUserNameAddEvent, setAdminNameAddEvent,setShowEventDataModal,handleShowMoreOpen,showMoreOpen,showEventDataModal2} = contex
   const [dayEvents, setDayEvents] = useState([]);
 
 
@@ -123,16 +124,18 @@ const handleDivOnClick = () =>{
   }
 }
 const handleEventClick = (e,evt)=>{
-  console.log("clicked")
+  // console.log("clicked")
   e.stopPropagation();
-  if(loggedAdmin){
-    setShowEventDataModal(true)
-    setSelectedEvent(evt)
+  // if(loggedAdmin){
+  //   setShowEventDataModal(true)
+  //   setSelectedEvent(evt)
    
-  }else if(loggedUser.name === 'Arisha'){
-    setShowEventDataModal(true)
-    setSelectedEvent(evt)
-  }
+  // }else if(loggedUser.name === 'Arisha'){
+  //   setShowEventDataModal(true)
+  //   setSelectedEvent(evt)
+  // }
+  setShowEventDataModal(true)
+  setSelectedEvent([evt])
 
 }
 var count = 0
@@ -143,6 +146,7 @@ const totalShowMoreOption = []
   return (
     <div className='border  border-gray-200 flex flex-col '>
 {showMoreOpen && <ShowMoreEventModals/>}
+{showEventDataModal2 && <ShowMoreEventModal2/>}
       {/* { selectedOffDay && selectedOffDay.map((offDay, i)=>{ */}
       {selectedOffDay && (days.format("dddd") === selectedOffDay[0] || days.format("dddd") ===  selectedOffDay[1] ||  days.format("dddd") ===  selectedOffDay[2]) ?  
       <div className='h-24  z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
@@ -244,7 +248,7 @@ else{
 // }
 // totalShowMoreOption.push(evt)
 count++ 
-console.log("count inside !== is :", count)
+// console.log("count inside !== is :", count)
 if(count >3){
 // return <span className='text-black cursor-pointer flex items-center justify-center'>{evt.auditNo.substring(0, 3)}../{evt.user}</span>
 return <span className='text-blue-500 cursor-pointer text-xs flex items-center justify-center' onClick={(e)=>handleShowMoreOpen(e,days,totalShowMoreOption)} >{count===4 && 'show more'}</span>

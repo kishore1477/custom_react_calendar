@@ -14,7 +14,7 @@ import ShowEventM from './ShowEventM';
   useEffect(() => {
       setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
-  console.log("monthis",currenMonth)
+  // console.log("monthis",currenMonth)
   
    return (
 
@@ -29,6 +29,7 @@ import ShowEventM from './ShowEventM';
     <div className=' w-full h-screen'>
    {showEventModal &&  <EventModal/>}
    {showEventDataModal &&  <ShowEventM/>}
+ 
      <div  className={` mx-auto my-auto z-0 grid grid-cols-7 grid-rows-5 ${(showEventModal || showMoreOpen || showEventDataModal) && 'bg-red-100'}`}>
       {
        currenMonth && currenMonth.map((week,weekId)=>(

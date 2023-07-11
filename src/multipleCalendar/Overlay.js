@@ -8,6 +8,8 @@ import { useLocation } from 'react-router-dom'
 import EventModal from '../components/EventModal';
 import { useNavigate } from "react-router-dom";
 import ShowEventM from '../components/ShowEventM';
+import ShowMoreEventModals from '../components/ShowMoreEventModals';
+import ShowMoreEventModal2 from '../components/ShowMoreEventModal2';
 const Overlay = () => {
   const navigate = useNavigate()
   const location = useLocation();
@@ -15,7 +17,7 @@ const Overlay = () => {
 //    const {selectedUsers} =  useContext(Contex)
    const [currenMonth, setCurrentMonth] = useState(getMonth());
    const contex = useContext(Contex)
-   const { showEventModal,setShowEventModal, setDaySelected ,savedEvents,handleShowMoreOpen,setSelectedEvent, monthIndex,state,selectedUserEvent, selectedUsers, dispatch,setChecked,filteredEvents, selectedOffDay,selectedUsersEventFromLs,dispatchUsersEvent,setShowEventDataModal,showEventDataModal}= contex 
+   const { showEventModal,setShowEventModal, setDaySelected ,savedEvents,handleShowMoreOpen,setSelectedEvent, monthIndex,state,selectedUserEvent, selectedUsers, dispatch,setChecked,filteredEvents, selectedOffDay,selectedUsersEventFromLs,dispatchUsersEvent,setShowEventDataModal,showEventDataModal,showMoreOpen,showEventDataModal2}= contex 
    const admin = localStorage.getItem('admin')
    const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
    const user = localStorage.getItem('loggedUser')
@@ -23,41 +25,19 @@ const Overlay = () => {
    useEffect(() => {
        setCurrentMonth(getMonth(monthIndex));
    }, [monthIndex]);
- console.log("selectedUsersEventFromLs in overlay is :", selectedUsersEventFromLs)
+//  console.log("selectedUsersEventFromLs in overlay is :", selectedUsersEventFromLs)
 
 
 
-   console.log("monthis",currenMonth)
-   console.log("selectedUsers inside overlay is:", selectedUsers)
+  //  console.log("monthis",currenMonth)
+  //  console.log("selectedUsers inside overlay is:", selectedUsers)
    const getCurrentDayClass = (days)=>{
     return days.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
     ? "bg-blue-600 text-white rounded-full w-7 h-7"
     : "";
   }
-  console.log("selectedUsers length :", selectedUsers.length)
-// if(selectedUsers.length ===  0){
-//   setChecked(false)
+  // console.log("selectedUsers length :", selectedUsers.length)
 
-// }
-// const handleHere = () =>{
-//   setChecked((prev)=>{
-//     if(prev===false){
-//       true
-//     }
-//   })
-// }
-// const handleDivOnClick = (days) =>{
-//   if(loggedAdmin){
-//     // if( || loggedAdmin){
-//       setDaySelected(days)
-//       // setShowEventModal(true)
-//     // }
-   
-//   }else if(loggedUser.name === 'Arisha'){
-//     setDaySelected(days)
-//       setShowEventModal(true)
-//   }
-// }
 const  handleClickOnDate =(e,date)=> {
   e.preventDefault()
   e.stopPropagation();
@@ -86,16 +66,19 @@ if(evt.user === user.name){
 
 }
 const handleEventClick = (e,evt)=>{
-  console.log("clicked")
+  // console.log("clicked")
+
   e.stopPropagation();
-  if(loggedAdmin){
-    setShowEventDataModal(true)
-    setSelectedEvent(evt)
+  setShowEventDataModal(true)
+    setSelectedEvent([evt])
    
-  }else if(loggedUser.name === 'Arisha'){
-    setShowEventDataModal(true)
-    setSelectedEvent(evt)
-  }
+
+  // if(loggedAdmin){
+   
+  // }else if(loggedUser.name === 'Arisha'){
+  //   setShowEventDataModal(true)
+  //   setSelectedEvent(evt)
+  // }
 
 }
 const handleDivOnClick = () =>{
@@ -111,16 +94,20 @@ const handleDivOnClick = () =>{
       // setUserNameAddEvent(loggedUser.name)
   }
 }
-var count =0
-const totalShowMoreOption =[]
+// var count =0
+// const totalShowMoreOption =[]
+var countN =0
+const totalShowMoreOptionNot =[]
   return (
-    <div className={`${(showEventModal || showEventDataModal) && 'bg-red-100'}`}>
+    <div className={`${(showEventModal || showEventDataModal || showMoreOpen) && 'bg-red-100'}`}>
       <div className='flex justify-center items-center'>
       <p className='text-purple-500 font-bold'>Welcome to the overlay view </p>
 
       </div>
       {showEventDataModal &&  <ShowEventM/>}
       {showEventModal &&  <EventModal/>}
+      {showMoreOpen && <ShowMoreEventModals/>}
+      {showEventDataModal2 && <ShowMoreEventModal2/>}
         {selectedUsers.length ===  0  &&  <span className='flex items-center justify-center'>Please select users calendars from <Link  to = '/main' className='text-red-500 ml-2' >here</Link></span>}
         <div className='flex'>
       {selectedUsers && selectedUsers.map((evt,i)=>{
@@ -142,13 +129,15 @@ const totalShowMoreOption =[]
   {
    currenMonth && currenMonth.map((week,weekId)=>(
       
-      week.map((days, dayId)=>(
+      week.map((days, dayId)=>{
         // console.log("dayId id is :", dayId)
         // console.log("days :", days)
   
         // DAy file
+        var count =0
+const totalShowMoreOption =[]
         
-        <div className={`border  border-gray-300 flex flex-col `}>
+   return     <div className={`border  border-gray-300 flex flex-col `}>
      {selectedOffDay && (days.format("dddd") === selectedOffDay[0] || days.format("dddd") ===  selectedOffDay[1] ||  days.format("dddd") ===  selectedOffDay[2])? 
       <div className='h-24   w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
        <header className="flex flex-col  items-center">
@@ -217,19 +206,14 @@ const totalShowMoreOption =[]
       // console.log("days.format", days.format("DD-MM-YY"))
       let currentDate = fullStart;
 while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend, 'day')) {
-  // currentDate = dayjs(currentDate).add(1, 'day');
 
-  // console.log("Insie while")
-  // if(currentDate >= )
-  // console.log("Current date iss :", currentDate)
-  // console.log("Current date iss :", currentDate.format('D'))
-  // console.log("days date iss :", days)
-  // console.log("days date iss :", days.format('D'))
-  // currentDate ?<></>
   if(days.format('DD-MM-YY') ===( currentDate && currentDate.format('DD-MM-YY'))){
     if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
+      // console.log("evt inside === is  :", evt)
       totalShowMoreOption.push(evt)
       count++
+      // console.log("count inside == is :", count)
+      // console.log("totalShowMoreOption inside == is :", totalShowMoreOption)
 if(count >3){
 return <span className='text-blue-500 cursor-pointer text-xs flex items-center justify-center' onClick={(e)=>handleShowMoreOpen(e,days,totalShowMoreOption)} >{count===4 && 'show more'}</span>
 
@@ -241,6 +225,8 @@ return <span className='text-blue-500 cursor-pointer text-xs flex items-center j
 
       totalShowMoreOption.push(evt)
       count++
+      // console.log("count inside !== is :", count)
+      // console.log("totalShowMoreOptionNot inside !== is :", totalShowMoreOption)
 if(count >3){
 return <span className='text-blue-500 cursor-pointer text-xs flex items-center justify-center' onClick={(e)=>handleShowMoreOpen(e,days,totalShowMoreOption)} >{count===4 && 'show more'}</span>
 
@@ -277,7 +263,7 @@ return <span className='text-blue-500 cursor-pointer text-xs flex items-center j
   
        
   
-      ))
+    })
     ))
   }
   </div>

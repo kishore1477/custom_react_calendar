@@ -8,6 +8,8 @@ import ReactCalendar from './ReactCalendar';
 import { colorList, sideBarlabelColorList } from '../components/Colorpicker';
 import MultipleCalendarEventModal from './MultipleCalendarEventModal';
 import EventModal from '../components/EventModal';
+import ShowMoreEventModals from '../components/ShowMoreEventModals';
+import ShowEventM from '../components/ShowEventM';
 
 const ShowMultipleCalendar = () => {
   const modalRef = useRef(null);
@@ -17,7 +19,7 @@ const ShowMultipleCalendar = () => {
   const path = location.pathname
   const [currenMonth, setCurrentMonth] = useState(getMonth());
   const contex = useContext(Contex)
-  const { showEventModal, monthIndex,state,selectedUserEvent, selectedUsers, dispatch, setChecked,multipleCalendarEventModalArray, showMultiCalEventModal,selectedUsersEventFromLs,dispatchUsersEvent}= contex 
+  const { showEventModal, monthIndex,state,selectedUserEvent, selectedUsers, dispatch, setChecked,multipleCalendarEventModalArray, showMultiCalEventModal,selectedUsersEventFromLs,dispatchUsersEvent,showMoreOpen,showEventDataModal}= contex 
 //   if(path === '/main' && selectedUsers.length === 0){
 // setChecked(false)
 //   }
@@ -41,8 +43,10 @@ const ShowMultipleCalendar = () => {
     });
   }
   return (
-    <div className={` ${showEventModal && 'bg-red-100'} flex` }>
+    <div className={` ${(showEventModal || showMoreOpen ) && 'bg-red-100'} flex` }>
         {showEventModal &&  <EventModal/>}
+        {showEventDataModal &&  <ShowEventM/>}
+        {showMoreOpen && <ShowMoreEventModals/>}
 {/* <div className=''>Admin Calendar</div> */}
 {selectedUsers.map((item,i)=>{
 

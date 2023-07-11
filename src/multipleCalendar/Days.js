@@ -9,7 +9,7 @@ const Days = (props) => {
   const user = localStorage.getItem('loggedUser')
   const loggedUser = user && JSON.parse(localStorage.getItem('loggedUser'))
   const contex = useContext(Contex)
-  const  {setShowEventModal, monthIndex,setDaySelected, selectedUserEvent ,savedEvents,setSelectedEvent,filteredEvents,dispatchMultiCalEventModal, multipleCalendarEventModalArray,setShowMultiCalEventModal, selectedOffDay, setUserNameAddEvent} = contex
+  const  {setShowEventModal, monthIndex,setDaySelected, selectedUserEvent ,savedEvents,setSelectedEvent,filteredEvents,dispatchMultiCalEventModal, multipleCalendarEventModalArray,setShowMultiCalEventModal, selectedOffDay,handleShowMoreOpen, setUserNameAddEvent} = contex
   const [dayEvents, setDayEvents] = useState([]);
     const  { days, weekId, dayId, item, userName} = props
     const navigate = useNavigate()
@@ -79,12 +79,13 @@ const  handleClickOnDate =(e,date)=> {
     navigate(`/day/${d}`)
 }
 // console.log("Logged user events is :", loggedUserEvents)
-
+var count = 0
+const totalShowMoreOptionEvent = []
   return (
     <div>
 
 
-    <div className={` border ${multipleCalendarBorderList[item.color]}  flex flex-col `}>
+    <div className={` border ${multipleCalendarBorderList[item.color]}  flex flex-col z-0 `}>
     {selectedOffDay && (days.format("dddd") === selectedOffDay[0] || days.format("dddd") ===  selectedOffDay[1] ||  days.format("dddd") ===  selectedOffDay[2])? 
       <div className='h-24  z-0 w-full md:h-32 flex flex-col  overflow-hidden  items-center' >
        <header className="flex flex-col  items-center">
@@ -158,13 +159,20 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
     if(days.format('DD-MM-YY') === fullStart.format('DD-MM-YY')){
       // savedEvents && savedEvents.map((sevt,i)=>{
         if(evt.user === userName){
-          return (
-            <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>
+count++
+totalShowMoreOptionEvent.push(evt)
+if(count >3){
+  return <span className='text-blue-500 cursor-pointer text-xs flex items-center justify-center' onClick={(e)=>handleShowMoreOpen(e,days,totalShowMoreOptionEvent)} >{count===4 && 'show more'}</span>
+}else{
+  return (
+    <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} text-xs h-4 cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50`}>
+ 
+ {evt.auditNo.substring(0, 3)}..</div>
+  )
+}
          
-         {evt.auditNo.substring(0, 3)}..</div>
-          )
         }else{
-          return (<div  className={` cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50 invisible`}>
+          return (<div  className={` cursor-pointer flex items-center justify-center border-none w-24 md:w-96   z-10 border-gray-50 invisible`}>
          
           </div>)  
         }
@@ -175,13 +183,20 @@ while (dayjs(currentDate).isBefore(fullend) || dayjs(currentDate).isSame(fullend
     }else if (days.format('DD-MM-YY') !== fullStart.format('DD-MM-YY')){
       
         if(evt.user === userName){
-          return (
-            <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
-               {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo.substring(0, 3)}..</span>: <span className='invisible'>,</span>}
-              </div>
-           )
+          count++
+totalShowMoreOptionEvent.push(evt)
+if(count >3){
+  return <span className='text-blue-500 cursor-pointer text-xs flex items-center justify-center' onClick={(e)=>handleShowMoreOpen(e,days,totalShowMoreOptionEvent)} >{count===4 && 'show more'}</span>
+}else{
+  return (
+    <div onClick={(e) => handleEventClick(e,evt)} className={`${colorList[evt.label]} text-xs h-4 cursor-pointer flex items-center justify-center border-none w-24 md:w-96 m-1 z-10 border-gray-50 `}>
+       {days.format("ddd") === 'Mon'? <span className=''>{evt.auditNo.substring(0, 3)}..</span>: <span className='invisible'>,</span>}
+      </div>
+   )
+}
+       
         }else{
-          return (<div  className={` cursor-pointer flex items-center justify-center border-none w-24 md:w-96  m-1  z-10 border-gray-50 invisible`}>
+          return (<div  className={`  cursor-pointer flex items-center justify-center border-none w-24 md:w-96     z-10 border-gray-50 invisible`}>
          
           </div>)  
         }

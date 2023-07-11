@@ -231,7 +231,7 @@ if(selectedTeamMembers.length > 0){
           <div className="grid grid-cols-1/5 items-end gap-y-2  md:gap-y-4">
             <div></div>
             <input
-              type="number"
+              type="text"
               name="auditNo"
               placeholder="Audit No"
               value={modalData.auditNo}
