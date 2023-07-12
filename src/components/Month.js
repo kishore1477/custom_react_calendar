@@ -6,11 +6,12 @@ import EventModal from './EventModal';
 import Labels from './Labels';
 import CalendarHeader from './CalendarHeader';
 import ShowEventM from './ShowEventM';
+import EditEventM from './EditEventM';
  
  const Month = () => {
   const [currenMonth, setCurrentMonth] = useState(getMonth());
   const contex = useContext(Contex)
-  const { showEventModal, monthIndex,state,showEventDataModal,showMoreOpen}= contex 
+  const { showEventModal, monthIndex,state,showEventDataModal,showMoreOpen,editEventM}= contex 
   useEffect(() => {
       setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
@@ -29,6 +30,7 @@ import ShowEventM from './ShowEventM';
     <div className=' w-full h-screen'>
    {showEventModal &&  <EventModal/>}
    {showEventDataModal &&  <ShowEventM/>}
+   {editEventM &&  <EditEventM/>}
  
      <div  className={` mx-auto my-auto z-0 grid grid-cols-7 grid-rows-5 ${(showEventModal || showMoreOpen || showEventDataModal) && 'bg-red-100'}`}>
       {

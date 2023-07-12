@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import Contex from '../contex/Contex';
 import dayjs from 'dayjs';
 const ShowEventM = () => {
-  const {selectedEvent, setShowEventDataModal, dispatchCalEvent} =   useContext(Contex)
+  const {selectedEvent, setShowEventDataModal, dispatchCalEvent,setEditEventM,setEditEventData} =   useContext(Contex)
   console.log("selectedEvent  inside showEventM:", selectedEvent)
 const {auditNo, location, customerName,end,industCode, label,standaradTyp,start,user} = selectedEvent
 console.log("auditNo is :", auditNo)
@@ -14,6 +14,11 @@ const user1 = localStorage.getItem('loggedUser')
 const loggedUser = user1 && JSON.parse(localStorage.getItem('loggedUser'))
 const loggedUserName = loggedUser && loggedUser.name
 
+const handleEditEvent = (e, evt) =>{
+  setEditEventM(true)
+  setEditEventData(evt)
+  setShowEventDataModal(false)
+}
   return (
     <div className={`h-screen w-full fixed left-0 top-0 flex justify-center items-center   z-20`}>
      
@@ -34,7 +39,7 @@ const loggedUserName = loggedUser && loggedUser.name
         <div>
 
 {(loggedUserName === 'Arisha' || loggedAdmin)  && <>
-<span className="material-icons-outlined text-gray-400 cursor-pointer mx-2">
+<span className="material-icons-outlined text-gray-400 cursor-pointer mx-2" onClick={(e)=>handleEditEvent(e,selectedEvent)}>
 edit
 </span>
           {selectedEvent && (

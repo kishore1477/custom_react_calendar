@@ -32,7 +32,7 @@ const MyCheckBoxList = [
     }
   ];
   const Checkbox = ({ obj, onChange }) => {
-    // console.log("obj is :", obj)
+    console.log("obj is :", obj)
     // console.log("onChange is :", onChange)
    
     return (

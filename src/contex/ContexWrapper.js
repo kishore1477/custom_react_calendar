@@ -3,6 +3,9 @@ import Contex from "./Contex"
 import { useState,useEffect,useReducer, useMemo,useRef } from "react"
 import dayjs from "dayjs";
 function savedEventsReducer(state, { type, payload }) {
+  const payload1 = payload && payload[0]
+  console.log("paylod is : ", payload)
+  console.log("state is : ", state)
   switch (type) {
     case "push":
       // console.log("State is :", state)
@@ -11,10 +14,12 @@ function savedEventsReducer(state, { type, payload }) {
       return [...state, payload];
     case "update":
       return state.map((evt) =>
+      // console.log("condition result is :",evt.id === payload.id)
+      // console.log("evt is ")
         evt.id === payload.id ? payload : evt
       );
     case "delete":
-      return state.filter((evt) => evt.id !== payload.id);
+      return state.filter((evt) => evt.id !== payload1.id);
     default:
       throw new Error();
   }
@@ -81,6 +86,7 @@ const [count, setCount] = useState(10)
 const [daySelected, setDaySelected] = useState(dayjs());
 const [selectedEvent, setSelectedEvent] = useState(null)
 const [selectedEventOfShowMoreM, setSelectedEventOfShowMoreM] = useState([])
+const [editEventData, setEditEventData] = useState([])
 const [labels, setLabels] = useState([]);
 const [selectedUserEvent, setSelectedUserEvent] = useState(null)
 const [selectedDate, setSelectedDate] = useState(dayjs())
@@ -94,6 +100,7 @@ const [adminNameAddEvent, setAdminNameAddEvent] = useState('')
 const [selectedOffDay, setSelectedOffDay] = useState(["Saturday","Sunday"])
 const [showEventDataModal, setShowEventDataModal] = useState(false)
 const [showEventDataModal2, setShowEventDataModal2] = useState(false)
+const [editEventM, setEditEventM] = useState(false)
 const [showMoreOpen, setShowMoreOpen] = useState(false)
 const [allEventOfday, setAllEventOfday] = useState([]);
 const [DateOfShowMore, setDateOfShowMore] = useState([]);
@@ -103,10 +110,14 @@ const [selectedUsers, dispatch] = useReducer(reducer, []);
 const [selectedUsersEventFromLs, dispatchUsersEvent] = useReducer(reducerUsersEvent, []);
 const [multipleCalendarEventModalArray, dispatchMultiCalEventModal] = useReducer(reducerMCEM, []);
 
-
+useEffect(() => {
+  localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+  const events =  JSON.parse(localStorage.getItem('savedEvents'))
+  // console.log("Events inside local in wrapper:", events)
+}, [savedEvents]);
  const  handleShowMoreOpen=(e,days,evt)=>{
   e.stopPropagation();
-  console.log("evt is inside handleShowMoreOpen ..", evt)
+  // console.log("evt is inside handleShowMoreOpen ..", evt)
     setShowMoreOpen(true)
     setAllEventOfday(evt)
     setDateOfShowMore(days)
@@ -151,11 +162,7 @@ const [multipleCalendarEventModalArray, dispatchMultiCalEventModal] = useReducer
     }
   }, [showEventDataModal2]);
   
-  useEffect(() => {
-    localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
-    const events =  JSON.parse(localStorage.getItem('savedEvents'))
-    // console.log("Events inside local in wrapper:", events)
-  }, [savedEvents]);
+
 
 useEffect(() => {
   setLabels((prevLabels) => {
@@ -210,7 +217,7 @@ return (
     <div>
    
 <Contex.Provider  value = {{showEventModal,setShowEventModal, count, setCount,  monthIndex, setMonthIndex , setDaySelected,daySelected,selectedEvent,setSelectedEvent,savedEvents,dispatchCalEvent,filteredEvents , setLabels,
-        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUsers, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal, setShowSmallCal, showSmallCal, loggedAdmin, loggedUser, setLoggedAdmin, setLoggedUser, setSelectedOffDay, selectedOffDay, userNameAddEvent, setUserNameAddEvent, adminNameAddEvent, setAdminNameAddEvent, selectedUsersEventFromLs,dispatchUsersEvent,loggedUserName, showEventDataModal, setShowEventDataModal,showEventDataModal2, setShowEventDataModal2, handleShowMoreOpen,handleShowMoreClose, showMoreOpen,setShowMoreOpen,allEventOfday, DateOfShowMore,setSelectedEventOfShowMoreM,selectedEventOfShowMoreM}}>
+        labels, updateLabel,setSelectedUserEvent, selectedUserEvent, selectedUsers, dispatch , selectedDate, setSelectedDate, view, setView, checked, setChecked, multipleCalendarEventModalArray, dispatchMultiCalEventModal,showMultiCalEventModal, setShowMultiCalEventModal, setShowSmallCal, showSmallCal, loggedAdmin, loggedUser, setLoggedAdmin, setLoggedUser, setSelectedOffDay, selectedOffDay, userNameAddEvent, setUserNameAddEvent, adminNameAddEvent, setAdminNameAddEvent, selectedUsersEventFromLs,dispatchUsersEvent,loggedUserName, showEventDataModal, setShowEventDataModal,showEventDataModal2, setShowEventDataModal2, handleShowMoreOpen,handleShowMoreClose, showMoreOpen,setShowMoreOpen,allEventOfday, DateOfShowMore,setSelectedEventOfShowMoreM,selectedEventOfShowMoreM,setEditEventM,editEventM,setEditEventData,editEventData}}>
         {props.children}
        {/* <App/> */}
     </Contex.Provider>

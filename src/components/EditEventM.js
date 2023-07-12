@@ -26,18 +26,19 @@ const colourOptions = [
   { value: 'Kishore', label: 'Kishore' },
 ];
 
-export default function EventModal() {
+export default function EditEventM() {
   const animatedComponents = makeAnimated();
   //  date picker code
   const [dates, setDates] = useState(null);
   const [valued, setValued] = useState(null);
   const [selectedTeamMembers, setSelectedTeamMembers] = useState([]);
-  // console.log("Selected team members is :", selectedTeamMembers)
-  // console.log("Selected team members is :", selectedTeamMembers.length )
-  // console.log("Value 0 is:", valued &&  valued[0])
-  // console.log("Value 1 is:", valued &&  valued[1])
-  // console.log("dates date is :", dates)
-  // console.log("valued date is :", valued)
+  // const [first, setfirst] = useState(second)
+  console.log("Selected team members is :", selectedTeamMembers)
+  console.log("Selected team members is :", selectedTeamMembers.length )
+  console.log("Value 0 is:", valued &&  valued[0])
+  console.log("Value 1 is:", valued &&  valued[1])
+  console.log("dates date is :", dates)
+  console.log("valued date is :", valued)
   const disabledDate = (current) => {
     // console.log("current date is :", current)
     
@@ -66,6 +67,7 @@ export default function EventModal() {
     selectedEvent,
     showEventModal,
     showSmallCal,
+    editEventData,
     setEditEventM,
     setShowSmallCal,userNameAddEvent,adminNameAddEvent,setAdminNameAddEvent,setUserNameAddEvent
   } = useContext(Contex);
@@ -78,22 +80,25 @@ export default function EventModal() {
 //   // setAdminNameEvent(adminNameAddEvent)
 //   setAdminNameAddEvent('')
 // }, [userNameAddEvent])
+const editEventDataIs = editEventData && editEventData[0]
+const {auditNo, location, customerName,end,industCode, label,standaradTyp,start,user,siteName,teamMembers,id} = editEventDataIs
+console.log("editEventData inside editEvent modal is :", editEventData)
 
   const handleAddTime = () => {
     setShowTime(!showTime)
 
   }
   const [timeString, setTimeString] = useState('');
-  // console.log("time string is ",timeString);
+  console.log("time string is ",timeString);
 
-  const start = timeString && timeString[0]
+  const start1 = timeString && timeString[0]
   // const startTimeIS = dayjs(start).format('HH:mm')
-  const startTimeIS = dayjs(start).hour()
-  // console.log("Start time  is :", start)
-  // console.log("startTimeIS time   in hour  is :", startTimeIS)
-  const end = timeString && timeString[1]
-  const endTimeIS = timeString && dayjs(end).format('HH:mm')
-  // console.log("end time  is :", endTimeIS)
+  const startTimeIS = dayjs(start1).hour()
+  console.log("Start time  is :", start)
+  console.log("startTimeIS time   in hour  is :", startTimeIS)
+  const end1 = timeString && timeString[1]
+  const endTimeIS = timeString && dayjs(end1).format('HH:mm')
+  console.log("end time  is :", endTimeIS)
   // Use state to store the selected option
   const [selectedOption, setSelectedOption] = useState("");
   // Handle the change event of the select tag
@@ -101,18 +106,18 @@ export default function EventModal() {
     // Set the selected option to the value of the selected option
     setSelectedOption(event.target.value);
   };
-  // console.log("selectedOption:", selectedOption)
+  console.log("selectedOption:", selectedOption)
 
   const [value, onChange] = useState('10:00');
-  // console.log("Time value is :", value)
-  const [modalData, setModalData] = useState({auditNo:'', location:'',customerName:"",standaradTyp:'', industCode:'', siteName:'',label:'' })
-  const [auditNo, setAuditNo] = useState('');
-  const [location, setLocation] = useState(
-    selectedEvent ? selectedEvent.location : ""
-  );
-  const [label, setLabel] = useState(
-    selectedEvent ? selectedEvent.label : ""
-  );
+  console.log("Time value is :", value)
+  const [updatedEventData, setUpdatedEventData] = useState({auditNo:auditNo, location:location,customerName:customerName,standaradTyp:standaradTyp, industCode:industCode, siteName:siteName,label:label })
+  // const [auditNo, setAuditNo] = useState('');
+  // const [location, setLocation] = useState(
+  //   selectedEvent ? selectedEvent.location : ""
+  // );
+  // const [label, setLabel] = useState(
+  //   selectedEvent ? selectedEvent.label : ""
+  // );
   const [desc, setDescription] = useState(
     selectedEvent ? selectedEvent.desc : ""
   );
@@ -124,7 +129,7 @@ export default function EventModal() {
 
   function handleSubmit(e) {
     e.preventDefault();
-const {auditNo,location, customerName, standaradTyp, industCode, siteName, label} = modalData
+const {auditNo,location, customerName, standaradTyp, industCode, siteName, label} = updatedEventData
     // auditNo:'', location:'',customerName:"",standaradTyp:'', industCode:'', siteName:'',label:'' 
     const calendarEvent = {
       auditNo,
@@ -134,28 +139,31 @@ const {auditNo,location, customerName, standaradTyp, industCode, siteName, label
       siteName,
       location,
       createdLabel:label,
-      label: selectedOption,
+      label: selectedOption?selectedOption:label,
       day: daySelected.valueOf(),
-      id:  Date.now(),
-      // umiqueForEach:  Date.now(),
+      id: id,
       start:valued && valued[0],
       end:valued && valued[1],
-      user: userNameAddEvent && userNameAddEvent,
+      user: user,
      
       // admin: adminNameAddEvent && adminNameAddEvent,
 
     };
-    // console.log("CalendarEvent is:", calendarEvent)
+    console.log("CalendarEvent is:", calendarEvent)
 
     // if (selectedEvent) {
       // dispatchCalEvent({ type: "update", payload: calendarEvent });
     // } else {
       if (auditNo && customerName && standaradTyp && siteName && label) {
+        // if(!teamMembers){
+        //   selectedTeamMembers.length ===0 
+        // }
+        console.log("selectedTeamMembers.length:", selectedTeamMembers.length)
 if(selectedTeamMembers.length > 0){
   // selectedTeamMembers.forE
   selectedTeamMembers.forEach((item,i) => {
-    
-    dispatchCalEvent({ type: "push", payload: {
+    // unique id error
+    dispatchCalEvent({ type: "update", payload: {
       auditNo,
       customerName,
       standaradTyp,
@@ -163,9 +171,9 @@ if(selectedTeamMembers.length > 0){
       siteName,
       location,
       createdLabel:label,
-      label: selectedOption,
+      label: selectedOption?selectedOption:label,
       day: daySelected.valueOf(),
-      id:  Date.now(),
+      id:  id,
       // umiqueForEach:`${i}-${Date.now()}`,
       start:valued && valued[0],
       end:valued && valued[1],
@@ -179,7 +187,8 @@ if(selectedTeamMembers.length > 0){
     setSelectedTeamMembers([])
   });
 }else{
-  dispatchCalEvent({ type: "push", payload: calendarEvent });
+  alert("ok")
+  dispatchCalEvent({ type: "update", payload: calendarEvent });
   setSelectedTeamMembers([])
   setUserNameAddEvent('')
 }
@@ -189,7 +198,8 @@ if(selectedTeamMembers.length > 0){
       }
     // }
 
-    setShowEventModal(false);
+    // setShowEventModal(false);
+    setEditEventM(false)
     // setSelectedTeamMembers([])
     // setUserNameAddEvent('')
   }
@@ -206,25 +216,25 @@ if(selectedTeamMembers.length > 0){
   };
   const onchange = (e)=>{
     const  {name, value} = e.target
-    setModalData({...modalData, [name]:value})
+    setUpdatedEventData({...updatedEventData, [name]:value})
     
   }
   return (
 
     <div>  
-    <div className={`h-screen w-full fixed left-0 top-0 flex justify-center items-center  z-10`}>
+    <div className={`h-screen w-full fixed left-0 top-0 flex justify-center items-center  z-30`}>
      
       <form className=" bg-white rounded-lg shadow-2xl mx-9 px-4  w-full md:w-96 ">
         <header className="bg-gray-100 px-4 xl:py-2 flex justify-between items-center">
           <span className="material-icons-outlined text-gray-400 ">
             drag_handle
           </span>
-          <span>Add New Event</span>
+          <span>Edit Event</span>
           <div>
             
               
         
-            <button onClick={() => setShowEventModal(false)}>
+            <button onClick={() => setEditEventM(false)}>
               <span className="material-icons-outlined text-gray-400">
                 close
               </span>
@@ -238,7 +248,7 @@ if(selectedTeamMembers.length > 0){
               type="text"
               name="auditNo"
               placeholder="Audit No"
-              value={modalData.auditNo}
+              value={updatedEventData.auditNo}
               required
               className=" border-0 text-gray-600 font-semibold   w-1/2 md:w-full  border-b-2 text-sm p-1 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               onChange={onchange}
@@ -300,7 +310,7 @@ if(selectedTeamMembers.length > 0){
                 type="text"
                 name="customerName"
                 placeholder="Customer Name"
-                value={modalData.customerName}
+                value={updatedEventData.customerName}
                 required
                 className="border-0 text-gray-600  border-b-2 text-sm p-1 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                 onChange={onchange}
@@ -312,7 +322,7 @@ if(selectedTeamMembers.length > 0){
                 type="text"
                 name="standaradTyp"
                 placeholder="Standarad (Audit type)"
-                value={modalData.standaradTyp}
+                value={updatedEventData.standaradTyp}
                 required
                 className="border-0 text-gray-600  border-b-2 text-sm p-1 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                 onChange={onchange}
@@ -326,7 +336,7 @@ fiber_pin
                 type="number"
                 name="industCode"
                 placeholder="Industrial Code"
-                value={modalData.industCode}
+                value={updatedEventData.industCode}
                 required
                 className="border-0 text-gray-600  border-b-2 text-sm p-1 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                 onChange={onchange}
@@ -338,7 +348,7 @@ fiber_pin
                 type="text"
                 name="siteName"
                 placeholder="Site Name"
-                value={modalData.siteName}
+                value={updatedEventData.siteName}
                 required
                 className="border-0 text-gray-600  border-b-2 text-sm p-1 w-1/2 md:w-full border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                 onChange={onchange}
@@ -352,7 +362,7 @@ fiber_pin
                 type="text"
                 name="location"
                 placeholder="Add a Location"
-                value={modalData.location}
+                value={updatedEventData.location}
                 required
                 className="border-0 text-gray-600  w-1/2 md:w-full border-b-2 text-sm p-1 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
                 onChange={onchange}
@@ -360,22 +370,24 @@ fiber_pin
             </div>
             
 
-            <Select
+          {teamMembers && <Select
       closeMenuOnSelect={false}
       components={animatedComponents}
      placeholder ='Select team members (optional)'
       isMulti
-      options={colourOptions}
+      
+      defaultValue={[teamMembers[0],teamMembers[1],teamMembers[2],teamMembers[3],teamMembers[4]]}
+      options={teamMembers}
       onChange={setSelectedTeamMembers}
       className="p-0 m-0 border-none"
-    />
+    />}  
             <div className="flex gap-x-2">
               <div className="flex">
                 <div className=""><input
                   type="text"
                   name="label"
                   placeholder="Create a label"
-                  value={modalData.label}
+                  value={updatedEventData.label}
                   required
                   className=" border-0 text-gray-600   w-1/2 md:w-full border-b-2 text-sm p-1 border-gray-200 focus:outline-none focus:ring-0  focus:border-blue-500"
                   onChange={onchange}
@@ -404,7 +416,7 @@ fiber_pin
             onClick={handleSubmit}
             className="bg-blue-500 hover:bg-blue-600 px-2 text-sm py-1 rounded text-white"
           >
-           Schedule
+           Update
           </button>
         </footer>
       </form>

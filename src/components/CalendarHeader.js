@@ -43,7 +43,7 @@ export default function CalendarHeader() {
       const add = dayjs(selectedDate).add(1,'day')
       const addFormat = add.format("MM-DD-YYYY")
       setSelectedDate(addFormat)
-      console.log("add is :", add)
+      // console.log("add is :", add)
      } else if ( view === 'month'){
 
        setMonthIndex(monthIndex + 1);
@@ -74,7 +74,7 @@ export default function CalendarHeader() {
 
   const handleSwitch = (e) =>{
     setChecked(!checked)
-    console.log("Checked value is:", checked)
+    // console.log("Checked value is:", checked)
     checked?navigate('/overlay'):navigate('/main')
    
 
@@ -83,7 +83,7 @@ export default function CalendarHeader() {
   //   setChecked(false)
   // }
   const d = dayjs().format("MM-DD-YYYY") + '$day'
-  console.log("D inside header:", d)
+  // console.log("D inside header:", d)
   const admin = localStorage.getItem('admin')
   const loggedAdmin = admin && JSON.parse(localStorage.getItem('admin'))
   const user = localStorage.getItem('loggedUser')
