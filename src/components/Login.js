@@ -129,8 +129,9 @@ localStorage.setItem("adminList", JSON.stringify(adminList))
   return (
     <section className="text-gray-600 body-font">
     <div className="container px-5 py-24 mx-auto flex flex-wrap    justify-center  items-center">
-     
+    
       <div className="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8    w-full mt-10 md:mt-0">
+     <b>admin login: -</b>  email: noman@evolve.com, password: noman12, <br/>  <b>user login:</b> - email: kishore@evolve.com, password: kishore12,
         <h2 className="text-gray-900 text-lg font-medium title-font mb-5">
           Login 
         </h2>
